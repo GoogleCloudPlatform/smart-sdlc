@@ -1,0 +1,8 @@
+# Node Files
+node_modules
+npm-debug.log
+
+# Documentation
+README.md
+mkdocs.yml
+docs

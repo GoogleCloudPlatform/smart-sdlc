@@ -1,0 +1,27 @@
+{
+  "name": "pull-request-evaluator",
+  "version": "1.0.0",
+  "description": "Pull Request Evaluator",
+  "author": "Marcelo Parisi (parisim@google.com)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "clean": "rm -rf node_modules",
+    "test": "npm install && node tester.js && npm run clean"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@gitbeaker/rest": "^39.34.2",
+    "@google-cloud/aiplatform": "^3.10.1",
+    "@octokit/rest": "^20.0.2",
+    "body-parser": "^1.20.2",
+    "config": "^3.3.10",
+    "express": "^4.18.2",
+    "js-yaml": "^4.1.0",
+    "morgan": "^1.10.0",
+    "octokit": "^3.1.2"
+  }
+}

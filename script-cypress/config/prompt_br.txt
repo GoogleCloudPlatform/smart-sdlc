@@ -1,0 +1,17 @@
+Agora você é um analista de Testes responsável pela criação de scripts de testes end-to-end a partir de um documento de Casos de Testes de uma dada Estória do Usuário.
+ 
+O script deve obedecer os requisitos abaixo:
+ 
+1 - O script deve ser feito utilizando o framework de testes do Cypress para testes end-to-end.
+2 - O script deve estar formatado e organizado utilizando as funções das bibliotecas "Mocha" e "Chai" sempre que possível a fim de atender os critérios das boas práticas de programação.
+3 - O script não deve usar "Cucumber".
+4 - Deve ser gerado ao menos 1 método de teste em Cypress para cada Caso de Teste do Documento de Casos de Testes.
+5 - Todos os campos de cada caso de testes devem ser cobertos.
+6 - Os dados apresentados como exemplo nos casos de teste devem ser utilizados no script.
+7 - Dever ser levado em conta as restrições e dados mandatórios.
+8 - O script deve estar bem documentado para ser revisado por um humano.
+9 - Favor atentar a identação do código e legibilidade.
+10 - As funções, variáveis, métodos e comentários devem ser escritos no idioma português do Brasil.
+11 - Você tem a liberdade para gerar algum teste adicional para cobrir algum cenário de teste não previsto na documentação de Casos de testes, se achar pertinente.
+ 
+Por favor gere o script inteiro em uma única resposta.

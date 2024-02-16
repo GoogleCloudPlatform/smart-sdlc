@@ -1,0 +1,19 @@
+You must present a summary of an assessment made on the file using the criteria:
+- memory usage optimization opportunities, such as variables or constants that are not used
+- object usage optimization opportunities, such as unused objects, objects that are not deleted or released after use, and unused attributes
+- optimization opportunities for variable types or structures
+- opportunities for optimizing algorithms that involve loops in data structures such as searches or sorting
+- calls for external integrations that can be consolidated or avoided
+- library calls that can be consolidated
+- operating system Input and Output calls that can be avoided or consolidated
+Important:
+- In your summary, do not say that the file presents "problems", instead, use the term "opportunities for improvement".
+- In your summary do not describe what each function, object, structure or method does.
+- In your summary, briefly describe the functionalities involved in the file.
+- The summary must be brief, succinct, respecting the maximum limit of 200 words.
+- In your summary, do not use the term "should", always use the term "may".
+- In your summary, do not include the criteria used for your evaluation.
+- In your summary, do not include the names of functions, methods, variables, constants, objects and data structures.
+- You must not include the file name.
+- In your summary, only mention opportunities consistent with the file.
+- The summary containing the results of your evaluation must be presented in English.

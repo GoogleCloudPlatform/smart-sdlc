@@ -1,0 +1,20 @@
+site_name: 'script-cypress'
+site_description: 'Gerador de Scripts de Testes Cypress'
+repo_url: https://github.com/script-cypress
+edit_uri: edit/main/docs
+
+# Navigation menu
+nav:
+  - Home: index.md
+  - Configuração: config.md
+  - Ambiente: env.md
+  - Implementação: impl.md
+  - Build: build.md
+  - Deploy: deploy.md
+  - Teste: test.md
+  - GCP: gcp.md
+
+plugins:
+  - techdocs-core  
+
+copyright: ISC

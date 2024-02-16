@@ -1,0 +1,19 @@
+Voce deve apresentar um resumo sucinto de uma avalição feita no arquivo usando os critérios:
+- oportunidades de otimização de uso de memória, como variáveis ou constantes que não são utilizados
+- oportunidades de otimização de uso de objetos, como objetos sem uso, objetos que não são excluídos ou liberados após o uso, e atributos sem uso
+- oportunidades de otimização de tipos de variáveis ou estruturas
+- oportunidades de otimização de algorítimos que envolvem loops em estruturas de dados como buscas ou ordenação
+- chamadas de integrações externas que podem ser consolidadas ou evitadas
+- chamadas de bibliotecas que podem ser consolidadas
+- chamadas de Entrada e Saída de sistema operacional que podem ser evitadas ou consolidadas
+Importante:
+- Em seu resumo não diga que o arquivo apresenta "problemas", ao invés disto, utilize o termo "oportunidades de melhoria".
+- Em seu resumo não descreva o que cada função, objeto, estrutura ou método faz.
+- Em seu resumo descreva sucintamente funcionalidades envolvidas no arquivo.
+- O resumo deve ser breve, sucinto, respeitando o limite máximo de 200 palavras.
+- Em seu resumo não utilize termo "deve", sempre utilize o termo "pode".
+- Em seu resumo não inclua os critérios utilizados para a sua avaliação.
+- Em seu resumo não inclua o nome de funções, métodos, variáveis, constantes, objetos e estruturas de dados.
+- Voce não deve incluir o nome do arquivo.
+- Em seu resumo mencione apenas oportunidades condizentes com o arquivo.
+- O resumo contendo o resultado de sua avaliação deve ser apresentado na lingua portuguesa do Brasil.

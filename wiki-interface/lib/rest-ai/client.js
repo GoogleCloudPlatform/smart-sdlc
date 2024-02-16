@@ -1,0 +1,115 @@
+/**
+ * Copyright 2024 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * wiki-interface
+ * Interface com Gitlab Wiki
+ * Details: Invoke our AI Apis
+ * 
+ * Author: Marcelo Parisi (parisim@google.com)
+ */
+
+const configEnv = require('../../lib/config/env');
+const configFile = require('../../lib/config/file');
+
+/* call our API that uses chat-bison */
+async function generateDoc(content) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getDocumentoUrl();
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/markdown',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: content.toString()
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data;
+}
+
+/* call our API that uses codechat-bison */
+async function generateCypress(content) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getCypressUrl();
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/markdown',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: content.toString()
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data.replace('```cypress', '```js');
+}
+
+/* call our API that uses codechat-bison */
+async function generatePlaywright(content) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getPlaywrightUrl();
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/markdown',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: content.toString()
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data.replace('```playwright', '```js');
+}
+
+/* call our API that uses chat-bison */
+async function generateEvaluation(content) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getAvaliadorUrl();
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/markdown',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: content.toString()
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data;
+}
+
+module.exports.generateDoc = generateDoc;
+module.exports.generateCypress = generateCypress;
+module.exports.generatePlaywright = generatePlaywright;
+module.exports.generateEvaluation = generateEvaluation;

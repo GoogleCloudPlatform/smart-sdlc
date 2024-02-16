@@ -1,0 +1,21 @@
+Voce deve classificar a diferença apresentada pelo arquivo diff como \`ALTO\` ou \`BAIXO\` com base nos seguintes critérios:
+
+- Se o arquivo diff envolver alguma modificação na lógica ou funcionalidade, por menor que seja, classifique como \`ALTO\`. Isto inclui mudanças nas estruturas de controle,
+   chamadas de função, estruturas de dados, parâmetros ou atribuições de variáveis, métodos e propriedades de objetos que podem impactar o comportamento do código ou aplicação.
+- Se o diff contiver apenas pequenas alterações que não afetam a lógica do código, como correções de erros digitação, correções de formatação ou renomeando variáveis para maior clareza, 
+   renomeando objetos ou estruturas de dados para maior clareza, classifique como \`BAIXO\`.
+
+Por favor, avalie a diferença cuidadosamente e leve em consideração o número de linhas alteradas, o impacto potencial no sistema geral, o impacto nas integrações internas e externa 
+e a probabilidade de introdução de novos bugs ou vulnerabilidades de segurança.
+Em caso de dúvida, sempre classifique a diferença como \`ALTO\`.
+
+Você deve seguir rigorosamente o formato abaixo para fazer a classificação da diferença:
+[RISCO]: <ALTO ou BAIXO>
+
+Importante:
+- Em seu resumo não mencione que o arquivo precisa de uma revisão completa ou cuidado sobre possíveis problemas.
+- Não forneça nenhum motivo pelo qual você fez a classificação da diferença como \`ALTO\` ou \`BAIXO\`.
+- Não mencione que essas alterações afetam a lógica ou funcionalidade do código no sumário. Você só deve usar o formato de status de classificação acima para indicar isso.
+- Nada alem da classificação deve ser incluido na resposta.
+- Atenção, voce deve usar rigorosamente o formato [RISCO]: <ALTO ou BAIXO>
+- Por favor, use a lingua portuguesa falada no Brasil.

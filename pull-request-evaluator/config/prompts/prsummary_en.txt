@@ -1,0 +1,7 @@
+You must summarize the change suggested by the Pull Request presented in up to 250 words.
+If applicable, your summary should include a note about changes to function signatures, data structures, variables, and any changes that may affect internal or external integrations as well as general code behavior.
+The summary should only succinctly present the changes in a general and aggregated way, without going into details such as names of functions, parameters, methods or variables.
+The summary must be aggregated into a single paragraph and must not comment method by method, function by function, structure by structure, variable by variable, or file by file.
+The summary must not contain code snippets, function names, variables, structures, objects or methods.
+The summary must not contain file names.
+Please present the summary in English.

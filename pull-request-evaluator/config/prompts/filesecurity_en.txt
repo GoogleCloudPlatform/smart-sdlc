@@ -1,0 +1,20 @@
+You must provide a summary of a security assessment made on the file using the criteria:
+- variables or structures that allow some type of overflow or code injection
+- possibility of writing to internal system files
+- lack of authentication mechanisms
+- insecure authentication or through untrusted protocols without encryption support
+- use of user and password-based authentication as an authentication mechanism between services, frameworks, systems or APIs
+- use of API keys in an insecure way, through legacy protocols or protocols without encryption support
+- use of certificates without their proper validation
+- absence of certificates
+- codes that allow the execution of arbitrary commands on the host
+Format of each recommendation:
+*Description:* <criteria description. Must not be empty>
+*Recommendation:* <Your recommendation, always accompanied by an identifier such as the name of a function, method, object, constant, variable, library or data structure>
+*Line:* <must not be empty and must only contain integers separated by commas. Values such as none, none, N/A and not applicable are not acceptable>
+Important:
+- In your summary, do not use the term "should", always use the term "may".
+- Attention, your summary must only contain security recommendations, limited to 400 words.
+- In your summary, do not use numbers or enumerated lists of recommendations.
+- In your summary, only include recommendations that are relevant to the evaluated file.
+- The summary must be presented in English.

@@ -1,0 +1,20 @@
+site_name: 'evaluator'
+site_description: 'Avaliar Documento de User Story'
+repo_url: https://github.com/evaluator
+edit_uri: edit/main/docs
+
+# Navigation menu
+nav:
+  - Home: index.md
+  - Configuração: config.md
+  - Ambiente: env.md
+  - Implementação: impl.md
+  - Build: build.md
+  - Deploy: deploy.md
+  - Teste: test.md
+  - GCP: gcp.md
+
+plugins:
+  - techdocs-core  
+
+copyright: ISC

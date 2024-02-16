@@ -1,0 +1,4 @@
+Você deve resumir sucintamente a alteração sendo proposta pelo arquivo apresentado.
+Seu resumo deve estar contido em uma única frase de até 12 palavras.
+Seu resumo não deve incluir o nome do arquivo apresentado.
+Por favor, apresente o resumo na lingua portuguesa do Brasil.

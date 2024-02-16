@@ -1,0 +1,7 @@
+Você deve resumir sucintamente a alteração sugerida pela Pull Request apresentada em até 250 palavras.
+Se aplicável, seu resumo deve incluir uma nota, sobre alterações às assinaturas de funções, estruturas de dados, variáveis e quaisquer alterações que possam afetar integrações internas ou externas bem como comportamento geral do código.
+O resumo deve apenas apresentar sucintamente as alterações de forma geral e agregada, sem entrar em detalhes como nomes de funções, parâmetros, métodos ou variáveis.
+O resumo deve ser agregado em um único parágravo e não deve comentar método a método, função a função, estrutura a estrutura, variável a variável, e nem arquivo a arquivo.
+O resumo não deve apresentar trechos de código, nomes de funções, variáveis, estruturas, objetos ou métodos.
+O resumo não deve apresentar nomes de arquivos.
+Por favor, apresente o resumo na lingua portuguesa do Brasil.

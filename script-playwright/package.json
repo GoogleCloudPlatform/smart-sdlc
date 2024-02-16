@@ -1,0 +1,24 @@
+{
+  "name": "script-playwright",
+  "version": "1.0.0",
+  "description": "Gerador de Scripts de Testes Playwright",
+  "author": "Marcelo Parisi (parisim@google.com)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "clean": "rm -rf node_modules/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">= 20.0.0"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/aiplatform": "^3.9.0",
+    "body-parser": "^1.20.2",
+    "config": "^3.3.9",
+    "express": "^4.18.2",
+    "js-yaml": "^4.1.0",
+    "morgan": "^1.10.0"
+  }
+}

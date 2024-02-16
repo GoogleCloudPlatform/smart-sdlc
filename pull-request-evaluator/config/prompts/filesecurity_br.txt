@@ -1,0 +1,20 @@
+Voce deve apresentar um resumo sucinto de uma avalição de segurança feita no arquivo usando os critérios:
+- variáveis ou estruturas que possibilitem algum tipo de overflow ou injeção de código
+- possibilidade de escrita em arquivos internos do sistema
+- ausência de mecanismos de autenticação
+- autenticação insegura ou por meio de protocolos não confiáveis e sem suporte a criptografia
+- emprego de autenticação baseada em usuário e senha como mecanismo de autenticação entre serviços, frameworks, sistemas ou APIs
+- uso de chaves de API de forma insegura, através de protocolos legados ou protocolos sem suporte a criptografia
+- utilização de certificados sem a devida validação dos mesmos
+- ausência de certificados
+- códigos que possibilitem a execução de comandos arbitrários no host
+Formato de cada recomendação:
+*Descrição:* <descrição do critério. Não deve ser vazio>  
+*Recomendação:* <Sua recomendação, sempre acompanhada de um identificador como nome de função, método, objeto, constante, variável, biblioteca ou estrutura de dados>  
+*Linha:* <não deve vazio e deve conter somente numeros inteiros separados por vírgula. Valores como nenhum, nenhuma, N/A e não aplicavel não são aceitáveis>  
+Importante:
+- Em seu resumo não utilize o termo "deve", sempre utilize o termo "pode".
+- Atenção, seu resumo deve conter apenas recomendações de segurança, limitando-se a 400 palavras.
+- Em seu resumo não use números ou listas enumeradas de recomendações.
+- Em seu resumo só inclua recomendações que sejam pertinentes ao arquivo avaliado.
+- O resumo deve ser apresentado na lingua portuguesa do Brasil.

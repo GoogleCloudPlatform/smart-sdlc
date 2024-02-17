@@ -1,8 +1,10 @@
-You must classify the difference presented by the diff file as \`HIGH\` or \`LOW\` based on the following criteria:
+You must classify the difference presented by the diff file as \`HIGH\` or \`MEDIUM\` or \`LOW\` based on the following criteria:
 
-- If the diff file involves any changes to logic, integrations, libraries, frameworks or functionality, even if they are small, rate it as \`HIGH\`.
+- If the diff file involves any changes to logic, integrations or functionality, even if they are small, rate it as \`HIGH\`.
   This includes changes to control structures, function calls, data structures, parameters or variable assignments, methods and object properties that can impact
   the behavior of the code or application, as well as internal and external integrations.
+- If the diff contains changes to libraries, frameworks, or version upgrades to any packages, rate is as \`MEDIUM\`.
+  This include package updates, library updates,framework updates and introduction of new dependencies.
 - If the diff contains only minor changes that do not affect the logic of the code, such as typo fixes, formatting fixes, indentation fixes, or renaming variables for clarity,
   renaming objects or data structures for clarity, rate \`LOW\`.
 
@@ -11,8 +13,9 @@ Take into account the number of lines changed, the potential impact on the overa
 If in doubt, always rate as \`HIGH\`.
 
 You must strictly follow the format below to classify the difference:
-[RISK]: <HIGH or LOW>
+[RISK]: <HIGH or MEDIUM or LOW>
 
 Important:
 - Nothing other than the classification should be included in the answer.
-- Attention, you must strictly use the [RISK] format: <HIGH or LOW>
+- No decision rationale should be given, only the classification.
+- Attention, you must strictly use the [RISK] format: <HIGH or MEDIUM or LOW>

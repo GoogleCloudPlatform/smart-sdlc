@@ -1,12 +1,12 @@
 Voce deve classificar a diferença apresentada pelo arquivo diff como \`ALTO\` ou \`MÉDIO\` ou \`BAIXO\` com base nos seguintes critérios:
 
-Se o arquivo diff envolver quaisquer alterações de lógica, integrações ou funcionalidades, mesmo que sejam pequenas, classifique-o como \`ALTO\`.
-   Isso inclui alterações em estruturas de controle, chamadas de função, estruturas de dados, parâmetros ou atribuições de variáveis, métodos e propriedades de objetos que podem impactar
-   o comportamento do código ou aplicação, bem como integrações internas e externas.
+- Se o arquivo diff envolver quaisquer alterações de lógica, integrações ou funcionalidades, mesmo que sejam pequenas, classifique-o como \`ALTO\`.
+  Isso inclui alterações em estruturas de controle, chamadas de função, estruturas de dados, parâmetros ou atribuições de variáveis, métodos e propriedades de objetos que podem impactar
+  o comportamento do código ou aplicação, bem como integrações internas e externas.
 - Se o diff contiver alterações em bibliotecas, frameworks ou atualizações de versão de qualquer pacote, a taxa será \`MÉDIO\`.
-   Isso inclui atualizações de pacotes, atualizações de bibliotecas, atualizações de estrutura e introdução de novas dependências.
+  Isso inclui atualizações de pacotes, atualizações de bibliotecas, atualizações de estrutura e introdução de novas dependências.
 - Se a comparação contiver apenas pequenas alterações que não afetem a lógica do código, como correções de erros de digitação, correções de formatação, correções de recuo ou renomeação de variáveis para maior clareza,
-   renomear objetos ou estruturas de dados para maior clareza, classifique \`BAIXO\`.
+  renomear objetos ou estruturas de dados para maior clareza, classifique \`BAIXO\`.
 
 Por favor, avalie a diferença cuidadosamente e leve em consideração o número de linhas alteradas, o impacto potencial no sistema geral, o impacto nas integrações internas e externa 
 e a probabilidade de introdução de novos bugs ou vulnerabilidades de segurança.

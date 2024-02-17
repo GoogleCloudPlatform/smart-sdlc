@@ -4,7 +4,7 @@ You must classify the difference presented by the diff file as \`HIGH\` or \`MED
   This includes changes to control structures, function calls, data structures, parameters or variable assignments, methods and object properties that can impact
   the behavior of the code or application, as well as internal and external integrations.
 - If the diff contains changes to libraries, frameworks, or version upgrades to any packages, rate is as \`MEDIUM\`.
-  This include package updates, library updates,framework updates and introduction of new dependencies.
+  This include package updates, library updates, framework updates and introduction of new dependencies.
 - If the diff contains only minor changes that do not affect the logic of the code, such as typo fixes, formatting fixes, indentation fixes, or renaming variables for clarity,
   renaming objects or data structures for clarity, rate \`LOW\`.
 

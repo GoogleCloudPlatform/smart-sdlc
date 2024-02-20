@@ -43,6 +43,7 @@ async function createMrComment(projectId, mrIid, body) {
     try {
         comm = await gitlabClient.MergeRequestNotes.create(projectId, mrIid, body);
     } catch (err) {
+        console.log(err);
         return null;
     }
 }
@@ -54,6 +55,7 @@ async function getMr(projectId, mrIid) {
         mr = await gitlabClient.MergeRequests.show(projectId, mrIid);
         return mr;
     } catch (err) {
+        console.log(err);
         return null;
     }
 }
@@ -64,6 +66,7 @@ async function getMrDiff(mr) {
         const diff = await gitlabClient.MergeRequests.allDiffs(mr.project_id, mr.iid);
         return diff;
     } catch (err) {
+        console.log(err);
         return null;
     }
 }
@@ -74,6 +77,7 @@ async function getFileRaw(projectId, thisFile, ref) {
         const raw = await gitlabClient.RepositoryFiles.showRaw(projectId, thisFile.new_path, ref);
         return raw;
     } catch (err) {
+        console.log(err);
         return "";
     }
 }

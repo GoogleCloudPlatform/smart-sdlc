@@ -48,6 +48,7 @@ async function createPrComment(owner, repo, issue_number, body) {
             body
         });
     } catch (err) {
+        console.log(err);
         return null;
     }
 }
@@ -69,6 +70,7 @@ async function getAllCommitsId(owner, repo, pull_number) {
             page++;
         } while (commits.data.length > 0)
     } catch (err) {
+        console.log(err);
         return null;
     }
     return allCommits
@@ -85,6 +87,7 @@ async function getPrDiff(owner, repo, pull_request) {
         });
         return targetBranchDiff;
     } catch (err) {
+        console.log(err);
         return null;
     }
 }
@@ -99,6 +102,7 @@ async function getPr(owner, repo, pull_request) {
         });
         return pullRequest;
     } catch (err) {
+        console.log(err);
         return null;
     }
 }
@@ -131,6 +135,7 @@ async function getFileAndDiff(owner, repo, file, basesha) {
             }
         }
     } catch (err) {
+        console.log(err);
         return null;
     }
 
@@ -162,6 +167,7 @@ async function getNewFileContent(owner, repo, file, basesha) {
             }
         }
     } catch (err) {
+        console.log(err);
         return null;
     }
 

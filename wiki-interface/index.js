@@ -127,8 +127,8 @@ app.get('/process/:model/:project/:page', async (req, res) => {
         }
     } else if (aiModel == "eval") {
         let newPagePath = slug + "_" + configFile.getAvaliadorsufix();
-        let newPageContet = await aiOperator.generateEvaluation(pageContent);
-        let newPageComment = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContet);
+        let newPageContent = await aiOperator.generateEvaluation(pageContent);
+        let newPageComment = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
         if (newPageComment) {
             res.header("Content-Type", "text/html");
             res.send(refreshContent);

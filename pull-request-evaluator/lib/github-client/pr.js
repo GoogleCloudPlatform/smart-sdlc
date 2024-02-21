@@ -135,8 +135,8 @@ async function getFileAndDiff(owner, repo, file, basesha) {
             }
         }
     } catch (err) {
-        console.log(err);
-        return null;
+        /* Probably a 404, brand new file */
+        thisFile.fileContent = "";
     }
 
     if (file.patch != null) {
@@ -148,7 +148,7 @@ async function getFileAndDiff(owner, repo, file, basesha) {
 }
 
 /* Get the resulting file (Original + Diff) */
-async function getNewFileContent(owner, repo, file, basesha) {
+async function getNewFileContent(owner, repo, file, diffsha) {
 
     let newContent = "";
 
@@ -157,7 +157,7 @@ async function getNewFileContent(owner, repo, file, basesha) {
             owner: owner,
             repo: repo,
             path: file.filename,
-            ref: basesha
+            ref: diffsha
         });
         if (contents.data != null) {
             if (!Array.isArray(contents.data)) {
@@ -167,8 +167,7 @@ async function getNewFileContent(owner, repo, file, basesha) {
             }
         }
     } catch (err) {
-        console.log(err);
-        return null;
+        return "";
     }
 
     return newContent;

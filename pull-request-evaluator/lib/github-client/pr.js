@@ -136,6 +136,7 @@ async function getFileAndDiff(owner, repo, file, basesha) {
         }
     } catch (err) {
         /* Probably a 404, brand new file */
+        console.log(err);
         thisFile.fileContent = "";
     }
 
@@ -167,6 +168,7 @@ async function getNewFileContent(owner, repo, file, diffsha) {
             }
         }
     } catch (err) {
+        console.log(err);
         return "";
     }
 

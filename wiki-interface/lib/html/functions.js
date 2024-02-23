@@ -26,6 +26,16 @@
 function getHtmlOptions(wikiList) {
 
     let options = "";
+
+    /* Sorting Data */
+    wikiList = wikiList.sort(function(a,b){
+        let x = a.title.toLowerCase();
+        let y = b.title.toLowerCase();
+        if(x>y){return 1;}
+        if(x<y){return -1;}
+        return 0;
+    });
+
     for(let thisWiki of wikiList) {
         options += "<option value=\"" + thisWiki.slug + "\">" + thisWiki.title + "</option>\n";
     }

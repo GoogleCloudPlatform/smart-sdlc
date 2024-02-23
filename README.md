@@ -66,8 +66,13 @@ This solution doesn't plan to cover Gitlab setup and provisioning. There are mul
 Each component of the solution has a deployment/installation guide on its subdirectory.  
 
 **IMPORTANT:** 
-* There are resoources that are shared between multiple components, like Secret Manager entries.  
-* Pay attention not to recreate those components and break the solution.
+* There are resources that are shared between multiple components, like Secret Manager entries.
+* Pay attention not to recreate those shared components and break the solution.
+
+## Documentation
+
+Each component of the solution has a README.md file with details about it.  
+There is also a TLDR.md file on each component for those that are in a hurry.  
 
 ## Wiki Integration
 
@@ -91,3 +96,7 @@ The Secret Token must match the token that you are using on Secret Manager.
 Select **Comments** and **Merge Request events** on the checkboxes:  
 
 ![webhook02](img/webhook02.png "Webhook 02: smart-sdlc")
+
+## Contributing
+
+Check [CONTRIBUTING.md](CONTRIBUTING.md) file.

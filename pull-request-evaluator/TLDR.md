@@ -40,7 +40,7 @@ gitlab:
   url: http://123-123-123-123.nip.io
   timeout: 60000
 functions:
-  # en / br : Must match prompt_XX.txt file name
+  # en / br : Must match prompt_XX.txt files and static/ files
   language: en
   prsummary: true
   diffsummary: true

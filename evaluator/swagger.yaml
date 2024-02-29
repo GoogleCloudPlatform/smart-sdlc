@@ -1,0 +1,62 @@
+swagger: "2.0"
+info:
+  title: evaluator
+  version: v1
+host: my-host.example.com
+schemes:
+  - "https"
+paths:
+  /process:
+    post:
+      summary: Process the document.
+      description: This endpoint receives the input document and sends to VertexAI for evaluation.
+      consumes:
+        - text/markdown
+      produces:
+        - text/markdown
+      parameters:
+        - in: header
+          name: API_KEY
+          description: API_KEY is the key used to authenticate the API call
+          type: string
+          required: true
+        - in: header
+          name: User-Agent
+          description: User-Agent is used to identify the caller
+          type: string
+          default: wiki-interface
+          required: true
+        - in: body
+          name: document
+          description: Input Document.
+          required: true
+          schema:
+            type: string
+            example: |
+              # Story Identification:
+              
+              **ID/Name:** #511  
+              **As a:** restaurant customer  
+              **I want to:** reserva a table online  
+              **So that:** I can ensure I have a place to eat at my preferred time
+              
+              **1-Acceptance Crietria**
+              - The system should let user select the date
+              - The system should show available times for date selected
+              - The system should let user reserve a table
+              - The user should receive a reservation confirmation
+      responses:
+        200:
+          description: OK
+          schema:
+            type: string
+            example: |
+              Regarding the content, here is my analysis:
+
+              - General opinion: The User Story is well-written and provides all the necessary information. The structure is clear and the language is concise.
+        400:
+          description: Bad request
+        401:
+          description: Access denied
+        500:
+          description: Internal error

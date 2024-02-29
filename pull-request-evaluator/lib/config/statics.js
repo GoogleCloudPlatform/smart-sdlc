@@ -23,19 +23,20 @@
  */
 
 const fs = require('node:fs');
+const configFile = require('../../lib/config/file');
 
 /* Check if greet file is present */
 function checkStatics() {
     let mystatic;
     try {
-        mystatic = fs.readFileSync('static/greet.md', 'utf8');
+        mystatic = fs.readFileSync('static/greet_' + configFile.getLanguage() + '.md', 'utf8');
     } catch (e) {
         console.log("File not found: greet.md");
         return false;
     }
 
     try {
-        mystatic = fs.readFileSync('static/help.md', 'utf8');
+        mystatic = fs.readFileSync('static/help_' + configFile.getLanguage() + '.md', 'utf8');
     } catch (e) {
         console.log("File not found: help.md");
         return false;
@@ -48,7 +49,7 @@ function checkStatics() {
 function getGreet() {
     let greet;
     try {
-        greet = fs.readFileSync('static/greet.md', 'utf8');
+        greet = fs.readFileSync('static/greet_' + configFile.getLanguage() + '.md', 'utf8');
     } catch (e) {
         return "";
     }
@@ -59,7 +60,7 @@ function getGreet() {
 function getHelp() {
     let help;
     try {
-        help = fs.readFileSync('static/help.md', 'utf8');
+        help = fs.readFileSync('static/help_' + configFile.getLanguage() + '.md', 'utf8');
     } catch (e) {
         return "";
     }

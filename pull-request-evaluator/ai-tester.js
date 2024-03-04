@@ -22,6 +22,7 @@
  * Author: Marcelo Parisi (parisim@google.com)
  */
 
+const process = require('node:process');
 const githubHelper = require('./lib/github-client/pr');
 const gitlabHelper = require('./lib/gitlab-client/mr');
 const aiHelper = require('./lib/gcp/aihelper');
@@ -137,10 +138,10 @@ function main() {
     }
 
     /* Github */
-    //let owner = "kubernetes";
-    //let repo = "ingress-nginx";
-    //let pr = 10797;
-    //myFunctionGithub(owner, repo, pr);
+    let owner = "kubernetes";
+    let repo = "ingress-nginx";
+    let pr = 10797;
+    myFunctionGithub(owner, repo, pr);
 
     /* Gitlab */
     //let projectId = "1";

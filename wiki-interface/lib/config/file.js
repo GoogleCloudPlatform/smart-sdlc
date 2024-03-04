@@ -27,35 +27,35 @@ const config = require('config');
 function checkConfigFile() {
     let test;
 
-    /* Check avaliador.url */
+    /* Check evaluator.url */
     try {
-        test = config.get('avaliador.url');
+        test = config.get('evaluator.url');
     } catch (e) {
-        console.log("No avaliador.url set in config file");
+        console.log("No evaluator.url set in config file");
         return false;
     }
 
-    /* Check avaliador.sufix */
+    /* Check evaluator.sufix */
     try {
-        test = config.get('avaliador.sufix');
+        test = config.get('evaluator.sufix');
     } catch (e) {
-        console.log("No avaliador.sufix set in config file");
+        console.log("No evaluator.sufix set in config file");
         return false;
     }
 
-    /* Check documento.url */
+    /* Check generator.url */
     try {
-        test = config.get('documento.url');
+        test = config.get('generator.url');
     } catch (e) {
-        console.log("No documento.url set in config file");
+        console.log("No generator.url set in config file");
         return false;
     }
 
-    /* Check documento.sufix */
+    /* Check generator.sufix */
     try {
-        test = config.get('documento.sufix');
+        test = config.get('generator.sufix');
     } catch (e) {
-        console.log("No documento.sufix set in config file");
+        console.log("No generator.sufix set in config file");
         return false;
     }
 
@@ -126,12 +126,12 @@ function checkConfigFile() {
     return true;
 }
 
-function getAvaliadorUrl() {
+function getEvaluatorUrl() {
     let url;
 
-    /* Get avaliador.url */
+    /* Get evaluator.url */
     try {
-        url = config.get('avaliador.url');
+        url = config.get('evaluator.url');
     } catch (e) {
         return "";
     }
@@ -139,12 +139,12 @@ function getAvaliadorUrl() {
     return url;
 }
 
-function getAvaliadorsufix() {
+function getEvaluatorsufix() {
     let sufix;
 
-    /* Get avaliador.sufix */
+    /* Get evaluator.sufix */
     try {
-        sufix = config.get('avaliador.sufix');
+        sufix = config.get('evaluator.sufix');
     } catch (e) {
         return "";
     }
@@ -152,12 +152,12 @@ function getAvaliadorsufix() {
     return sufix;
 }
 
-function getDocumentoUrl() {
+function getGeneratorUrl() {
     let url;
 
-    /* Get documento.url */
+    /* Get generator.url */
     try {
-        url = config.get('documento.url');
+        url = config.get('generator.url');
     } catch (e) {
         return "";
     }
@@ -165,12 +165,12 @@ function getDocumentoUrl() {
     return url;
 }
 
-function getDocumentosufix() {
+function getGeneratorsufix() {
     let sufix;
 
-    /* Get documento.sufix */
+    /* Get generator.sufix */
     try {
-        sufix = config.get('documento.sufix');
+        sufix = config.get('generator.sufix');
     } catch (e) {
         return "";
     }
@@ -282,10 +282,10 @@ function getGitlabUrl() {
     return url;
 }
 
-module.exports.getAvaliadorUrl = getAvaliadorUrl;
-module.exports.getAvaliadorsufix = getAvaliadorsufix;
-module.exports.getDocumentoUrl = getDocumentoUrl;
-module.exports.getDocumentosufix = getDocumentosufix;
+module.exports.getEvaluatorUrl = getEvaluatorUrl;
+module.exports.getEvaluatorsufix = getEvaluatorsufix;
+module.exports.getGeneratorUrl = getGeneratorUrl;
+module.exports.getGeneratorsufix = getGeneratorsufix;
 module.exports.getCypressUrl = getCypressUrl;
 module.exports.getCypresssufix = getCypresssufix;
 module.exports.getPlaywrightUrl = getPlaywrightUrl;

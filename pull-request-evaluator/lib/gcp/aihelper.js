@@ -22,11 +22,11 @@
  * Author: Marcelo Parisi (parisim@google.com)
  */
 
-const configEnv = require('../config/env');
 const configFile = require('../config/file');
 const configPrompts = require('../config/prompts');
-const aiplatform = require('@google-cloud/aiplatform');
-
+const gcpAiPlatformText = require('../../lib/gcp/texthelper');
+const gcpAiPlatformChat = require('../../lib/gcp/chathelper');
+const gcpAiPlatformGemini = require('../../lib/gcp/geminihelper');
 
 /*
  * Builds a request with original file
@@ -49,87 +49,18 @@ async function diffRank(changeList) {
         myInput += actualFile.fileDiff;
         myInput += "\n########## FIM #########\n\n";
 
-
-        /* Config Parameters */
-        const project = configEnv.getProject();
-        const location = configFile.getCodeLocation();
         const model = configFile.getCodeModel();
-        const thistemperature = parseFloat(configFile.getCodeTemperature());
-        const thismaxtokens = parseFloat(configFile.getCodeMaxtokens());
-
-
-        /* AI Platform Client */
-        const { PredictionServiceClient } = aiplatform.v1;
-        const { helpers } = aiplatform;
-
-        /* GRPC Client Config */
-        const clientOptions = {
-            apiEndpoint: location + '-aiplatform.googleapis.com',
-            "grpc.keepalive_timeout_ms": parseInt(configFile.getCodeKeepaliveTimeout()),
-            "grpc.keepalive_time_ms": parseInt(configFile.getCodeKeepaliveTime()),
-            "grpc.enable_retries": parseInt(configFile.getCodeEnableRetries()),
-            "grpc.dns_min_time_between_resolutions_ms": parseInt(configFile.getCodeDnsTime()),
-            "grpc.initial_reconnect_backoff_ms": parseInt(configFile.getCodeInitialBackoff()),
-            "grpc.max_reconnect_backoff_ms": parseInt(configFile.getCodeMaxBackoff()),
-            "grpc.client_idle_timeout_ms": parseInt(configFile.getCodeIdleTimeout())
-        };
-
-        const publisher = 'google';
-
-        /* Setting up our VertexAI Client */
-        const predictionServiceClient = new PredictionServiceClient(clientOptions);
-        const endpoint = `projects/${project}/locations/${location}/publishers/${publisher}/models/${model}`;
         const myprompt = configPrompts.getDiffRank();
 
-        /* This is the prompt we're sending to Vertex AI */
-        const prompt = {
-            context: myprompt,
-
-            messages: [
-                {
-                    author: 'user',
-                    content: myInput,
-                },
-            ],
-        };
-        const instanceValue = helpers.toValue(prompt);
-        const instances = [instanceValue];
-
-        /* Vertex AI Model parameters */
-        const parameter = {
-            maxResponses: 1,
-            candidateCount: 1,
-            temperature: thistemperature,
-            maxOutputTokens: thismaxtokens,
-            topP: 1,
-            topK: 0,
-        };
-        const parameters = helpers.toValue(parameter);
-
-        /* Setting up our Request */
-        const request = {
-            endpoint,
-            instances,
-            parameters,
-        };
-
-        /* Setting Call Retry Options */
-        let predictOptions = {
-            retry: configFile.getGrpcRetry(),
-            maxRetries: parseInt(configFile.getGrpcMaxRetries()),
-            timeout: parseInt(configFile.getGrpcTimeout()),
-            retryRequestOptions: {
-                maxRetryDelay: 500000,
-                retries: parseInt(configFile.getGrpcMaxRetries()),
-                retryDelayMultiplier: 1000
-            }
-        };
-
-        /* Send Request to Vertex AI */
-        const response = await predictionServiceClient.predict(request, predictOptions);
-        if (response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue != "") {
-            myResponse += response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue.toString() + "  \n  \n";
+        if(model.includes("code-bison") || model.includes("text-bison")) {
+            myResponse += await gcpAiPlatformText.callPredictCode(myprompt, myInput);
+        } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
+            myResponse += await gcpAiPlatformChat.callPredictCode(myprompt, myInput);
+        } else if(model.includes("gemini")) {
+            myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
         }
+
+        myResponse += "  \n";
         myInput = "";
     }
     return myResponse;
@@ -156,80 +87,18 @@ async function diffSummary(changeList) {
         myInput += actualFile.fileDiff;
         myInput += "\n########## FIM #########\n\n";
 
-
-        /* Config Parameters */
-        const project = configEnv.getProject();
-        const location = configFile.getTextLocation();
         const model = configFile.getTextModel();
-        const thistemperature = parseFloat(configFile.getTextTemperature());
-        const thismaxtokens = parseFloat(configFile.getTextMaxtokens());
-
-
-        /* AI Platform Client */
-        const { PredictionServiceClient } = aiplatform.v1;
-        const { helpers } = aiplatform;
-
-        /* GRPC Client Config */
-        const clientOptions = {
-            apiEndpoint: location + '-aiplatform.googleapis.com',
-            "grpc.keepalive_timeout_ms": parseInt(configFile.getTextKeepaliveTimeout()),
-            "grpc.keepalive_time_ms": parseInt(configFile.getTextKeepaliveTime()),
-            "grpc.enable_retries": parseInt(configFile.getTextEnableRetries()),
-            "grpc.dns_min_time_between_resolutions_ms": parseInt(configFile.getTextDnsTime()),
-            "grpc.initial_reconnect_backoff_ms": parseInt(configFile.getTextInitialBackoff()),
-            "grpc.max_reconnect_backoff_ms": parseInt(configFile.getTextMaxBackoff()),
-            "grpc.client_idle_timeout_ms": parseInt(configFile.getTextIdleTimeout())
-        };
-
-        const publisher = 'google';
-
-        /* Setting up our VertexAI Client */
-        const predictionServiceClient = new PredictionServiceClient(clientOptions);
-        const endpoint = `projects/${project}/locations/${location}/publishers/${publisher}/models/${model}`;
         const myprompt = configPrompts.getDiffSummary();
 
-        /* This is the prompt we're sending to Vertex AI */
-        const prompt = {
-            prompt: myprompt + "\n" + myInput
-        };
+        if(model.includes("text-bison") || model.includes("code-bison")) {
+            myResponse += await gcpAiPlatformText.callPredictText(myprompt, myInput);
+        } else if(model.includes("chat-bison") || model.includes("codechat-bison")) {
+            myResponse += await gcpAiPlatformChat.callPredictText(myprompt, myInput);
+        } else if(model.includes("gemini")) {
+            myResponse += await gcpAiPlatformGemini.callPredictText(myprompt, myInput);
+        }
 
-        const instanceValue = helpers.toValue(prompt);
-        const instances = [instanceValue];
-
-        /* Vertex AI Model parameters */
-        const parameter = {
-            maxResponses: 1,
-            candidateCount: 1,
-            temperature: thistemperature,
-            maxOutputTokens: thismaxtokens,
-            topP: 1,
-            topK: 0,
-        };
-        const parameters = helpers.toValue(parameter);
-
-        /* Setting up our Request */
-        const request = {
-            endpoint,
-            instances,
-            parameters,
-        };
-
-        /* Setting Call Retry Options */
-        let predictOptions = {
-            retry: configFile.getGrpcRetry(),
-            maxRetries: parseInt(configFile.getGrpcMaxRetries()),
-            timeout: parseInt(configFile.getGrpcTimeout()),
-            retryRequestOptions: {
-                maxRetryDelay: 500000,
-                retries: parseInt(configFile.getGrpcMaxRetries()),
-                retryDelayMultiplier: 1000
-            }
-        };
-
-        /* Send Request to Vertex AI */
-        const response = await predictionServiceClient.predict(request, predictOptions);
-        myResponse += response[0].predictions[0].structValue.fields.content.stringValue + "  \n  \n";
-
+        myResponse += "  \n";
         myInput = "";
 
     }
@@ -244,6 +113,7 @@ async function diffSummary(changeList) {
 async function prSummary(changeList) {
 
     let myInput = "";
+    let response = "";
 
     for (const actualFile of changeList) {
         myInput += "arquivo: " + actualFile.fileName;
@@ -252,77 +122,18 @@ async function prSummary(changeList) {
         myInput += "\n########## FIM ##########\n\n";
     }
 
-    /* Config Parameters */
-    const project = configEnv.getProject();
-    const location = configFile.getTextLocation();
-    const model = configFile.getTextModel();
-    const thistemperature = parseFloat(configFile.getTextTemperature());
-    const thismaxtokens = parseFloat(configFile.getTextMaxtokens());
-
-
-    /* AI Platform Client */
-    const { PredictionServiceClient } = aiplatform.v1;
-    const { helpers } = aiplatform;
-
-    /* GRPC Client Config */
-    const clientOptions = {
-        apiEndpoint: location + '-aiplatform.googleapis.com',
-        "grpc.keepalive_timeout_ms": parseInt(configFile.getTextKeepaliveTimeout()),
-        "grpc.keepalive_time_ms": parseInt(configFile.getTextKeepaliveTime()),
-        "grpc.enable_retries": parseInt(configFile.getTextEnableRetries()),
-        "grpc.dns_min_time_between_resolutions_ms": parseInt(configFile.getTextDnsTime()),
-        "grpc.initial_reconnect_backoff_ms": parseInt(configFile.getTextInitialBackoff()),
-        "grpc.max_reconnect_backoff_ms": parseInt(configFile.getTextMaxBackoff()),
-        "grpc.client_idle_timeout_ms": parseInt(configFile.getTextIdleTimeout())
-    };
-
-    const publisher = 'google';
-
-    /* Setting up our VertexAI Client */
-    const predictionServiceClient = new PredictionServiceClient(clientOptions);
-    const endpoint = `projects/${project}/locations/${location}/publishers/${publisher}/models/${model}`;
+    const model = configFile.getCodeModel();
     const myprompt = configPrompts.getPrSummary();
 
-    /* This is the prompt we're sending to Vertex AI */
-    const prompt = {
-        prompt: myprompt + "\n" + myInput
-    };
-    const instanceValue = helpers.toValue(prompt);
-    const instances = [instanceValue];
-
-    /* Vertex AI Model parameters */
-    const parameter = {
-        maxResponses: 1,
-        candidateCount: 1,
-        temperature: thistemperature,
-        maxOutputTokens: thismaxtokens,
-        topP: 1,
-        topK: 0,
-    };
-    const parameters = helpers.toValue(parameter);
-
-    /* Setting up our Request */
-    const request = {
-        endpoint,
-        instances,
-        parameters,
-    };
-
-    /* Setting Call Retry Options */
-    let predictOptions = {
-        retry: configFile.getGrpcRetry(),
-        maxRetries: parseInt(configFile.getGrpcMaxRetries()),
-        timeout: parseInt(configFile.getGrpcTimeout()),
-        retryRequestOptions: {
-            maxRetryDelay: 500000,
-            retries: parseInt(configFile.getGrpcMaxRetries()),
-            retryDelayMultiplier: 1000
-        }
-    };
-
-    /* Send Request to Vertex AI */
-    const response = await predictionServiceClient.predict(request, predictOptions);
-    return response[0].predictions[0].structValue.fields.content.stringValue;
+    if(model.includes("code-bison") || model.includes("text-bison")) {
+        response = await gcpAiPlatformText.callPredictCode(myprompt, myInput);
+    } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
+        response = await gcpAiPlatformChat.callPredictCode(myprompt, myInput);
+    } else if(model.includes("gemini")) {
+        response = await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
+    }
+    
+    return response;
 }
 
 /*
@@ -341,87 +152,18 @@ async function fileSummary(changeList) {
         myInput += actualFile.newContent;
         myInput += "\n########## FIM #########\n\n";
 
-
-        /* Config Parameters */
-        const project = configEnv.getProject();
-        const location = configFile.getCodeLocation();
         const model = configFile.getCodeModel();
-        const thistemperature = parseFloat(configFile.getCodeTemperature());
-        const thismaxtokens = parseFloat(configFile.getCodeMaxtokens());
-
-
-        /* AI Platform Client */
-        const { PredictionServiceClient } = aiplatform.v1;
-        const { helpers } = aiplatform;
-
-        /* GRPC Client Config */
-        const clientOptions = {
-            apiEndpoint: location + '-aiplatform.googleapis.com',
-            "grpc.keepalive_timeout_ms": parseInt(configFile.getCodeKeepaliveTimeout()),
-            "grpc.keepalive_time_ms": parseInt(configFile.getCodeKeepaliveTime()),
-            "grpc.enable_retries": parseInt(configFile.getCodeEnableRetries()),
-            "grpc.dns_min_time_between_resolutions_ms": parseInt(configFile.getCodeDnsTime()),
-            "grpc.initial_reconnect_backoff_ms": parseInt(configFile.getCodeInitialBackoff()),
-            "grpc.max_reconnect_backoff_ms": parseInt(configFile.getCodeMaxBackoff()),
-            "grpc.client_idle_timeout_ms": parseInt(configFile.getCodeIdleTimeout())
-        };
-
-        const publisher = 'google';
-
-        /* Setting up our VertexAI Client */
-        const predictionServiceClient = new PredictionServiceClient(clientOptions);
-        const endpoint = `projects/${project}/locations/${location}/publishers/${publisher}/models/${model}`;
         const myprompt = configPrompts.getFileSummary();
 
-        /* This is the prompt we're sending to Vertex AI */
-        const prompt = {
-            context: myprompt,
-
-            messages: [
-                {
-                    author: 'user',
-                    content: myInput,
-                },
-            ],
-        };
-        const instanceValue = helpers.toValue(prompt);
-        const instances = [instanceValue];
-
-        /* Vertex AI Model parameters */
-        const parameter = {
-            maxResponses: 1,
-            candidateCount: 1,
-            temperature: thistemperature,
-            maxOutputTokens: thismaxtokens,
-            topP: 1,
-            topK: 0,
-        };
-        const parameters = helpers.toValue(parameter);
-
-        /* Setting up our Request */
-        const request = {
-            endpoint,
-            instances,
-            parameters,
-        };
-
-        /* Setting Call Retry Options */
-        let predictOptions = {
-            retry: configFile.getGrpcRetry(),
-            maxRetries: parseInt(configFile.getGrpcMaxRetries()),
-            timeout: parseInt(configFile.getGrpcTimeout()),
-            retryRequestOptions: {
-                maxRetryDelay: 500000,
-                retries: parseInt(configFile.getGrpcMaxRetries()),
-                retryDelayMultiplier: 1000
-            }
-        };
-
-        /* Send Request to Vertex AI */
-        const response = await predictionServiceClient.predict(request, predictOptions);
-        if (response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue != "") {
-            myResponse += response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue.toString() + "  \n  \n";
+        if(model.includes("code-bison") || model.includes("text-bison")) {
+            myResponse += await gcpAiPlatformText.callPredictCode(myprompt, myInput);
+        } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
+            myResponse += await gcpAiPlatformChat.callPredictCode(myprompt, myInput);
+        } else if(model.includes("gemini")) {
+            myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
         }
+        
+        myResponse += "  \n";
         myInput = "";
     }
     return myResponse;
@@ -443,87 +185,18 @@ async function filePerformance(changeList) {
         myInput += actualFile.newContent;
         myInput += "\n########## FIM #########\n\n";
 
-
-        /* Config Parameters */
-        const project = configEnv.getProject();
-        const location = configFile.getCodeLocation();
         const model = configFile.getCodeModel();
-        const thistemperature = parseFloat(configFile.getCodeTemperature());
-        const thismaxtokens = parseFloat(configFile.getCodeMaxtokens());
-
-
-        /* AI Platform Client */
-        const { PredictionServiceClient } = aiplatform.v1;
-        const { helpers } = aiplatform;
-
-        /* GRPC Client Config */
-        const clientOptions = {
-            apiEndpoint: location + '-aiplatform.googleapis.com',
-            "grpc.keepalive_timeout_ms": parseInt(configFile.getCodeKeepaliveTimeout()),
-            "grpc.keepalive_time_ms": parseInt(configFile.getCodeKeepaliveTime()),
-            "grpc.enable_retries": parseInt(configFile.getCodeEnableRetries()),
-            "grpc.dns_min_time_between_resolutions_ms": parseInt(configFile.getCodeDnsTime()),
-            "grpc.initial_reconnect_backoff_ms": parseInt(configFile.getCodeInitialBackoff()),
-            "grpc.max_reconnect_backoff_ms": parseInt(configFile.getCodeMaxBackoff()),
-            "grpc.client_idle_timeout_ms": parseInt(configFile.getCodeIdleTimeout())
-        };
-
-        const publisher = 'google';
-
-        /* Setting up our VertexAI Client */
-        const predictionServiceClient = new PredictionServiceClient(clientOptions);
-        const endpoint = `projects/${project}/locations/${location}/publishers/${publisher}/models/${model}`;
         const myprompt = configPrompts.getFilePerformance();
 
-        /* This is the prompt we're sending to Vertex AI */
-        const prompt = {
-            context: myprompt,
-
-            messages: [
-                {
-                    author: 'user',
-                    content: myInput,
-                },
-            ],
-        };
-        const instanceValue = helpers.toValue(prompt);
-        const instances = [instanceValue];
-
-        /* Vertex AI Model parameters */
-        const parameter = {
-            maxResponses: 1,
-            candidateCount: 1,
-            temperature: thistemperature,
-            maxOutputTokens: thismaxtokens,
-            topP: 1,
-            topK: 0,
-        };
-        const parameters = helpers.toValue(parameter);
-
-        /* Setting up our Request */
-        const request = {
-            endpoint,
-            instances,
-            parameters,
-        };
-
-        /* Setting Call Retry Options */
-        let predictOptions = {
-            retry: configFile.getGrpcRetry(),
-            maxRetries: parseInt(configFile.getGrpcMaxRetries()),
-            timeout: parseInt(configFile.getGrpcTimeout()),
-            retryRequestOptions: {
-                maxRetryDelay: 500000,
-                retries: parseInt(configFile.getGrpcMaxRetries()),
-                retryDelayMultiplier: 1000
-            }
-        };
-
-        /* Send Request to Vertex AI */
-        const response = await predictionServiceClient.predict(request, predictOptions);
-        if (response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue != "") {
-            myResponse += response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue.toString() + "  \n  \n";
+        if(model.includes("code-bison") || model.includes("text-bison")) {
+            myResponse += await gcpAiPlatformText.callPredictCode(myprompt, myInput);
+        } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
+            myResponse += await gcpAiPlatformChat.callPredictCode(myprompt, myInput);
+        } else if(model.includes("gemini")) {
+            myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
         }
+
+        myResponse += "  \n";
         myInput = "";
     }
     return myResponse;
@@ -545,87 +218,18 @@ async function fileSecurity(changeList) {
         myInput += actualFile.newContent;
         myInput += "\n########## FIM #########\n\n";
 
-
-        /* Config Parameters */
-        const project = configEnv.getProject();
-        const location = configFile.getCodeLocation();
         const model = configFile.getCodeModel();
-        const thistemperature = parseFloat(configFile.getCodeTemperature());
-        const thismaxtokens = parseFloat(configFile.getCodeMaxtokens());
-
-
-        /* AI Platform Client */
-        const { PredictionServiceClient } = aiplatform.v1;
-        const { helpers } = aiplatform;
-
-        /* GRPC Client Config */
-        const clientOptions = {
-            apiEndpoint: location + '-aiplatform.googleapis.com',
-            "grpc.keepalive_timeout_ms": parseInt(configFile.getCodeKeepaliveTimeout()),
-            "grpc.keepalive_time_ms": parseInt(configFile.getCodeKeepaliveTime()),
-            "grpc.enable_retries": parseInt(configFile.getCodeEnableRetries()),
-            "grpc.dns_min_time_between_resolutions_ms": parseInt(configFile.getCodeDnsTime()),
-            "grpc.initial_reconnect_backoff_ms": parseInt(configFile.getCodeInitialBackoff()),
-            "grpc.max_reconnect_backoff_ms": parseInt(configFile.getCodeMaxBackoff()),
-            "grpc.client_idle_timeout_ms": parseInt(configFile.getCodeIdleTimeout())
-        };
-
-        const publisher = 'google';
-
-        /* Setting up our VertexAI Client */
-        const predictionServiceClient = new PredictionServiceClient(clientOptions);
-        const endpoint = `projects/${project}/locations/${location}/publishers/${publisher}/models/${model}`;
         const myprompt = configPrompts.getFileSecurity();
 
-        /* This is the prompt we're sending to Vertex AI */
-        const prompt = {
-            context: myprompt,
-
-            messages: [
-                {
-                    author: 'user',
-                    content: myInput,
-                },
-            ],
-        };
-        const instanceValue = helpers.toValue(prompt);
-        const instances = [instanceValue];
-
-        /* Vertex AI Model parameters */
-        const parameter = {
-            maxResponses: 1,
-            candidateCount: 1,
-            temperature: thistemperature,
-            maxOutputTokens: thismaxtokens,
-            topP: 1,
-            topK: 0,
-        };
-        const parameters = helpers.toValue(parameter);
-
-        /* Setting up our Request */
-        const request = {
-            endpoint,
-            instances,
-            parameters,
-        };
-
-        /* Setting Call Retry Options */
-        let predictOptions = {
-            retry: configFile.getGrpcRetry(),
-            maxRetries: parseInt(configFile.getGrpcMaxRetries()),
-            timeout: parseInt(configFile.getGrpcTimeout()),
-            retryRequestOptions: {
-                maxRetryDelay: 500000,
-                retries: parseInt(configFile.getGrpcMaxRetries()),
-                retryDelayMultiplier: 1000
-            }
-        };
-
-        /* Send Request to Vertex AI */
-        const response = await predictionServiceClient.predict(request, predictOptions);
-        if (response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue != "") {
-            myResponse += response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue.toString() + "  \n  \n";
+        if(model.includes("code-bison") || model.includes("text-bison")) {
+            myResponse += await gcpAiPlatformText.callPredictCode(myprompt, myInput);
+        } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
+            myResponse += await gcpAiPlatformChat.callPredictCode(myprompt, myInput); 
+        } else if(model.includes("gemini")) {
+            myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
         }
+
+        myResponse += "  \n";
         myInput = "";
     }
     return myResponse;

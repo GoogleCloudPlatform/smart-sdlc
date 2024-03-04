@@ -40,6 +40,7 @@ async function callPredict(mycontent) {
     /* AI Platform Client */
     const { PredictionServiceClient } = aiplatform.v1;
     const { helpers } = aiplatform;
+
     /* Vertex Client Options */
     const clientOptions = {
         apiEndpoint: location + '-aiplatform.googleapis.com',

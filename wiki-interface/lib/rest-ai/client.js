@@ -28,7 +28,7 @@ const configFile = require('../../lib/config/file');
 /* call our API that uses chat-bison */
 async function generateDoc(content) {
     const aiApiKey = configEnv.getApikey();
-    const thisUrl = configFile.getDocumentoUrl();
+    const thisUrl = configFile.getGeneratorUrl();
 
     const requestOptions = {
         method: 'POST',
@@ -91,7 +91,7 @@ async function generatePlaywright(content) {
 /* call our API that uses chat-bison */
 async function generateEvaluation(content) {
     const aiApiKey = configEnv.getApikey();
-    const thisUrl = configFile.getAvaliadorUrl();
+    const thisUrl = configFile.getEvaluatorUrl();
 
     const requestOptions = {
         method: 'POST',

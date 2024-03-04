@@ -25,6 +25,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const process = require('node:process');
 const configEnv = require('./lib/config/env');
 const configHelper = require('./lib/config/file');
 const staticHelper = require('./lib/config/statics');

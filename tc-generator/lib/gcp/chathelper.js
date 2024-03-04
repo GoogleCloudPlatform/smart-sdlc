@@ -22,9 +22,9 @@
  * Author: Marcelo Parisi (parisim@google.com)
  */
 
-const configEnv = require('../../lib/config/env');
-const configFile = require('../../lib/config/file');
-const contextFile = require('../../lib/config/ctx');
+const configEnv = require('../config/env');
+const configFile = require('../config/file');
+const contextFile = require('../config/ctx');
 const aiplatform = require('@google-cloud/aiplatform');
 
 async function callPredict(mycontent) {

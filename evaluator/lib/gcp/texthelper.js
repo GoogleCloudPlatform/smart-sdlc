@@ -22,9 +22,9 @@
  * Author: Marcelo Parisi (parisim@google.com)
  */
 
-const configEnv = require('../../lib/config/env');
-const configFile = require('../../lib/config/file');
-const contextFile = require('../../lib/config/ctx');
+const configEnv = require('../config/env');
+const configFile = require('../config/file');
+const contextFile = require('../config/ctx');
 const aiplatform = require('@google-cloud/aiplatform');
 
 async function evaluateFormat(mycontent) {
@@ -60,18 +60,24 @@ async function evaluateFormat(mycontent) {
     const endpoint = `projects/${project}/locations/${location}/publishers/${publisher}/models/${model}`;
     const mycontext = contextFile.getFormat();
 
-    /* This is the prompt we're sending to Vertex AI */
-    const prompt = {
-        context: mycontext,
+    let instanceValue;
 
-        messages: [
-            {
-                author: 'user',
-                content: mycontent,
-            },
-        ],
-    };
-    const instanceValue = helpers.toValue(prompt);
+    /* Set instance according to model */
+    if(model.includes("code-bison")) {
+        /* This is the prefix we're sending to Vertex AI */
+        const prefix = {
+            prefix: mycontext + "\n" + mycontent
+        };
+
+        instanceValue = helpers.toValue(prefix);
+    } else {
+        /* This is the prompt we're sending to Vertex AI */
+        const prompt = {
+            prompt: mycontext + "\n" + mycontent
+        };
+
+        instanceValue = helpers.toValue(prompt);
+    }
     const instances = [instanceValue];
 
     /* Vertex AI Model parameters */
@@ -106,8 +112,8 @@ async function evaluateFormat(mycontent) {
 
     /* Send Request to Vertex AI */
     const response = await predictionServiceClient.predict(request, predictOptions);
-    if (response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue != "") {
-        return response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue.toString();
+    if (response[0].predictions[0].structValue.fields.content.stringValue != "") {
+        return response[0].predictions[0].structValue.fields.content.stringValue.toString();
     } else {
         return "";
     }
@@ -146,18 +152,23 @@ async function evaluateContent(mycontent) {
     const endpoint = `projects/${project}/locations/${location}/publishers/${publisher}/models/${model}`;
     const mycontext = contextFile.getContent();
 
-    /* This is the prompt we're sending to Vertex AI */
-    const prompt = {
-        context: mycontext,
+    let instanceValue;
 
-        messages: [
-            {
-                author: 'user',
-                content: mycontent,
-            },
-        ],
-    };
-    const instanceValue = helpers.toValue(prompt);
+    if(model.includes("code-bison")) {
+        /* This is the prefix we're sending to Vertex AI */
+        const prefix = {
+            prefix: mycontext + "\n" + mycontent
+        };
+
+        instanceValue = helpers.toValue(prefix);
+    } else {
+        /* This is the prompt we're sending to Vertex AI */
+        const prompt = {
+            prompt: mycontext + "\n" + mycontent
+        };
+
+        instanceValue = helpers.toValue(prompt);
+    }
     const instances = [instanceValue];
 
     /* Vertex AI Model parameters */
@@ -192,12 +203,11 @@ async function evaluateContent(mycontent) {
 
     /* Send Request to Vertex AI */
     const response = await predictionServiceClient.predict(request, predictOptions);
-    if (response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue != "") {
-        return response[0].predictions[0].structValue.fields.candidates.listValue.values[0].structValue.fields.content.stringValue.toString();
+    if (response[0].predictions[0].structValue.fields.content.stringValue != "") {
+        return response[0].predictions[0].structValue.fields.content.stringValue.toString();
     } else {
         return "";
     }
 }
-
-module.exports.evaluateFormat = evaluateFormat;
 module.exports.evaluateContent = evaluateContent;
+module.exports.evaluateFormat = evaluateFormat;

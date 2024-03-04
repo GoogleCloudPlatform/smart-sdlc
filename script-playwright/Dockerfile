@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ##
-# gerar-playright-script
+# script-playwright
 # Gerador de Script de Testes Playwright
 # Details: Dockerfile
 # 

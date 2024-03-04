@@ -2,10 +2,10 @@
 
 **REVIEW** the `config/default.yaml` file:
 ```
-avaliador:
+evaluator:
   url: https://evaluator-xxxxxxxxxxxxxxx.app/process
   sufix: "Eval"
-documento:
+generator:
   url: https://tc-generator-xxxxxxxxxxxxxxx.app/process
   sufix: "TestCase"
 cypress:

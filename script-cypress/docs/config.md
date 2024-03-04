@@ -40,6 +40,7 @@ Abaixo encontra-se um exemplo do arquivo de configuração:
 ```yaml
 aiplatform:
   location: us-central1
+  # codechat-bison-32k@002 / gemini-1.0-pro-001
   model: codechat-bison-32k@002
   temperature: 0.6
   maxtokens: 8192

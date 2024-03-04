@@ -57,6 +57,7 @@ Abaixo encontra-se um exemplo do arquivo de configuração:
 ```yaml
 aiplatform:
   location: us-central1
+  # chat-bison-32k@002 / text-bison-32k@002 / gemini-1.0-pro-001
   model: chat-bison-32k@002
   temperature: 0.2
   maxtokens: 8192

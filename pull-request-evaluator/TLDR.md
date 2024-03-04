@@ -4,6 +4,7 @@
 ```yaml
 aitext:
   location: us-central1
+  # text-bison-32k@002 / chat-bison-32k@002 / gemini-1.0-pro-001
   model: text-bison-32k@002
   temperature: 0.2
   maxtokens: 8192
@@ -16,6 +17,7 @@ aitext:
   client_idle_timeout_ms: 60000
 aicode:
   location: us-central1
+  # codechat-bison-32k@002 / code-bison-32k@002 / gemini-1.0-pro-001
   model: codechat-bison-32k@002
   temperature: 0.2
   maxtokens: 8192

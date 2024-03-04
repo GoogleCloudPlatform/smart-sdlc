@@ -24,6 +24,7 @@
 
 const morgan = require('morgan');
 const express = require('express');
+const process = require('node:process');
 const configEnv = require('./lib/config/env');
 const configFile = require('./lib/config/file');
 const obfuscatorMid = require('./lib/security/obfuscator');
@@ -93,7 +94,7 @@ app.get('/process/:model/:project/:page', async (req, res) => {
 
     /* figuring out which AI Api to call */
     if (aiModel == "document") {
-        let newPagePath = slug + "_" + configFile.getDocumentosufix();
+        let newPagePath = slug + "_" + configFile.getGeneratorsufix();
         let newPageContent = await aiOperator.generateDoc(pageContent);
         let newPageResult = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
         if (newPageResult) {
@@ -104,7 +105,7 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.send("Internal Error");
         }
     } else if (aiModel == "cypress") {
-        let newPagePath = slug.replace(configFile.getDocumentosufix(), configFile.getCypresssufix());
+        let newPagePath = slug.replace(configFile.getGeneratorsufix(), configFile.getCypresssufix());
         let newPageContent = await aiOperator.generateCypress(pageContent);
         let newPageResult = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
         if (newPageResult) {
@@ -115,7 +116,7 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.send("Internal Error");
         }
     } else if (aiModel == "playwright") {
-        let newPagePath = slug.replace(configFile.getDocumentosufix(), configFile.getPlaywrightsufix());
+        let newPagePath = slug.replace(configFile.getGeneratorsufix(), configFile.getPlaywrightsufix());
         let newPageContent = await aiOperator.generatePlaywright(pageContent);
         let newPageResult = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
         if (newPageResult) {
@@ -126,7 +127,7 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.send("Internal Error");
         }
     } else if (aiModel == "eval") {
-        let newPagePath = slug + "_" + configFile.getAvaliadorsufix();
+        let newPagePath = slug + "_" + configFile.getEvaluatorsufix();
         let newPageContent = await aiOperator.generateEvaluation(pageContent);
         let newPageComment = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
         if (newPageComment) {

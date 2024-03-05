@@ -123,6 +123,14 @@ function checkConfigFile() {
         return false;
     }
 
+    /* Check main.language */
+    try {
+        test = config.get('main.language');
+    } catch (e) {
+        console.log("No main.language set in config file");
+        return false;
+    }
+
     return true;
 }
 
@@ -282,6 +290,19 @@ function getGitlabUrl() {
     return url;
 }
 
+function getLanguage() {
+    let language;
+
+    /* Get main.language */
+    try {
+        language = config.get('main.language');
+    } catch (e) {
+        return "";
+    }
+
+    return language;
+}
+
 module.exports.getEvaluatorUrl = getEvaluatorUrl;
 module.exports.getEvaluatorsufix = getEvaluatorsufix;
 module.exports.getGeneratorUrl = getGeneratorUrl;
@@ -295,3 +316,4 @@ module.exports.getServerName = getServerName;
 module.exports.checkConfigFile = checkConfigFile;
 module.exports.getGitlabTimeout = getGitlabTimeout;
 module.exports.getGitlabUrl = getGitlabUrl;
+module.exports.getLanguage = getLanguage;

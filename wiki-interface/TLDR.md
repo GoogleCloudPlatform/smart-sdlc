@@ -19,6 +19,9 @@ gitlab:
   timeout: 60000
 logging:
   format: combined
+main:
+  # must match _xx on lib/html/functions.js
+  language: en 
 server:
   name: wiki-interface
 ```

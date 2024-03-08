@@ -94,14 +94,27 @@ async function evaluateFormat(mycontent) {
 
     /* Setting Call Retry Options */
     let predictOptions = {
-        retry: configFile.getGrpcRetry(),
+        retry: {
+            retryCodes: [
+                10, // 'ABORTED'
+                1,  // 'CANCELLED',
+                4,  // 'DEADLINE_EXCEEDED'
+                13, // 'INTERNAL'
+                8,  // 'RESOURCE_EXHAUSTED'
+                14, // 'UNAVAILABLE'
+                2,  // 'UNKNOWN'
+              ],
+            backoffSettings: {
+                initialRetryDelayMillis: 10000,
+                retryDelayMultiplier: 2,
+                maxRetryDelayMillis: 120000,
+                initialRpcTimeoutMillis: 20000,
+                maxRpcTimeoutMillis: 30000,
+                totalTimeoutMillis: 400000
+              }
+        },
         maxRetries: parseInt(configFile.getGrpcMaxRetries()),
         timeout: parseInt(configFile.getGrpcTimeout()),
-        retryRequestOptions: {
-            maxRetryDelay: 500000,
-            retries: parseInt(configFile.getGrpcMaxRetries()),
-            retryDelayMultiplier: 1000
-        }
     };
 
     /* Send Request to Vertex AI */
@@ -180,14 +193,27 @@ async function evaluateContent(mycontent) {
 
     /* Setting Call Retry Options */
     let predictOptions = {
-        retry: configFile.getGrpcRetry(),
+        retry: {
+            retryCodes: [
+                10, // 'ABORTED'
+                1,  // 'CANCELLED',
+                4,  // 'DEADLINE_EXCEEDED'
+                13, // 'INTERNAL'
+                8,  // 'RESOURCE_EXHAUSTED'
+                14, // 'UNAVAILABLE'
+                2,  // 'UNKNOWN'
+              ],
+            backoffSettings: {
+                initialRetryDelayMillis: 10000,
+                retryDelayMultiplier: 2,
+                maxRetryDelayMillis: 120000,
+                initialRpcTimeoutMillis: 20000,
+                maxRpcTimeoutMillis: 30000,
+                totalTimeoutMillis: 400000
+              }
+        },
         maxRetries: parseInt(configFile.getGrpcMaxRetries()),
         timeout: parseInt(configFile.getGrpcTimeout()),
-        retryRequestOptions: {
-            maxRetryDelay: 500000,
-            retries: parseInt(configFile.getGrpcMaxRetries()),
-            retryDelayMultiplier: 1000
-        }
     };
 
     /* Send Request to Vertex AI */

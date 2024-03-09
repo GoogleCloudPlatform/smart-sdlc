@@ -17,15 +17,16 @@
 /**
  * wiki-interface
  * Interface com Gitlab Wiki
- * Details: Convert list to options
+ * Details: HTML content
  * 
  * Author: Marcelo Parisi (parisim@google.com)
  */
 
+const fs = require('node:fs');
 const configFile = require('../../lib/config/file');
 
-/* build an HTML list from wiki list */
-function getHtmlOptions(wikiList) {
+/* build an HTML list for User Stories */
+function getHtmlUsOptions(wikiList) {
 
     let options = "";
 
@@ -39,7 +40,55 @@ function getHtmlOptions(wikiList) {
     });
 
     for(let thisWiki of wikiList) {
-        options += "<option value=\"" + thisWiki.slug + "\">" + thisWiki.title + "</option>\n";
+        if(!thisWiki.title.includes(configFile.getGeneratorsufix()) && !thisWiki.title.includes(configFile.getCypresssufix) && 
+           !thisWiki.title.includes(configFile.getPlaywrightsufix) && !thisWiki.title.includes(configFile.getEvaluatorsufix)) {
+            options += "<option value=\"" + thisWiki.slug + "\">" + thisWiki.title + "</option>\n";
+        }
+    }
+    return options;
+}
+
+/* build an HTML list for User Stories */
+function getHtmlTcOptions(wikiList) {
+
+    let options = "";
+
+    /* Sorting Data */
+    wikiList = wikiList.sort(function(a,b){
+        let x = a.title.toLowerCase();
+        let y = b.title.toLowerCase();
+        if(x>y){return 1;}
+        if(x<y){return -1;}
+        return 0;
+    });
+
+    for(let thisWiki of wikiList) {
+        if(!thisWiki.title.includes(configFile.getGeneratorsufix()) && !thisWiki.title.includes(configFile.getCypresssufix) && 
+           !thisWiki.title.includes(configFile.getPlaywrightsufix) && !thisWiki.title.includes(configFile.getEvaluatorsufix)) {
+            options += "<option value=\"" + thisWiki.slug + "\">" + thisWiki.title + "</option>\n";
+        }
+    }
+    return options;
+}
+
+/* build an HTML list for Test Cases */
+function getHtmlTsOptions(wikiList) {
+
+    let options = "";
+
+    /* Sorting Data */
+    wikiList = wikiList.sort(function(a,b){
+        let x = a.title.toLowerCase();
+        let y = b.title.toLowerCase();
+        if(x>y){return 1;}
+        if(x<y){return -1;}
+        return 0;
+    });
+
+    for(let thisWiki of wikiList) {
+        if(thisWiki.title.includes(configFile.getGeneratorsufix())) {
+            options += "<option value=\"" + thisWiki.slug + "\">" + thisWiki.title + "</option>\n";
+        }
     }
     return options;
 }
@@ -64,144 +113,35 @@ function generateRefreshPage(refreshUrl) {
 }
 
 /* build HTML form */
-function generateHtmlForm(projectId, myHtmlOptions) {
-    let myresponse_en = `
-         <!DOCTYPE html>
-         <html>
-         <head>
-         <meta http-equiv="cache-control" content="max-age=0; no-cache" />
-         <meta http-equiv="expires" content="0" />
-         <meta http-equiv="pragma" content="no-cache" />
-         <title>GenAI Dashboard</title>
-         <script>
-         function sendData() {
-             document.getElementById("inputdoc").disabled = true;
-             document.getElementById("aialgo").disabled = true;
-             document.getElementById("processar").disabled = true;
-             document.getElementById("reset").disabled = true;
-             document.getElementById("inputdata").style.display = "none";
-             document.getElementById("loading").style.display = "block";
-             window.location.href = "/process/" + document.getElementById('aialgo').value + "/" + document.getElementById('project').value + "/" + document.getElementById('inputdoc').value;
-         }
-         </script>
-         </head>
-         <body>
-         <br>
-         <h2>GenAI Dashboard</h2>
-         <h4>
-            <font color="red"><b>Warning:</b></font>&nbsp;For documents and scripts generator, the destination item must not exist in Wiki!<br />
-        </h4>
-         <div id="inputdata">
-             <br />
-             <input type="hidden" name="project" id="project" value="${projectId}" />
-         
-             <label for="inputdoc">Select Document:</label>
-             <select name="inputdoc" id="inputdoc">
-                 ${myHtmlOptions}
-             </select>
-             <br />
-             <br />
-             <label for="aialgo">Select Model</label>&nbsp;
-             <select name="aialgo" id="aialgo">
-             <option value="eval">&nbsp;&nbsp;Evaluate User Story&nbsp;&nbsp;&nbsp;&nbsp;</option>
-             <option value="document">&nbsp;&nbsp;Generate Test Case&nbsp;&nbsp;&nbsp;&nbsp;</option>
-             <option value="cypress">&nbsp;&nbsp;Generate Cypress Script&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-             <option value="playwright">&nbsp;&nbsp;Generate Playwright Script&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-             </select>
-             <br />
-             <br />
-             <button id="processar" onclick="sendData()">Process</button>
-             &nbsp;&nbsp;
-             <input type="reset" id="reset" name="reset" value="&nbsp;&nbsp;Reset&nbsp;&nbsp;">
-             <br />&nbsp;<br />
-             <a href="javascript:history.back()">Go Back</a>
-         </div>
-         <br />
-         <div id="loading" style="display: none">
-             <center>
-             <img src="/img/loading.gif" border="0" width="180" height="180"> <br />
-             </center>
-         </div>
-         <br />
-         </body>
-         </html>
-    `;
+function generateHtmlForm(projectId, wikiList) {
+    let usOptions = getHtmlUsOptions(wikiList);
+    let tcOptions = getHtmlTcOptions(wikiList);
+    let tsOptions = getHtmlTsOptions(wikiList);
 
-    let myresponse_br = `
-         <!DOCTYPE html>
-         <html>
-         <head>
-         <meta http-equiv="cache-control" content="max-age=0; no-cache" />
-         <meta http-equiv="expires" content="0" />
-         <meta http-equiv="pragma" content="no-cache" />
-         <title>GenAI Dashboard</title>
-         <script>
-         function sendData() {
-             document.getElementById("inputdoc").disabled = true;
-             document.getElementById("aialgo").disabled = true;
-             document.getElementById("processar").disabled = true;
-             document.getElementById("reset").disabled = true;
-             document.getElementById("inputdata").style.display = "none";
-             document.getElementById("loading").style.display = "block";
-             window.location.href = "/process/" + document.getElementById('aialgo').value + "/" + document.getElementById('project').value + "/" + document.getElementById('inputdoc').value;
-         }
-         </script>
-         </head>
-         <body>
-         <br>
-         <h2>GenAI Dashboard</h2>
-         <h4>
-            <font color="red"><b>Atenção:</b></font>&nbsp;Para os geradores de documento e script, o item de destino do Wiki não pode existir!<br />
-        </h4>
-         <div id="inputdata">
-             <br />
-             <input type="hidden" name="project" id="project" value="${projectId}" />
-         
-             <label for="inputdoc">Selecione o Documento:</label>
-             <select name="inputdoc" id="inputdoc">
-                 ${myHtmlOptions}
-             </select>
-             <br />
-             <br />
-             <label for="aialgo">Selecione o Modelo</label>&nbsp;
-             <select name="aialgo" id="aialgo">
-             <option value="eval">&nbsp;&nbsp;Avaliar Estória do Usuário&nbsp;&nbsp;&nbsp;&nbsp;</option>
-             <option value="document">&nbsp;&nbsp;Gerador de Casos de Testes&nbsp;&nbsp;&nbsp;&nbsp;</option>
-             <option value="cypress">&nbsp;&nbsp;Gerador de Script em Cypress&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-             <option value="playwright">&nbsp;&nbsp;Gerador de Script em Playwright&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-             </select>
-             <br />
-             <br />
-             <button id="processar" onclick="sendData()">Processar</button>
-             &nbsp;&nbsp;
-             <input type="reset" id="reset" name="reset" value="&nbsp;&nbsp;Limpar&nbsp;&nbsp;">
-             <br />&nbsp;<br />
-             <a href="javascript:history.back()">Voltar</a>
-         </div>
-         <br />
-         <div id="loading" style="display: none">
-             <center>
-             <img src="/img/loading.gif" border="0" width="180" height="180"> <br />
-             </center>
-         </div>
-         <br />
-         </body>
-         </html>
-    `;
+    let filename  = "templates/mainform_" + configFile.getLanguage() + ".html";
+    let mycontent = fs.readFileSync(filename, 'utf8');
 
-    let myresponse = "";
-    if(configFile.getLanguage() == "br") {
-        myresponse = myresponse_br;
-    } else if (configFile.getLanguage() == "en") {
-        myresponse = myresponse_en;
-    } else {
-        /* Default is english */
-        myresponse = myresponse_en;
-    }
+    mycontent = mycontent.replace("__PROJECT-ID__", projectId);
+    mycontent = mycontent.replace("__US-INPUT-DOCS__", usOptions);
+    mycontent = mycontent.replace("__TC-INPUT-DOCS__", tcOptions);
+    mycontent = mycontent.replace("__TS-INPUT-DOCS__", tsOptions);
 
-    return myresponse;
+    return mycontent;
 }
 
-module.exports.getHtmlOptions = getHtmlOptions;
+/* build rating page */
+function generateRatingPage(id, content, projectId, document) {
+    let filename  = "templates/ratingform_" + configFile.getLanguage() + ".html";
+    let mycontent = fs.readFileSync(filename, 'utf8');
+
+    mycontent = mycontent.replace("__PROJECT-ID__", projectId);
+    mycontent = mycontent.replace("__DOC-CONTENTS__", content);
+    mycontent = mycontent.replace("__DOCUMENT__", document);
+    mycontent = mycontent.replace("__TRANSACTION-ID__", id);
+
+    return mycontent;
+}
+
 module.exports.generateRefreshPage = generateRefreshPage;
 module.exports.generateHtmlForm = generateHtmlForm;
+module.exports.generateRatingPage = generateRatingPage;

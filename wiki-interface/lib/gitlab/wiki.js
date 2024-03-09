@@ -60,6 +60,18 @@ async function createWikiPage(projectId, name, body) {
     }
 }
 
+/* Delete a page */
+async function deleteWikiPage(projectId, name) {
+    let wk;
+    try {
+        wk = await gitlabClient.ProjectWikis.remove(projectId, name);
+        return wk;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+}
+
 /* Get Gitlab Project Id */
 async function getProjectUrl(projectId) {
     let url;
@@ -76,4 +88,5 @@ async function getProjectUrl(projectId) {
 module.exports.createWikiPage = createWikiPage;
 module.exports.listWiki = listWiki;
 module.exports.getWiki = getWiki;
+module.exports.deleteWikiPage = deleteWikiPage;
 module.exports.getProjectUrl = getProjectUrl;

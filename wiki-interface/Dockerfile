@@ -32,6 +32,9 @@ WORKDIR /app
 COPY config config/
 COPY lib lib/
 COPY img img/
+COPY static static/
+COPY templates templates/
+ADD https://md-block.verou.me/md-block.js static/
 COPY package.json .
 COPY index.js .
 

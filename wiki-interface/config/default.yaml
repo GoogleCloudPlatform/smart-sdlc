@@ -27,10 +27,12 @@ playwright:
 gitlab:
   url: http://XXX-XXX-XXX-XXX.nip.io
   timeout: 60000
+bigquery:
+  dataset: metrificator
+main:
+  # en / br : Must match _xx on templates
+  language: en
 logging:
   format: combined
-main:
-  # must match _xx on lib/html/functions.js
-  language: en 
 server:
   name: wiki-interface

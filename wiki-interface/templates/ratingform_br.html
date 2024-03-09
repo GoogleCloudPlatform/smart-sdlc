@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>    
+    <head>
+        <meta http-equiv="cache-control" content="max-age=0; no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>GenAI Dashboard: Rating</title>
+        <link href="/static/tabstyle.css" rel="stylesheet" />
+        <script src="/static/ratingform.js"></script>
+        <script type="module" src="/static/md-block.js"></script>
+    </head>    
+    <body>
+        <h2>GenAI Dashboard</h2>
+        <h4>
+            <font color="red"><b>Atenção:</b></font>&nbsp;Uma nota zero implica no descarte do documento!<br />
+        </h4>
+        <div class="tab"></div>
+        <div id="about" class="tabcontent active" style="display: block">
+            <md-block>
+                __DOC-CONTENTS__
+            </md-block>
+        </div>
+        <br />
+        <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+        <input type="hidden" name="document" id="document" value="__DOCUMENT__" />
+        <input type="hidden" name="id" id="id" value="__TRANSACTION-ID__" />
+        <br />
+        <label for="rating">Avalie o Resultado:</label>&nbsp;<br />
+        <label for="rating">0 &nbsp;</label><input type="range" id="rating" name="rating" min="0" max="5" default="0"><label for="rating">&nbsp; 5</label>
+        <br />
+        <br />
+        <button id="processar" onclick="sendRatingData()">Salvar Avaliação</button>
+        <br />&nbsp;<br />
+    </body>  
+</html> 

@@ -131,6 +131,14 @@ function checkConfigFile() {
         return false;
     }
 
+    /* Check bigquery.dataset */
+    try {
+        test = config.get('bigquery.dataset');
+    } catch (e) {
+        console.log("No bigquery.dataset set in config file");
+        return false;
+    }
+
     return true;
 }
 
@@ -303,6 +311,19 @@ function getLanguage() {
     return language;
 }
 
+function getDataset() {
+    let dataset;
+
+    /* Get bigquery.dataset */
+    try {
+        dataset = config.get('bigquery.dataset');
+    } catch (e) {
+        return "";
+    }
+
+    return dataset;
+}
+
 module.exports.getEvaluatorUrl = getEvaluatorUrl;
 module.exports.getEvaluatorsufix = getEvaluatorsufix;
 module.exports.getGeneratorUrl = getGeneratorUrl;
@@ -317,3 +338,4 @@ module.exports.checkConfigFile = checkConfigFile;
 module.exports.getGitlabTimeout = getGitlabTimeout;
 module.exports.getGitlabUrl = getGitlabUrl;
 module.exports.getLanguage = getLanguage;
+module.exports.getDataset = getDataset;

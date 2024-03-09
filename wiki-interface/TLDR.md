@@ -17,11 +17,13 @@ playwright:
 gitlab:
   url: http://XXX-XXX-XXX-XXX.nip.io
   timeout: 60000
+bigquery:
+  dataset: metrificator
+main:
+  # en / br : Must match _xx on templates
+  language: en
 logging:
   format: combined
-main:
-  # must match _xx on lib/html/functions.js
-  language: en 
 server:
   name: wiki-interface
 ```
@@ -31,7 +33,13 @@ Export project values:
 export MY_PROJECT_ID="gcp-project-id"
 export MY_PROJECT_NO="1234567890"
 export MY_LOCATION="southamerica-east1"
+export MY_DATASET_ID="metrificator"
 ``` 
+
+Set our project id:
+```bash
+gcloud config set project $MY_PROJECT_ID
+```
 
 Enable the following APIs: 
 ```bash
@@ -41,6 +49,7 @@ gcloud services enable cloudbuild.googleapis.com \
                        compute.googleapis.com \
                        artifactregistry.googleapis.com \
                        secretmanager.googleapis.com \
+                       bigquery.googleapis.com \
                        --project=$MY_PROJECT_ID
 ```
 
@@ -70,6 +79,28 @@ echo -n "a random generate 64 char string" | gcloud secrets versions add apikey 
 gcloud secrets add-iam-policy-binding apikey \
        --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \
        --role="roles/secretmanager.secretAccessor"
+```
+
+Create a BigQuery Dataset:
+```bash
+bq mk \
+   --location=$MY_LOCATION_ID \
+   --description="Dataset to hold AI Metrics and Ratings" \
+   --dataset $MY_PROJECT_ID:$MY_DATASET_ID 
+```
+
+Create a BigQuery Table:
+```bash
+cat metrificator.sql | envsubst > metrificator.$MY_PROJECT_ID.sql
+bq query --use_legacy_sql=false < metrificator.$MY_PROJECT_ID.sql
+```
+
+Grant BigQuery Permissions:
+```bash
+gcloud projects add-iam-policy-binding $MY_PROJECT_ID \
+       --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \
+       --role="roles/bigquery.dataOwner" \
+       --condition=None
 ```
 
 Grant a few IAM permissions:

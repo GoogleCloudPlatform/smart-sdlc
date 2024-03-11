@@ -90,7 +90,7 @@ app.get('/process/:model/:project/:page', async (req, res) => {
     let pageContent = await wikiOperator.getWiki(projectId, slug);
 
     /* figuring out which AI Api to call */
-    if (aiModel == "document") {
+    if (aiModel == "tc-generator") {
         let newPagePath = slug + "_" + configFile.getGeneratorsufix();
         let newPageContent = await aiOperator.generateDoc(pageContent);
         let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, newPagePath);
@@ -103,7 +103,7 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.statusCode = 500;
             res.send("Internal Error");
         }   
-    } else if (aiModel == "cypress") {
+    } else if (aiModel == "script-cypress") {
         let originalPath = slug.replace("_" + configFile.getGeneratorsufix(), "");
         let newPagePath = slug.replace(configFile.getGeneratorsufix(), configFile.getCypresssufix());
         let newPageContent = await aiOperator.generateCypress(pageContent);
@@ -117,7 +117,7 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.statusCode = 500;
             res.send("Internal Error");
         }
-    } else if (aiModel == "playwright") {
+    } else if (aiModel == "script-playwright") {
         let originalPath = slug.replace("_" + configFile.getGeneratorsufix(), "");
         let newPagePath = slug.replace(configFile.getGeneratorsufix(), configFile.getPlaywrightsufix());
         let newPageContent = await aiOperator.generatePlaywright(pageContent);
@@ -131,7 +131,7 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.statusCode = 500;
             res.send("Internal Error");
         }
-    } else if (aiModel == "eval") {
+    } else if (aiModel == "evaluator") {
         let newPagePath = slug + "_" + configFile.getEvaluatorsufix();
         let newPageContent = await aiOperator.generateEvaluation(pageContent);
         let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, newPagePath);
@@ -144,6 +144,9 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.statusCode = 500;
             res.send("Internal Error");
         }
+    } else if (aiModel == "us-generator") {
+        res.statusCode = 404;
+        res.send("Not found!");
     } else {
         res.statusCode = 400;
         res.send("Bad Request");

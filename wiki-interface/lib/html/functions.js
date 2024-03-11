@@ -40,8 +40,8 @@ function getHtmlUsOptions(wikiList) {
     });
 
     for(let thisWiki of wikiList) {
-        if(!thisWiki.title.includes(configFile.getGeneratorsufix()) && !thisWiki.title.includes(configFile.getCypresssufix) && 
-           !thisWiki.title.includes(configFile.getPlaywrightsufix) && !thisWiki.title.includes(configFile.getEvaluatorsufix)) {
+        if(!thisWiki.title.includes(configFile.getGeneratorsufix()) && !thisWiki.title.includes(configFile.getCypresssufix()) && 
+           !thisWiki.title.includes(configFile.getPlaywrightsufix()) && !thisWiki.title.includes(configFile.getEvaluatorsufix())) {
             options += "<option value=\"" + thisWiki.slug + "\">" + thisWiki.title + "</option>\n";
         }
     }
@@ -63,8 +63,8 @@ function getHtmlTcOptions(wikiList) {
     });
 
     for(let thisWiki of wikiList) {
-        if(!thisWiki.title.includes(configFile.getGeneratorsufix()) && !thisWiki.title.includes(configFile.getCypresssufix) && 
-           !thisWiki.title.includes(configFile.getPlaywrightsufix) && !thisWiki.title.includes(configFile.getEvaluatorsufix)) {
+        if(!thisWiki.title.includes(configFile.getGeneratorsufix()) && !thisWiki.title.includes(configFile.getCypresssufix()) && 
+           !thisWiki.title.includes(configFile.getPlaywrightsufix()) && !thisWiki.title.includes(configFile.getEvaluatorsufix())) {
             options += "<option value=\"" + thisWiki.slug + "\">" + thisWiki.title + "</option>\n";
         }
     }

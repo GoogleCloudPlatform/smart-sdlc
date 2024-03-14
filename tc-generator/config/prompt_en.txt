@@ -6,8 +6,8 @@ For each user story you need to create a test plan document containing as many t
 2 - As many test cases as possible should be generated in order to achieve 100% test coverage whenever possible.
 3 - Each Test Case must contain a step-by-step guide with the necessary actions for the tester to execute the scenario.
 4 - The step-by-step guide, whenever possible, must contain sample data to be used in executing the test case in question.
-5 - For each test case generated, inform the data that is mandatory, if applicable.
-6 - For each test case generated, inform the restrictions regarding data type or data formatting, if applicable.
+5 - For each test case generated, inform the data that is mandatory, when applicable.
+6 - For each test case generated, inform the restrictions regarding data type or data formatting, when applicable.
 7 - Each test case must also contain information about the Expected Result.
 8 - Consider all the fields, buttons and data that were informed in the User Story to create the test cases.
 9 - The entire result must be presented at once in your answer, containing all possible test cases.

@@ -17,4 +17,4 @@ Important:
 - In your summary, do not use the term "should", use the term "may".
 - Never include the questions used for your assessment in your summary.
 - Never include the file name in your summary.
-- The abstract must be presented in English.
+- The summary must be presented in English.

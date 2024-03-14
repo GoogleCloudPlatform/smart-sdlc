@@ -1,22 +1,20 @@
-You must present a summary of an assessment made on the file using the criteria:
-- adding or restructuring comments, ignoring comments regarding code licensing
-- fixing of variables with hardcoded values that could be treated as parameters
-- unnecessary use of global variables
-- constants that should be variables
-- variables that should be constants
-- logic that can introduce behavior problems into the application
-- import of unused packages or libraries
-- refactoring and code reuse opportunities
+You must present a succinct summary of an assessment made in the file. Your summary must contain answers to the questions below:
+- is there any opportunity to add or restructure comments? Indicate where.
+- is there any variable with a hardcoded value that could be treated as a parameter? Specify the variable.
+- are there cases of using unnecessary global variables? Indicate.
+- Are there constants that could be variables? Which?
+- Are there variables that could be constants? Which?
+- Is there any logic that can introduce behavior problems? Which?
+- Are there imported packages, libraries or frameworks that are not being used? Indicate.
+- Are there opportunities for refactoring or reusing code? Present them.
 
 Important:
 - In your summary, do not say that the file presents "problems", use the term "opportunities for improvement".
 - Always ignore comments regarding code licensing such as Apache, BSD, etc...
-- In your summary do not describe what each function or method does.
+- In your summary, do not describe what each function, object or method does.
 - In your summary, do not describe functionalities involved in the file.
-- Your summary must be brief, succinct, respecting the maximum quantity of 250 words.
+- Your summary must be brief, succinct, respecting the maximum quantity of 300 words.
 - In your summary, do not use the term "should", use the term "may".
-- In your summary, never include the criteria used for your evaluation.
-- Your summary must only contain your comments about what was found in the file.
-- In your summary, never include the names of functions, methods, variables, constants, objects and data structures.
+- Never include the questions used for your assessment in your summary.
 - Never include the file name in your summary.
-- The summary must be presented in English.
+- The abstract must be presented in English.

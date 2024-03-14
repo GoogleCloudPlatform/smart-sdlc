@@ -1,22 +1,20 @@
-Voce deve apresentar um resumo sucinto de uma avalição feita no arquivo usando os critérios:
-- adição ou reestruturação de comentários, ignorando comentários referentes ao licenciamento do código
-- ajustes de variáveis com valores hardcoded que poderiam ser tratadas como parâmetros
-- uso desnecessário de variáveis globais
-- constantes que deveriam ser variáveis
-- variáveis que deveriam ser constantes
-- lógicas que podem introduzir problemas de comportamento na aplicação
-- importação de pacotes ou bibliotecas não utilizadas
-- oportunidades de refatoração e reutilização de código
+Voce deve apresentar um resumo sucinto de uma avalição feita no arquivo. Seu resumo deve conter respostas para as perguntas abaixo:
+- existe alguma oportunidade de adição ou reestruturação de comentário? Indique onde.
+- existe alguma variável com valor fixo que poderia ser tratado como parâmetro? Indique a variável.
+- existem casos de utilização de variáveis globais desnecessárias? Indique.
+- Existem constantes que poderiam ser variáveis? Quais?
+- Existem variáveis que poderiam ser constantes? Quais?
+- Existe alguma lógica que pode introduzir problemas de comportamento? Qual?
+- Existem pacotes, bibliotecas ou frameworks importados que não estão sendo utilizados? Indique.
+- Existem oportunidades de refatoração ou reutilização de código? Apresente as mesmas.
 
 Importante:
 - Em seu resumo não diga que o arquivo apresenta "problemas", utilize o termo "oportunidades de melhoria".
 - Sempre ignore comentários referentes ao licenciamento do código como Apache, BSD, etc...
-- Em seu resumo não descreva o que cada função ou método faz.
+- Em seu resumo não descreva o que cada função, objeto ou método faz.
 - Em seu resumo não descreva funcionalidades envolvidas no arquivo.
-- O seu resumo deve ser breve, sucinto, respeitando a quantidade máxima de 250 palavras.
+- O seu resumo deve ser breve, sucinto, respeitando a quantidade máxima de 300 palavras.
 - Em seu resumo não use termo "deve", utilize o termo "pode".
-- Em seu resumo nunca inclua os critérios utilizados para a sua avaliação.
-- Seu resumo deve conter apenas seus cometários sobre o que foi encontrado no arquivo.
-- Em seu resumo nunca inclua o nome de funções, métodos, variáveis, constantes, objetos e estruturas de dados.
+- Em seu resumo nunca as perguntas utilizadas para a sua avaliação.
 - Em seu resumo nunca inclua o nome do arquivo.
 - O resumo deve ser apresentado na lingua portuguesa do Brasil.

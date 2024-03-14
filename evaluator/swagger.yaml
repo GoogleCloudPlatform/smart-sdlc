@@ -51,10 +51,10 @@ paths:
               
               **ID/Name:** #511  
               **As a:** restaurant customer  
-              **I want to:** reserva a table online  
+              **I want to:** reserve a table online  
               **So that:** I can ensure I have a place to eat at my preferred time
               
-              **1-Acceptance Crietria**
+              **1-Acceptance Criteria**
               - The system should let user select the date
               - The system should show available times for date selected
               - The system should let user reserve a table

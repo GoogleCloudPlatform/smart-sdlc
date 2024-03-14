@@ -21,8 +21,7 @@ As the diagram shows, the solution relies heavily on Google Cloud Run. There is 
 | script-playwright | Node.js Service that receives Test Case and returns a Test Script in Playwright     |
 | pull-request      | Node.js Service that receives Webhook calls from Gitlab/Github and evaluates change |
 
-Each of the described components is built into its own container. Details for each of them are provided in their respective folders.  
-Although the diagram shows **Vertex AI** all the components **already have builtin Gemini support**. Check config file for details.   
+Each of the described components is built into its own container. Details for each of them are provided in their respective folders.   
 There are two main integration points to Gitlab, the **wiki-interface** component and the **pull-request** component.  
 The **wiki-interface** component is basically some HTML Form + Javascript that reads the Wiki Page list from Gitlab, and writes back to Gitlab the results. If you wish to integrate to any other system, you can use this component as an starting point.  
 The **wiki-interface** is also responsible for storing document generation metrics as well as result rating to **BigQuery**.  
@@ -37,22 +36,22 @@ The proposed solution works with three different personas.
 * Business Analyst  
   Business Analyst writes user story and submits to Gitlab.  
   Business Analyst uses **wiki-integration** to execute an evaluation through **evaluator**.  
-  **evaluator** invokes **Vertex AI / Gemini** with our prompt to get the results.  
+  **evaluator** invokes **Vertex AI** with our prompt to get the results.  
   **wiki-integration** gets the result from **evaluator** and submits to **Gitlab Wiki**.
 
 * Test/QA Analyst  
   Test/QA Analyst reviews User Story document and submits to **tc-generator** using **wiki-integration**.
-  **tc-generator** uses Vertex AI / Gemini to generate a Test Case document.  
+  **tc-generator** uses Vertex AI to generate a Test Case document.  
   **wiki-integration** gets the results and submits to **Gitlab Wiki**.  
   Test/QA Analyst reviews Test Case document and using **wiki-integration** submits it to one of our **script** components.  
-  **script** component invokes **Vertex AI / Gemini** to generate a Test Script in Cypress or Playwright.  
+  **script** component invokes **Vertex AI** to generate a Test Script in Cypress or Playwright.  
   **wiki-integration** gets the result from **script** component and submits to **Gitlab Wiki**.  
   Test/QA Analyst reviews and adapts Test Script using **Duet AI** and saves final version.
 
 * Software Developer  
   Software Developer reviews User Story document and writes code with help of **Duet AI**.  
   Software Developer opens a Pull/Merge Request to **Gitlab**.  
-  **Gitlab** invokes our **Webhook** to evaluate the change proposed using **Vertex AI / Gemini**.  
+  **Gitlab** invokes our **Webhook** to evaluate the change proposed using **Vertex AI**.  
   **Webhook** comments back to the proposed review with change evaluation.  
 
 ## Gitlab

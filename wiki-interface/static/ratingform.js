@@ -28,3 +28,9 @@ function disableRating() {
     document.getElementById("processar").disabled = true;
     document.getElementById("rating").disabled = true;
 }
+
+/* show rating */
+function showRating() {
+    rating = document.getElementById('rating').value;
+    document.getElementById('ratevalue').innerHTML = rating.toString();
+}

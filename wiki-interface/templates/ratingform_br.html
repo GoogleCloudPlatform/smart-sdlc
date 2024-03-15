@@ -41,8 +41,8 @@
         <input type="hidden" name="document" id="document" value="__DOCUMENT__" />
         <input type="hidden" name="id" id="id" value="__TRANSACTION-ID__" />
         <br />
-        <label for="rating">Avalie o Resultado:</label>&nbsp;<br />
-        <label for="rating">0 &nbsp;</label><input type="range" id="rating" name="rating" min="0" max="5" default="0"><label for="rating">&nbsp; 5</label>
+        <label for="rating">Avalie o Resultado:</label>&nbsp;<label id="ratevalue" name="ratevalue">3</label><br /><br />
+        <label for="rating">0 &nbsp;</label><input type="range" id="rating" name="rating" min="0" max="5" onchange="showRating()"><label for="rating">&nbsp; 5</label>
         <br />
         <br />
         <button id="processar" onclick="sendRatingData()">Salvar Avaliação</button>

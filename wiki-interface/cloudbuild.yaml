@@ -57,6 +57,7 @@ steps:
         '--min-instances=1', '--max-instances=10',
         '--memory=2Gi','--cpu=2',
         '--no-cpu-throttling', '--cpu-boost',
+        '--timeout=900',
         '--allow-unauthenticated'
     ]
 

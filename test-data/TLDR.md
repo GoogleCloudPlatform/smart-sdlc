@@ -15,6 +15,7 @@ gcloud services enable cloudbuild.googleapis.com \
                        compute.googleapis.com \
                        artifactregistry.googleapis.com \
                        secretmanager.googleapis.com \
+                       aiplatform.googleapis.com \
                        --project=$MY_PROJECT_ID
 ```
 

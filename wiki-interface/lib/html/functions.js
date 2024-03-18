@@ -93,25 +93,6 @@ function getHtmlTsOptions(wikiList) {
     return options;
 }
 
-/* build refresh page */
-function generateRefreshPage(refreshUrl) {
-    let refreshContent = `
-         <!DOCTYPE html>
-         <html xmlns="http://www.w3.org/1999/xhtml">    
-         <head>
-             <meta http-equiv="cache-control" content="max-age=0; no-cache" />
-             <meta http-equiv="expires" content="0" />
-             <meta http-equiv="pragma" content="no-cache" />
-             <meta http-equiv="refresh" content="2;URL='${refreshUrl}'" />    
-         </head>    
-         <body>
-         </body>  
-         </html> 
-    `;
-
-    return refreshContent;
-}
-
 /* build HTML form */
 function generateHtmlForm(projectId, wikiList) {
     let usOptions = getHtmlUsOptions(wikiList);
@@ -121,10 +102,10 @@ function generateHtmlForm(projectId, wikiList) {
     let filename  = "templates/mainform_" + configFile.getLanguage() + ".html";
     let mycontent = fs.readFileSync(filename, 'utf8');
 
-    mycontent = mycontent.replace("__PROJECT-ID__", projectId);
-    mycontent = mycontent.replace("__US-INPUT-DOCS__", usOptions);
-    mycontent = mycontent.replace("__TC-INPUT-DOCS__", tcOptions);
-    mycontent = mycontent.replace("__TS-INPUT-DOCS__", tsOptions);
+    mycontent = mycontent.replaceAll("__PROJECT-ID__", projectId);
+    mycontent = mycontent.replaceAll("__US-INPUT-DOCS__", usOptions);
+    mycontent = mycontent.replaceAll("__TC-INPUT-DOCS__", tcOptions);
+    mycontent = mycontent.replaceAll("__TS-INPUT-DOCS__", tsOptions);
 
     return mycontent;
 }
@@ -134,14 +115,20 @@ function generateRatingPage(id, content, projectId, document) {
     let filename  = "templates/ratingform_" + configFile.getLanguage() + ".html";
     let mycontent = fs.readFileSync(filename, 'utf8');
 
-    mycontent = mycontent.replace("__PROJECT-ID__", projectId);
-    mycontent = mycontent.replace("__DOC-CONTENTS__", content);
-    mycontent = mycontent.replace("__DOCUMENT__", document);
-    mycontent = mycontent.replace("__TRANSACTION-ID__", id);
+    mycontent = mycontent.replaceAll("__PROJECT-ID__", projectId);
+    mycontent = mycontent.replaceAll("__DOCUMENT__", document);
+    mycontent = mycontent.replaceAll("__TRANSACTION-ID__", id);
+
+    if(document != "test-data") {
+        content = "<md-block>\n" + content + "</md-block>\n";
+    } else {
+        content = "<textarea rows=20 cols=150>\n" + content + "</textarea>\n";
+    }
+
+    mycontent = mycontent.replaceAll("__DOC-CONTENTS__", content);
 
     return mycontent;
 }
 
-module.exports.generateRefreshPage = generateRefreshPage;
 module.exports.generateHtmlForm = generateHtmlForm;
 module.exports.generateRatingPage = generateRatingPage;

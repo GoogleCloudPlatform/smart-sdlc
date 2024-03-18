@@ -13,110 +13,143 @@
   -- See the License for the specific language governing permissions and
   -- limitations under the License.
   -->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="cache-control" content="max-age=0; no-cache" />
-        <meta http-equiv="expires" content="0" />
-        <meta http-equiv="pragma" content="no-cache" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>GenAI Dashboard</title>
-        <link href="/static/tabstyle.css" rel="stylesheet" />
-        <script src="/static/mainform.js"></script>
-        <script src="/static/tabfunctions.js"></script>
-    </head>
-    <body>
-        <h2>GenAI Dashboard</h2>
-        <h4>
-            <font color="red"><b>Atenção:</b></font>&nbsp;Para os geradores de documento e script, o item de destino do Wiki não pode existir!<br />
-        </h4>
-
-        <div class="tab">
-            <button class="tablinks active" onclick="openTab(event, 'about')" id="btnabout">Sobre</button>
-            <button class="tablinks" onclick="openTab(event, 'usinputdata')" id="btnus">User Story</button>
-            <button class="tablinks" onclick="openTab(event, 'tcinputdata')" id="btntc">Test Case</button>
-            <button class="tablinks" onclick="openTab(event, 'tsinputdata') "id="btnts">Test Script</button>
-        </div>
-
-        <!-- ABOUT TAB -->
-        <div id="about" class="tabcontent active" style="display: block">
-            <h3>Sobre</h3>
-            <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
-            <br />
-            <p>Esta é a ferramenta Wiki Integration responsável por executar os Modelos de AI do GCP no conteúdo do Wiki.</p>
-            <p>Por favor, avalie as respostas obtidas, isto é importante.</p>
-        </div>
-
-        <!-- USER STORY TAB -->
-        <div id="usinputdata" class="tabcontent">
-            <h3>User Story</h3>
-            <br />
-                
-            <label for="usinputdoc">Selecione o Documento:</label>
-            <select name="usinputdoc" id="usinputdoc">
-                __US-INPUT-DOCS__
-            </select>
-            <br />
-            <br />
-            <label for="usalgo">Selecione o Modelo</label>&nbsp;
-            <select name="usalgo" id="usalgo">
-                <option value="evaluator">&nbsp;&nbsp;Avaliar User Story&nbsp;&nbsp;&nbsp;&nbsp;</option>
-            </select>
-            <br />
-            <br />
-            <button id="processar" onclick="sendUsData()">Processar</button>
-            <br />&nbsp;<br />
-        </div>
-
-        <!-- TEST CASE TAB -->
-        <div id="tcinputdata" class="tabcontent">
-            <h3>Test Case</h3>
-            <br />
-                
-            <label for="tcinputdoc">Selecione o Documento:</label>
-            <select name="tcinputdoc" id="tcinputdoc">
-                __TC-INPUT-DOCS__
-            </select>
-            <br />
-            <br />
-            <label for="tcalgo">Selecione o Modelo</label>&nbsp;
-            <select name="tcalgo" id="tcalgo">
-                <option value="tc-generator">&nbsp;&nbsp;Gerar Test Case&nbsp;&nbsp;&nbsp;&nbsp;</option>
-            </select>
-            <br />
-            <br />
-            <button id="processar" onclick="sendTcData()">Processar</button>
-            <br />&nbsp;<br />
-        </div>
-
-        <!-- TEST SCRIPTS TAB -->
-        <div id="tsinputdata" class="tabcontent">
-            <h3>Test Scripts</h3>
-            <br />
-                
-            <label for="tsinputdoc">Selecione o Documento:</label>
-            <select name="tsinputdoc" id="tsinputdoc">
-                __TS-INPUT-DOCS__
-            </select>
-            <br />
-            <br />
-            <label for="tsalgo">Selecione o Modelo</label>&nbsp;
-            <select name="tsalgo" id="tsalgo">
-                <option value="script-cypress">&nbsp;&nbsp;Cypress&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                <option value="script-playwright">&nbsp;&nbsp;Playwright&nbsp;&nbsp;&nbsp;&nbsp;</option>
-            </select>
-            <br />
-            <br />
-            <button id="processar" onclick="sendTsData()">Processar</button>
-            <br />&nbsp;<br />
-        </div>
-
-        <!-- LOADING -->
-        <div id="loading" class="tabcontent">
-            <center>
-                <img src="/img/loading.gif" border="0" width="180" height="180"> <br />
-            </center>
-        </div>
-    
-    </body>
-</html> 
+  <!DOCTYPE html>
+  <html>
+      <head>
+          <meta http-equiv="cache-control" content="max-age=0; no-cache" />
+          <meta http-equiv="expires" content="0" />
+          <meta http-equiv="pragma" content="no-cache" />
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>GenAI Dashboard</title>
+          <link href="/static/tabstyle.css" rel="stylesheet" />
+          <script src="/static/mainform.js"></script>
+          <script src="/static/tabfunctions.js"></script>
+      </head>
+      <body>
+          <h2>GenAI Dashboard</h2>
+          <h4>
+              <font color="red"><b>Atenção:</b></font>&nbsp;Para os geradores de documento e script, o item de destino do Wiki não pode existir!<br />
+          </h4>
+  
+          <div class="tab">
+              <button class="tablinks active" onclick="openTab(event, 'about')" id="btnabout">Sobre</button>
+              <button class="tablinks" onclick="openTab(event, 'usinputdata')" id="btnus">User Story</button>
+              <button class="tablinks" onclick="openTab(event, 'tcinputdata')" id="btntc">Test Case</button>
+              <button class="tablinks" onclick="openTab(event, 'tsinputdata') "id="btnts">Test Script</button>
+              <button class="tablinks" onclick="openTab(event, 'datasample') "id="btntd">Massa de Dados</button>
+          </div>
+  
+          <!-- ABOUT TAB -->
+          <div id="about" class="tabcontent active" style="display: block">
+              <h3>Sobre</h3>
+              <br />
+              <p>Esta é a ferramenta Wiki Integration responsável por executar os Modelos de AI do GCP no conteúdo do Wiki.</p>
+              <p>Por favor, avalie as respostas obtidas, isto é importante.</p>
+          </div>
+  
+          <!-- USER STORY TAB -->
+          <div id="usinputdata" class="tabcontent">
+              <h3>User Story</h3>
+              <br />
+                  <!-- FORM -->
+                  <form method="POST" name="usform" id="usform" action="/process">
+                      <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+                      <label for="inputdoc">Selecione o Documento:</label>
+                      <select name="inputdoc" id="inputdoc">
+                          __US-INPUT-DOCS__
+                      </select>
+                      <br />
+                      <br />
+                      <label for="model">Selecione o Modelo</label>&nbsp;
+                      <select name="model" id="model">
+                          <option value="evaluator">&nbsp;&nbsp;Avaliar User Story&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                      </select>
+                      <br />
+                      <br />
+                      <button id="processar" onclick="sendUsData()">Processar</button>
+                  </form>
+              <br />&nbsp;<br />
+          </div>
+  
+          <!-- TEST CASE TAB -->
+          <div id="tcinputdata" class="tabcontent">
+              <h3>Test Case</h3>
+              <br />
+                  <!-- FORM -->
+                  <form method="POST" name="tcform" id="tcform" action="/process">
+                      <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+                      <label for="inputdoc">Selecione o Documento:</label>
+                      <select name="inputdoc" id="inputdoc">
+                          __TC-INPUT-DOCS__
+                      </select>
+                      <br />
+                      <br />
+                      <label for="model">Selecione o Modelo</label>&nbsp;
+                      <select name="model" id="model">
+                          <option value="tc-generator">&nbsp;&nbsp;Gerar Test Case&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                      </select>
+                      <br />
+                      <br />
+                      <button id="processar" onclick="sendTcData()">Processar</button>
+                  </form>
+              <br />&nbsp;<br />
+          </div>
+  
+          <!-- TEST SCRIPTS TAB -->
+          <div id="tsinputdata" class="tabcontent">
+              <h3>Test Scripts</h3>
+              <br />
+                  <!-- FORM -->
+                  <form method="POST" name="tsform" id="tsform" action="/process">
+                      <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+                      <label for="inputdoc">Selecione o Documento:</label>
+                      <select name="inputdoc" id="inputdoc">
+                          __TS-INPUT-DOCS__
+                      </select>
+                      <br />
+                      <br />
+                      <label for="model">Selecione o Modelo</label>&nbsp;
+                      <select name="model" id="model">
+                          <option value="script-cypress">&nbsp;&nbsp;Cypress&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                          <option value="script-playwright">&nbsp;&nbsp;Playwright&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                      </select>
+                      <br />
+                      <br />
+                      <button id="processar" onclick="sendTsData()">Processar</button>
+                  </form>
+              <br />&nbsp;<br />
+          </div>
+  
+          <!-- TEST DATA TAB -->
+          <div id="datasample" class="tabcontent">
+              <h3>Massa de Dados</h3>
+              <i>A entrada deve ser no formato CSV. A primeira linha deve conter o nome dos campos, e a segunda linha um exemplo de dados.</i>
+              <br /><br />
+                  <!-- FORM -->
+                  <form method="POST" name="tdform" id="tdform" action="/process">
+                      <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+                      <input type="hidden" name="model" id="model" value="testdata" />
+                      <label for="inputdoc">Entre com o CSV:</label><br />
+                      <textarea id="inputdoc" name="inputdoc" rows="4" cols="150">
+  nome,sobrenome,email,senha,endereco,cep,cpf
+  "Joao","Silva","joao.silva@email.com.br","S3nh@P4ssw0rd","Rua das Flores, 123","01234-567"</textarea>
+                      <br />
+                      <br />
+                      <label for="datasampleqty">Quantidade: &nbsp;</label><input type="range" id="datasampleqty" name="datasampleqty" min="0" max="80" onchange="showQty()" onclick="showQtd()">&nbsp;<label for="datasampleqty" id="sampleqty">40</label>
+                      <br />
+                      <br />
+                      <button id="processar" onclick="sendSampleData()">Gerar</button>
+                  </form>
+              <br />&nbsp;<br />
+          </div>
+  
+          <!-- LOADING -->
+          <div id="loading" class="tabcontent">
+              <center>
+                  <img src="/img/loading.gif" border="0" width="180" height="180"> <br />
+              </center>
+          </div>
+      
+      </body>
+  </html> 
+  

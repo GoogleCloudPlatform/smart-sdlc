@@ -24,6 +24,8 @@ cypress:
 playwright:
   url: https://script-playwright-xxxxxxxxxxxxxxx.app/process
   sufix: "TS_Playwright"
+data:
+  url: https://test-data-xxxxxxxxxxxxxxx.app/process
 gitlab:
   url: http://XXX-XXX-XXX-XXX.nip.io
   timeout: 60000

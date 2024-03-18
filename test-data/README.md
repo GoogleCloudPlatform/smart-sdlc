@@ -4,6 +4,9 @@ App/Service in NodeJS + Express to generate Test Data from a data sample.
 This application is designed to run in Docker on **Google Cloud Run**.  
 Google Cloud's **Vertex AI** is used in the implementation.
 
+**WARNING**  
+**PII**: Testing data model may not generate valid PII data like SSN. (Sometimes it may even fail to generate any data at all, even invalid ones).
+
 ## TLDR
 For those in a rush, head to [TLDR.md](TLDR.md) file.
 

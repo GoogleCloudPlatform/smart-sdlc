@@ -4,6 +4,9 @@ This repository provides a tool set and a deployment guide showcasing the usage 
 This repository is organized in subprojects, each of them with its own detailed documentation on the setup and deployment.  
 Prompts for each of the components are provided in English and Brazilian Portuguese, and may be customized as needed.
 
+**WARNING**  
+**PII**: Testing data model may not generate valid PII data like SSN. (Sometimes it may even fail to generate any data at all, even invalid ones).
+
 ## Architecture
 
 The organization of the components on the platform is detailed below:  

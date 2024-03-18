@@ -27,9 +27,9 @@ const envHelper = require('../config/env');
 
 /* sign received payload to compare */
 function signPayload(data) {
-    const buffer = Buffer.from(data, 'utf8')
+    const buffer = Buffer.from(data, 'utf8');
     let secret = envHelper.getWebhookSecret();
-    return 'sha1=' + crypto.createHmac('sha1', secret).update(buffer).digest('hex')
+    return 'sha1=' + crypto.createHmac('sha1', secret).update(buffer).digest('hex');
 }
 
 module.exports.signPayload = signPayload;

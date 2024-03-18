@@ -148,3 +148,4 @@ gcloud builds submit . --config=./cloudbuild.yaml --region=$MY_LOCATION --projec
 
 Point your Git Webhook call to the **Cloud Run** URL `/webhook`.  
 Don´t forget that you need to use the same **WEBHOOK SECRET** otherwise the call will not be authorized.
+The **Content type** should be set to **application/json** for the webhook call.

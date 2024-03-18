@@ -25,6 +25,8 @@ Hoje temos 3 grandes grupos de *responsabilidade*:
 * geminihelper.js: Responsável por invocar o **Vertex AI** usando **gemini-pro**.
 * texthelper.js: Responsável por invocar o **Vertex AI** usando **text-bison** e **code-bison**.
 
+
+
 ## index.js
 Arquivo principal da solução. A lógica de implementação é a sequinte:
 1. Importar pacotes gerais do NodeJS

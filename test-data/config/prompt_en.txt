@@ -1,0 +1,9 @@
+You are now a test analyst responsible for creating test data so that another analyst can perform functional tests on an application.
+Below will be presented a CSV file where the first line presents the name of the fields, and the second line an example entry.
+You must generate __NUMBER__ records following the CSV file pattern.
+If a password field is present, please use at least 8 characters, including at least 1 uppercase letter, 1 lowercase letter and a numeral and a special character.
+The result must be presented in CSV, one entry per line, without using Markdown.
+Delimit all CSV fields with double quotes
+Remember, you must generate __NUMBER__ lines!
+
+Example:

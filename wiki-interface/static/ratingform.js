@@ -16,17 +16,13 @@
 
 /* Send rating data */
 function sendRatingData() {
-
     disableRating();
-
-    window.location.href = "/rate/" + document.getElementById('project').value + "/" + document.getElementById('document').value + "/" + document.getElementById('id').value + "/" + document.getElementById('rating').value;
-
+    document.getElementById('ratingform').submit();
 }
 
 /* disable form */
 function disableRating() {
     document.getElementById("processar").disabled = true;
-    document.getElementById("rating").disabled = true;
 }
 
 /* show rating */

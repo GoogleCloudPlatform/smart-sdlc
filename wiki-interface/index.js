@@ -25,6 +25,7 @@
 const morgan = require('morgan');
 const express = require('express');
 const process = require('node:process');
+const bodyParser = require('body-parser');
 const configEnv = require('./lib/config/env');
 const configFile = require('./lib/config/file');
 const obfuscatorMid = require('./lib/security/obfuscator');
@@ -58,6 +59,10 @@ app.use(morgan(configFile.getLogFormat()));
 app.use(obfuscatorMid);
 app.use(authorizerMid);
 
+/* Body Parser */
+app.use('/process', bodyParser.urlencoded({ extended: true }));
+app.use('/rate', bodyParser.urlencoded({ extended: true }));
+
 /* Our Static Content */
 app.use('/img', express.static('img'));
 app.use('/static', express.static('static'));
@@ -78,19 +83,18 @@ app.get('/webui/:project', async (req, res) => {
     res.send(myresponse);
 });
 
-app.get('/process/:model/:project/:page', async (req, res) => {
+/* Process the main form */
+app.post('/process', async (req, res) => {
 
-    /* Getting request parameters */
-    let aiModel = req.params.model;
-    let projectId = req.params.project;
-    let slug = req.params.page;
+    /* Getting POST parameters */
+    let aiModel = req.body.model;
+    let projectId = req.body.project;
     let transactionId = uuidv4();
-
-    /* Loading dta from Wiki */
-    let pageContent = await wikiOperator.getWiki(projectId, slug);
 
     /* figuring out which AI Api to call */
     if (aiModel == "tc-generator") {
+        let slug = req.body.inputdoc;
+        let pageContent = await wikiOperator.getWiki(projectId, slug);
         let newPagePath = slug + "_" + configFile.getGeneratorsufix();
         let newPageContent = await aiOperator.generateDoc(pageContent);
         let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, newPagePath);
@@ -104,6 +108,8 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.send("Internal Error");
         }   
     } else if (aiModel == "script-cypress") {
+        let slug = req.body.inputdoc;
+        let pageContent = await wikiOperator.getWiki(projectId, slug);
         let originalPath = slug.replace("_" + configFile.getGeneratorsufix(), "");
         let newPagePath = slug.replace(configFile.getGeneratorsufix(), configFile.getCypresssufix());
         let newPageContent = await aiOperator.generateCypress(pageContent);
@@ -118,6 +124,8 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.send("Internal Error");
         }
     } else if (aiModel == "script-playwright") {
+        let slug = req.body.inputdoc;
+        let pageContent = await wikiOperator.getWiki(projectId, slug);
         let originalPath = slug.replace("_" + configFile.getGeneratorsufix(), "");
         let newPagePath = slug.replace(configFile.getGeneratorsufix(), configFile.getPlaywrightsufix());
         let newPageContent = await aiOperator.generatePlaywright(pageContent);
@@ -132,12 +140,28 @@ app.get('/process/:model/:project/:page', async (req, res) => {
             res.send("Internal Error");
         }
     } else if (aiModel == "evaluator") {
+        let slug = req.body.inputdoc;
+        let pageContent = await wikiOperator.getWiki(projectId, slug);
         let newPagePath = slug + "_" + configFile.getEvaluatorsufix();
         let newPageContent = await aiOperator.generateEvaluation(pageContent);
         let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, newPagePath);
         let newPageResult = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
         if (newPageResult) {
             await metricOperator.insertMetric(transactionId, projectId, slug, newPagePath, aiModel);
+            res.header("Content-Type", "text/html");
+            res.send(ratingContent);
+        } else {
+            console.log(newPageResult);
+            res.statusCode = 500;
+            res.send("Internal Error");
+        }
+    } else if (aiModel == "testdata") {
+        let pageContent = req.body.inputdoc;
+        let qty = req.body.datasampleqty;
+        let newPageContent = await aiOperator.generateTestData(pageContent, qty);
+        let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, "test-data");
+        if (newPageContent) {
+            await metricOperator.insertMetric(transactionId, projectId, "test-data", "test-data", "test-data");
             res.header("Content-Type", "text/html");
             res.send(ratingContent);
         } else {
@@ -153,29 +177,26 @@ app.get('/process/:model/:project/:page', async (req, res) => {
     }
 });
 
-app.get('/rate/:project/:document/:id/:rating', async (req, res) => {
+app.post('/rate', async (req, res) => {
 
     /* Getting request parameters */
-    let projectId = req.params.project;
-    let document = req.params.document;
-    let transactionId = req.params.id;
-    let rating = req.params.rating;
+    let projectId = req.body.project;
+    let document = req.body.document;
+    let transactionId = req.body.id;
+    let rating = req.body.rating;
 
     await metricOperator.insertRating(transactionId, parseInt(rating));
 
     /* if rate is 0 delete page */
-    if(rating == 0 || rating == "0") {
+    if((rating == 0 || rating == "0") && document != "test-data") {
         _ = await wikiOperator.deleteWikiPage(projectId, document);
     }
 
     /* Refresh URL formation */
     let refreshUrl = await wikiOperator.getProjectUrl(projectId);
 
-    /* Response Content */
-    let refreshContent = htmlFunctions.generateRefreshPage(refreshUrl);
+    res.redirect(refreshUrl);
 
-    res.header("Content-Type", "text/html");
-    res.send(refreshContent);
 });
 
 /* Starting Application */

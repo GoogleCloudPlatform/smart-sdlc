@@ -91,6 +91,14 @@ function checkConfigFile() {
         return false;
     }
 
+    /* Check data.url */
+    try {
+        test = config.get('data.url');
+    } catch (e) {
+        console.log("No data.url set in config file");
+        return false;
+    }
+
     /* Check logging.format */
     try {
         test = config.get('logging.format');
@@ -246,6 +254,19 @@ function getPlaywrightsufix() {
     return sufix;
 }
 
+function getDataUrl() {
+    let url;
+
+    /* Get data.url */
+    try {
+        url = config.get('data.url');
+    } catch (e) {
+        return "";
+    }
+
+    return url;
+}
+
 function getLogFormat() {
     let logformat;
 
@@ -332,6 +353,7 @@ module.exports.getCypressUrl = getCypressUrl;
 module.exports.getCypresssufix = getCypresssufix;
 module.exports.getPlaywrightUrl = getPlaywrightUrl;
 module.exports.getPlaywrightsufix = getPlaywrightsufix;
+module.exports.getDataUrl = getDataUrl;
 module.exports.getLogFormat = getLogFormat;
 module.exports.getServerName = getServerName;
 module.exports.checkConfigFile = checkConfigFile;

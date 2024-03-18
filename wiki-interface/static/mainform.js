@@ -16,35 +16,34 @@
 
 /* User Story Call */
 function sendUsData() {
-
     disableAll();
     document.getElementById("usinputdata").style.display = "none";
     document.getElementById("loading").style.display = "block";
-
-    window.location.href = "/process/" + document.getElementById('usalgo').value + "/" + document.getElementById('project').value + "/" + document.getElementById('usinputdoc').value;
-
+    document.getElementById('usform').submit();
 }
 
 /* Test Case Call */
 function sendTcData() {
-
     disableAll();
     document.getElementById("tcinputdata").style.display = "none";
     document.getElementById("loading").style.display = "block";
-
-    window.location.href = "/process/" + document.getElementById('tcalgo').value + "/" + document.getElementById('project').value + "/" + document.getElementById('tcinputdoc').value;
-
+    document.getElementById('tcform').submit();
 }
 
 /* Test Script Call */
 function sendTsData() {
-
     disableAll();
     document.getElementById("tsinputdata").style.display = "none";
     document.getElementById("loading").style.display = "block";
+    document.getElementById('tsform').submit();
+}
 
-    window.location.href = "/process/" + document.getElementById('tsalgo').value + "/" + document.getElementById('project').value + "/" + document.getElementById('tsinputdoc').value;
-
+/* Test Data Call */
+function sendSampleData() {
+    disableAll();
+    document.getElementById("datasample").style.display = "none";
+    document.getElementById("loading").style.display = "block";
+    document.getElementById('tdform').submit();
 }
 
 /* disable form */
@@ -53,4 +52,11 @@ function disableAll() {
     document.getElementById("btnus").disabled = true;
     document.getElementById("btntc").disabled = true;
     document.getElementById("btnts").disabled = true;
+    document.getElementById("btntd").disabled = true;
+}
+
+/* sample qty */
+function showQtd() {
+    rating = document.getElementById('datasampleqty').value;
+    document.getElementById('sampleqty').innerHTML = rating.toString();
 }

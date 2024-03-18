@@ -13,110 +13,143 @@
   -- See the License for the specific language governing permissions and
   -- limitations under the License.
   -->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="cache-control" content="max-age=0; no-cache" />
-        <meta http-equiv="expires" content="0" />
-        <meta http-equiv="pragma" content="no-cache" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>GenAI Dashboard</title>
-        <link href="/static/tabstyle.css" rel="stylesheet" />
-        <script src="/static/mainform.js"></script>
-        <script src="/static/tabfunctions.js"></script>
-    </head>
-    <body>
-        <h2>GenAI Dashboard</h2>
-        <h4>
-            <font color="red"><b>Warning:</b></font>&nbsp;For documents and scripts generator, the destination item must not exist in Wiki!<br />
-        </h4>
-
-        <div class="tab">
-            <button class="tablinks active" onclick="openTab(event, 'about')" id="btnabout">About</button>
-            <button class="tablinks" onclick="openTab(event, 'usinputdata')" id="btnus">User Story</button>
-            <button class="tablinks" onclick="openTab(event, 'tcinputdata')" id="btntc">Test Case</button>
-            <button class="tablinks" onclick="openTab(event, 'tsinputdata') "id="btnts">Test Script</button>
-        </div>
-
-        <!-- ABOUT TAB -->
-        <div id="about" class="tabcontent active" style="display: block">
-            <h3>About</h3>
-            <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
-            <br />
-            <p>This is a Wiki Integration tool to run GCP AI Models on the Wiki Contents.</p>
-            <p>Please, make sure you rate the answer you got, this is very important.</p>
-        </div>
-
-        <!-- USER STORY TAB -->
-        <div id="usinputdata" class="tabcontent">
-            <h3>User Story</h3>
-            <br />
-                
-            <label for="usinputdoc">Select Document:</label>
-            <select name="usinputdoc" id="usinputdoc">
-                __US-INPUT-DOCS__
-            </select>
-            <br />
-            <br />
-            <label for="usalgo">Select Model</label>&nbsp;
-            <select name="usalgo" id="usalgo">
-                <option value="evaluator">&nbsp;&nbsp;Evaluate User Story&nbsp;&nbsp;&nbsp;&nbsp;</option>
-            </select>
-            <br />
-            <br />
-            <button id="processar" onclick="sendUsData()">Process</button>
-            <br />&nbsp;<br />
-        </div>
-
-        <!-- TEST CASE TAB -->
-        <div id="tcinputdata" class="tabcontent">
-            <h3>Test Case</h3>
-            <br />
-                
-            <label for="tcinputdoc">Select Document:</label>
-            <select name="tcinputdoc" id="tcinputdoc">
-                __TC-INPUT-DOCS__
-            </select>
-            <br />
-            <br />
-            <label for="tcalgo">Select Model</label>&nbsp;
-            <select name="tcalgo" id="tcalgo">
-                <option value="tc-generator">&nbsp;&nbsp;Generate Test Case&nbsp;&nbsp;&nbsp;&nbsp;</option>
-            </select>
-            <br />
-            <br />
-            <button id="processar" onclick="sendTcData()">Process</button>
-            <br />&nbsp;<br />
-        </div>
-
-        <!-- TEST SCRIPTS TAB -->
-        <div id="tsinputdata" class="tabcontent">
-            <h3>Test Scripts</h3>
-            <br />
-                
-            <label for="tsinputdoc">Select Document:</label>
-            <select name="tsinputdoc" id="tsinputdoc">
-                __TS-INPUT-DOCS__
-            </select>
-            <br />
-            <br />
-            <label for="tsalgo">Select Model</label>&nbsp;
-            <select name="tsalgo" id="tsalgo">
-                <option value="script-cypress">&nbsp;&nbsp;Cypress&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                <option value="script-playwright">&nbsp;&nbsp;Playwright&nbsp;&nbsp;&nbsp;&nbsp;</option>
-            </select>
-            <br />
-            <br />
-            <button id="processar" onclick="sendTsData()">Process</button>
-            <br />&nbsp;<br />
-        </div>
-
-        <!-- LOADING -->
-        <div id="loading" class="tabcontent">
-            <center>
-                <img src="/img/loading.gif" border="0" width="180" height="180"> <br />
-            </center>
-        </div>
-    
-    </body>
-</html> 
+  <!DOCTYPE html>
+  <html>
+      <head>
+          <meta http-equiv="cache-control" content="max-age=0; no-cache" />
+          <meta http-equiv="expires" content="0" />
+          <meta http-equiv="pragma" content="no-cache" />
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>GenAI Dashboard</title>
+          <link href="/static/tabstyle.css" rel="stylesheet" />
+          <script src="/static/mainform.js"></script>
+          <script src="/static/tabfunctions.js"></script>
+      </head>
+      <body>
+          <h2>GenAI Dashboard</h2>
+          <h4>
+              <font color="red"><b>Warning:</b></font>&nbsp;For documents and scripts generator, the destination item must not exist in Wiki!<br />
+          </h4>
+  
+          <div class="tab">
+              <button class="tablinks active" onclick="openTab(event, 'about')" id="btnabout">About</button>
+              <button class="tablinks" onclick="openTab(event, 'usinputdata')" id="btnus">User Story</button>
+              <button class="tablinks" onclick="openTab(event, 'tcinputdata')" id="btntc">Test Case</button>
+              <button class="tablinks" onclick="openTab(event, 'tsinputdata') "id="btnts">Test Script</button>
+              <button class="tablinks" onclick="openTab(event, 'datasample') "id="btntd">Test Data</button>
+          </div>
+  
+          <!-- ABOUT TAB -->
+          <div id="about" class="tabcontent active" style="display: block">
+              <h3>About</h3>
+              <br />
+              <p>This is a Wiki Integration tool to run GCP AI Models on the Wiki Contents.</p>
+              <p>Please, make sure you rate the answer you got, this is very important.</p>
+          </div>
+  
+          <!-- USER STORY TAB -->
+          <div id="usinputdata" class="tabcontent">
+              <h3>User Story</h3>
+              <br />
+                  <!-- FORM -->
+                  <form method="POST" name="usform" id="usform" action="/process">
+                      <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+                      <label for="inputdoc">Select Document:</label>
+                      <select name="inputdoc" id="inputdoc">
+                          __US-INPUT-DOCS__
+                      </select>
+                      <br />
+                      <br />
+                      <label for="model">Select Model</label>&nbsp;
+                      <select name="model" id="model">
+                          <option value="evaluator">&nbsp;&nbsp;Evaluate User Story&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                      </select>
+                      <br />
+                      <br />
+                      <button id="processar" onclick="sendUsData()">Process</button>
+                  </form>
+              <br />&nbsp;<br />
+          </div>
+  
+          <!-- TEST CASE TAB -->
+          <div id="tcinputdata" class="tabcontent">
+              <h3>Test Case</h3>
+              <br />
+                  <!-- FORM -->
+                  <form method="POST" name="tcform" id="tcform" action="/process">
+                      <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+                      <label for="inputdoc">Select Document:</label>
+                      <select name="inputdoc" id="inputdoc">
+                          __TC-INPUT-DOCS__
+                      </select>
+                      <br />
+                      <br />
+                      <label for="model">Select Model</label>&nbsp;
+                      <select name="model" id="model">
+                          <option value="tc-generator">&nbsp;&nbsp;Generate Test Case&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                      </select>
+                      <br />
+                      <br />
+                      <button id="processar" onclick="sendTcData()">Process</button>
+                  </form>
+              <br />&nbsp;<br />
+          </div>
+  
+          <!-- TEST SCRIPTS TAB -->
+          <div id="tsinputdata" class="tabcontent">
+              <h3>Test Scripts</h3>
+              <br />
+                  <!-- FORM -->
+                  <form method="POST" name="tsform" id="tsform" action="/process">
+                      <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+                      <label for="inputdoc">Select Document:</label>
+                      <select name="inputdoc" id="inputdoc">
+                          __TS-INPUT-DOCS__
+                      </select>
+                      <br />
+                      <br />
+                      <label for="model">Select Model</label>&nbsp;
+                      <select name="model" id="model">
+                          <option value="script-cypress">&nbsp;&nbsp;Cypress&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                          <option value="script-playwright">&nbsp;&nbsp;Playwright&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                      </select>
+                      <br />
+                      <br />
+                      <button id="processar" onclick="sendTsData()">Process</button>
+                  </form>
+              <br />&nbsp;<br />
+          </div>
+  
+          <!-- TEST DATA TAB -->
+          <div id="datasample" class="tabcontent">
+              <h3>Test Data</h3>
+              <i>The input must be in CSV. The first line should contain field names, and the second line should have a sample.</i>
+              <br /><br />
+                  <!-- FORM -->
+                  <form method="POST" name="tdform" id="tdform" action="/process">
+                      <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+                      <input type="hidden" name="model" id="model" value="testdata" />
+                      <label for="inputdoc">Entre com o CSV:</label><br />
+                      <textarea id="inputdoc" name="inputdoc" rows="4" cols="150">
+  first name,last name,email,password,address,zip,ssn
+  "John","Smith","jsmith@email.com","P@ssw0rd","123 Main St","12345","111-22-3333"</textarea>
+                      <br />
+                      <br />
+                      <label for="datasampleqty">Quantity: &nbsp;</label><input type="range" id="datasampleqty" name="datasampleqty" min="0" max="80" onchange="showQty()" onclick="showQtd()">&nbsp;<label for="datasampleqty" id="sampleqty">40</label>
+                      <br />
+                      <br />
+                      <button id="processar" onclick="sendSampleData()">Generate</button>
+                  </form>
+              <br />&nbsp;<br />
+          </div>
+  
+          <!-- LOADING -->
+          <div id="loading" class="tabcontent">
+              <center>
+                  <img src="/img/loading.gif" border="0" width="180" height="180"> <br />
+              </center>
+          </div>
+      
+      </body>
+  </html> 
+  

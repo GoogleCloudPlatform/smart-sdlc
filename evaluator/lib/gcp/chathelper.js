@@ -96,13 +96,8 @@ async function evaluateFormat(mycontent) {
     let predictOptions = {
         retry: {
             retryCodes: [
-                10, // 'ABORTED'
-                1,  // 'CANCELLED',
                 4,  // 'DEADLINE_EXCEEDED'
-                13, // 'INTERNAL'
                 8,  // 'RESOURCE_EXHAUSTED'
-                14, // 'UNAVAILABLE'
-                2,  // 'UNKNOWN'
               ],
             backoffSettings: {
                 initialRetryDelayMillis: 10000,

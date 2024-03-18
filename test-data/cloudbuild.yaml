@@ -1,0 +1,72 @@
+# Copyright 2024 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+##
+# test-data
+# Gerador de Dados
+# Details: cloudtbuild.yaml
+# 
+# Author: Marcelo Parisi (parisim@google.com)
+##
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build'
+    args: [
+        'build',
+        '-t', '$_REPO_LOCATION-docker.pkg.dev/$_PROJECT_ID/$_REPO_ID/$_SERVICE_NAME',
+        '.' 
+    ]
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Tag: LATEST'
+    args: [
+        'tag',
+        '$_REPO_LOCATION-docker.pkg.dev/$_PROJECT_ID/$_REPO_ID/$_SERVICE_NAME',
+        '$_REPO_LOCATION-docker.pkg.dev/$_PROJECT_ID/$_REPO_ID/$_SERVICE_NAME:$_TAG'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push: LATEST'
+    args: [
+        'push',
+        '$_REPO_LOCATION-docker.pkg.dev/$_PROJECT_ID/$_REPO_ID/$_SERVICE_NAME:$_TAG'
+    ]
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'Deploy'
+    args: [
+        'run',
+        'deploy', '$_SERVICE_NAME',
+        '--image', '$_REPO_LOCATION-docker.pkg.dev/$_PROJECT_ID/$_REPO_ID/$_SERVICE_NAME:$_TAG',
+        '--platform', 'managed',
+        '--region', '$_SERVICE_REGION',
+        '--set-env-vars=PROJECT_ID=$_PROJECT_ID',
+        '--set-env-vars=USER_AGENT=$_USER_AGENT', 
+        '--set-secrets=APIKEY=apikey:latest',
+        '--min-instances=1', '--max-instances=10',
+        '--memory=2Gi','--cpu=2',
+        '--no-cpu-throttling', '--cpu-boost',
+        '--timeout=900',
+        '--allow-unauthenticated'
+    ]
+
+substitutions:
+  _SERVICE_NAME: test-data
+  _SERVICE_REGION: southamerica-east1
+  _TAG: 1.0.0
+  _REPO_LOCATION: southamerica-east1
+  _PROJECT_ID: gcp-project-id
+  _REPO_ID: docker-repo
+  _USER_AGENT: wiki-interface
+
+tags: ['test-data','docker','nodejs', 'vertex']

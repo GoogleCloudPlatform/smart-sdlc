@@ -31,7 +31,7 @@ async function listWiki(projectId) {
         wikiList = await gitlabClient.ProjectWikis.all(projectId);
         return wikiList;
     } catch (err) {
-        console.log(err);
+        console.log(JSON.stringify(err));
         return null;
     }
 }
@@ -43,7 +43,7 @@ async function getWiki(projectId, slug) {
         thisWiki = await gitlabClient.ProjectWikis.show(projectId, slug);
         return thisWiki;
     } catch (err) {
-        console.log(err);
+        console.log(JSON.stringify(err));
         return null;
     }
 }
@@ -55,7 +55,7 @@ async function createWikiPage(projectId, name, body) {
         wk = await gitlabClient.ProjectWikis.create(projectId, body, name);
         return wk;
     } catch (err) {
-        console.log(err);
+        console.log(JSON.stringify(err));
         return null;
     }
 }
@@ -67,7 +67,7 @@ async function deleteWikiPage(projectId, name) {
         wk = await gitlabClient.ProjectWikis.remove(projectId, name);
         return wk;
     } catch (err) {
-        console.log(err);
+        console.log(JSON.stringify(err));
         return null;
     }
 }
@@ -80,7 +80,7 @@ async function getProjectUrl(projectId) {
         url = fullProject.http_url_to_repo;
         return url;
     } catch (err) {
-        console.log(err);
+        console.log(JSON.stringify(err));
         return null;
     }
 }

@@ -13,39 +13,41 @@
   -- See the License for the specific language governing permissions and
   -- limitations under the License.
   -->
-<!DOCTYPE html>
-<html>    
-    <head>
-        <meta http-equiv="cache-control" content="max-age=0; no-cache" />
-        <meta http-equiv="expires" content="0" />
-        <meta http-equiv="pragma" content="no-cache" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>GenAI Dashboard: Rating</title>
-        <link href="/static/tabstyle.css" rel="stylesheet" />
-        <script src="/static/ratingform.js"></script>
-        <script type="module" src="/static/md-block.js"></script>
-    </head>    
-    <body>
-        <h2>GenAI Dashboard</h2>
-        <h4>
-            <font color="red"><b>Warning:</b></font>&nbsp;A zero rating implies the document will be discarded!<br />
-        </h4>
-        <div class="tab"></div>
-        <div id="about" class="tabcontent active" style="display: block">
-            <md-block>
-                __DOC-CONTENTS__
-            </md-block>
-        </div>
-        <br />
-        <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
-        <input type="hidden" name="document" id="document" value="__DOCUMENT__" />
-        <input type="hidden" name="id" id="id" value="__TRANSACTION-ID__" />
-        <br />
-        <label for="rating">Rate the Document:</label>&nbsp;<label id="ratevalue" name="ratevalue">3</label><br /><br />
-        <label for="rating">0 &nbsp;</label><input type="range" id="rating" name="rating" min="0" max="5" onchange="showRating()"><label for="rating">&nbsp; 5</label>
-        <br />
-        <br />
-        <button id="processar" onclick="sendRatingData()">Save Rating</button>
-        <br />&nbsp;<br />
-    </body>  
-</html> 
+  <!DOCTYPE html>
+  <html>    
+      <head>
+          <meta http-equiv="cache-control" content="max-age=0; no-cache" />
+          <meta http-equiv="expires" content="0" />
+          <meta http-equiv="pragma" content="no-cache" />
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>GenAI Dashboard: Rating</title>
+          <link href="/static/tabstyle.css" rel="stylesheet" />
+          <script src="/static/ratingform.js"></script>
+          <script type="module" src="/static/md-block.js"></script>
+      </head>    
+      <body>
+          <h2>GenAI Dashboard</h2>
+          <h4>
+              <font color="red"><b>Warning:</b></font>&nbsp;A zero rating implies the document will be discarded!<br />
+          </h4>
+          <div class="tab"></div>
+          <div id="about" class="tabcontent active" style="display: block">
+                  __DOC-CONTENTS__
+          </div>
+          <br />
+          <!-- FORM -->
+          <form method="POST" name="ratingform" id="ratingform" action="/rate">
+              <input type="hidden" name="project" id="project" value="__PROJECT-ID__" />
+              <input type="hidden" name="document" id="document" value="__DOCUMENT__" />
+              <input type="hidden" name="id" id="id" value="__TRANSACTION-ID__" />
+              <br />
+              <label for="ratevalue">Rate the document:</label>&nbsp;<label id="ratevalue" name="ratevalue">3</label><br /><br />
+              <label for="rate">0 &nbsp;</label>
+              <input type="range" id="rating" name="rating" min="0" max="5" onchange="showRating()"><label for="rate">&nbsp; 5</label>
+              <br />
+              <br />
+              <button id="processar" onclick="sendRatingData()">Save Rating</button>
+          </form>
+          <br />&nbsp;<br />
+      </body>  
+  </html> 

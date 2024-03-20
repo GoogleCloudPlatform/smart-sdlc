@@ -109,7 +109,29 @@ async function generateEvaluation(content) {
     return data;
 }
 
+/* call our API that uses chat-bison */
+async function generateTestData(content, qty) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getDataUrl() + "/" + qty.toString();
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: content.toString()
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data;
+}
+
 module.exports.generateDoc = generateDoc;
 module.exports.generateCypress = generateCypress;
 module.exports.generatePlaywright = generatePlaywright;
 module.exports.generateEvaluation = generateEvaluation;
+module.exports.generateTestData = generateTestData;

@@ -120,7 +120,7 @@ function generateRatingPage(id, content, projectId, document) {
     mycontent = mycontent.replaceAll("__TRANSACTION-ID__", id);
 
     if(document != "test-data") {
-        content = "<md-block>\n" + content + "</md-block>\n";
+        content = "<md-block>\n" + content + "\n</md-block>\n";
     } else {
         content = "<textarea rows=20 cols=150>\n" + content + "</textarea>\n";
     }

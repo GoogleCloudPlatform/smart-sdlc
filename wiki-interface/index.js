@@ -33,6 +33,8 @@ const authorizerMid = require('./lib/security/authorizer');
 const wikiOperator = require('./lib/gitlab/wiki');
 const htmlFunctions = require('./lib/html/functions');
 const aiOperator = require('./lib/rest-ai/client');
+const mdOperator = require('./lib/markdown/mdhelper');
+const imgOperator = require('./lib/markdown/imghelper');
 const metricOperator = require('./lib/metrificator/operator');
 const { v4: uuidv4 } = require('uuid');
 
@@ -94,7 +96,27 @@ app.post('/process', async (req, res) => {
     /* figuring out which AI Api to call */
     if (aiModel == "tc-generator") {
         let slug = req.body.inputdoc;
-        let pageContent = await wikiOperator.getWiki(projectId, slug);
+        let pageObject = await wikiOperator.getWiki(projectId, slug);
+        let pageContent = pageObject.content;
+
+        let baseUrl = await wikiOperator.getProjectUrl(projectId);
+         
+        let imgCheck = await mdOperator.checkImagesOnMarkdown(pageContent);
+        if(imgCheck) {
+            if(await gitOperator.cloneWiki(baseUrl, projectId)) {
+                let allImages = await mdOperator.extractImagesFromMarkdown(pageContent);
+                for(let i = 0; i < allImages.length; i++) {
+                    let imgName = allImages[i].altText;
+                    let imgUrl = allImages[i].url;
+                    let imgMime = await imgOperator.getMimeType(imgUrl);
+                    let imgContent = await gitOperator.getFileFromRepo(projectId, imgUrl);
+                    let imgHash = await imgOperator.getBase64(imgContent);
+                    let imageDesc = await aiOperator.describeImage(imgMime, imgHash);
+                    pageContent = await mdOperator.replaceImagesInMarkdown(pageContent, imgName, imageDesc);
+                }
+            }
+        }
+
         let newPagePath = slug + "_" + configFile.getGeneratorsufix();
         let newPageContent = await aiOperator.generateDoc(pageContent);
         let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, newPagePath);

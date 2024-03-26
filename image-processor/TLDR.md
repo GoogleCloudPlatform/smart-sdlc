@@ -2,8 +2,8 @@
 
 Export project values:
 ```bash
-export MY_PROJECT_ID="parisim-default-labs"
-export MY_PROJECT_NO="590559213441"
+export MY_PROJECT_ID="gcp-project-id"
+export MY_PROJECT_NO="1234567890"
 export MY_LOCATION="southamerica-east1"
 ``` 
 

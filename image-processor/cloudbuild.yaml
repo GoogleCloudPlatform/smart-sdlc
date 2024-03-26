@@ -65,7 +65,7 @@ substitutions:
   _SERVICE_REGION: southamerica-east1
   _TAG: 1.0.0
   _REPO_LOCATION: southamerica-east1
-  _PROJECT_ID: parisim-default-labs
+  _PROJECT_ID: gcp-project-id
   _REPO_ID: docker-repo
   _USER_AGENT: wiki-interface
 

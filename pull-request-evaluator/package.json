@@ -20,7 +20,7 @@
     "@octokit/rest": "^20.0.2",
     "body-parser": "^1.20.2",
     "config": "^3.3.10",
-    "express": "^4.18.2",
+    "express": "^4.19.2",
     "js-yaml": "^4.1.0",
     "morgan": "^1.10.0",
     "octokit": "^3.1.2"

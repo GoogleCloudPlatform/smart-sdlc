@@ -17,7 +17,7 @@
 /**
  * wiki-interface
  * Interface com Gitlab Wiki
- * Details: Gitlab Wiki Api
+ * Details: Gitlab Git Api
  * 
  * Author: Marcelo Parisi (parisim@google.com)
  */

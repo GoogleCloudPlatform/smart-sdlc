@@ -16,6 +16,8 @@ playwright:
   sufix: "TS_Playwright"
 data:
   url: https://test-data-xxxxxxxxxxxxxxx.app/process
+image:
+  url: https://image-processor-xxxxxxxxxxxxxxx.app/process
 gitlab:
   url: http://XXX-XXX-XXX-XXX.nip.io
   timeout: 60000

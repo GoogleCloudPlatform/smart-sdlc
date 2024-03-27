@@ -101,10 +101,13 @@ app.post('/process', async (req, res) => {
 
         let baseUrl = await wikiOperator.getProjectUrl(projectId);
          
+        /* Checking if markdown has images */
         let imgCheck = await mdOperator.checkImagesOnMarkdown(pageContent);
         if(imgCheck) {
+            /* Clone wiki git repo */
             if(await gitOperator.cloneWiki(baseUrl, projectId)) {
                 let allImages = await mdOperator.extractImagesFromMarkdown(pageContent);
+                /* Process each image */
                 for(let i = 0; i < allImages.length; i++) {
                     let imgName = allImages[i].altText;
                     let imgUrl = allImages[i].url;

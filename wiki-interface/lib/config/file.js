@@ -99,6 +99,14 @@ function checkConfigFile() {
         return false;
     }
 
+    /* Check image.url */
+    try {
+        test = config.get('image.url');
+    } catch (e) {
+        console.log("No image.url set in config file");
+        return false;
+    }
+
     /* Check logging.format */
     try {
         test = config.get('logging.format');
@@ -267,6 +275,19 @@ function getDataUrl() {
     return url;
 }
 
+function getImageUrl() {
+    let url;
+
+    /* Get image.url */
+    try {
+        url = config.get('image.url');
+    } catch (e) {
+        return "";
+    }
+
+    return url;
+}
+
 function getLogFormat() {
     let logformat;
 
@@ -354,6 +375,7 @@ module.exports.getCypresssufix = getCypresssufix;
 module.exports.getPlaywrightUrl = getPlaywrightUrl;
 module.exports.getPlaywrightsufix = getPlaywrightsufix;
 module.exports.getDataUrl = getDataUrl;
+module.exports.getImageUrl = getImageUrl;
 module.exports.getLogFormat = getLogFormat;
 module.exports.getServerName = getServerName;
 module.exports.checkConfigFile = checkConfigFile;

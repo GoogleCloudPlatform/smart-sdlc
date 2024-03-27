@@ -15,8 +15,8 @@
  */
 
 /**
- * evaluator
- * Avaliar Documento de User Story
+ * image-processor
+ * Processador de Prototipos de Tela
  * Details: Main Solution Handler
  * 
  * Author: Marcelo Parisi (parisim@google.com)
@@ -32,8 +32,6 @@ const authorizationMid = require('./lib/security/authorization');
 const configEnv = require('./lib/config/env');
 const configFile = require('./lib/config/file');
 const contextFile = require('./lib/config/ctx');
-const gcpAiPlatformText = require('./lib/gcp/texthelper');
-const gcpAiPlatformChat = require('./lib/gcp/chathelper');
 const gcpAiPlatformGemini = require('./lib/gcp/geminihelper');
 
 /* Server Listening Port */
@@ -64,7 +62,7 @@ app.use(morgan(configFile.getLogFormat()));
 app.use(obfuscatorMid);
 
 /* Middleware Setup */
-app.use(bodyParser.text({ type: 'text/markdown', extended: true }));
+app.use(bodyParser.json());
 app.use('/process', authenticationMid); /* Authenticate Request */
 app.use('/process', authorizationMid);  /* Authorize Request    */
 
@@ -76,27 +74,9 @@ app.get('/hc', async (req, res) => {
 /* Process Request */
 app.post('/process', async (req, res) => {
     let response = "";
-    let model = configFile.getModel();
-    if(model.includes("text-bison") || model.includes("code-bison")) {
-        response = await gcpAiPlatformText.evaluateFormat(req.body);
-        response += "\n--------------------\n";
-        response += await gcpAiPlatformText.evaluateContent(req.body);
-        res.status = 200;
-    } else if (model.includes("chat-bison") || model.includes("codechat-bison")) {
-        response = await gcpAiPlatformChat.evaluateFormat(req.body);
-        response += "\n--------------------\n";
-        response += await gcpAiPlatformChat.evaluateContent(req.body);
-        res.status = 200;
-    } else if (model.includes("gemini")) {
-        response = await gcpAiPlatformGemini.evaluateFormat(req.body);
-        response += "\n--------------------\n";
-        response += await gcpAiPlatformGemini.evaluateContent(req.body);
-        res.status = 200;
-    } else {
-        response = "Internal error";
-        res.status = 503;
-    }
-
+    let mime = req.body.mime;
+    let image = req.body.image;
+    response = await gcpAiPlatformGemini.callPredict(mime, image);
     res.send(response);
 });
 

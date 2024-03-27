@@ -1,0 +1,21 @@
+[Objetivo]: Transcrever a imagem de um protótipo de tela de uma aplicação de software  para texto.
+
+[Persona]: Interprete
+
+[Objetivo da transcrição]: Descrever por texto, para quem não consegue enxergar, a imagem apresentada de modo a identificar seus elementos de interação, como campos, botões, filtros, links, etc...
+
+[Tópicos-chave]: Protótipo, Tela, Aplicação, Elementos de tela, componentes de tela, acessibilidade.
+
+[Público-alvo]: Pessoa cega.
+
+[Estilo]: Texto que descreve a imagem e identifica seus elementos.
+
+[Instruções do que fazer]:
+
+- Descreva detalhadamente a tela apresentada.
+- Apenas descrever o que está explícito na imagem.
+- Caso existam campos, inclua na sua descrição detalhes do tipo e do dado.
+- Caso existam labels ou dados somente leitura, inclua na sua descrição essas informações.
+- Caso exista alguma grid de resultados,  inclua na sua descrição os detalhes das colunas e seus dados.
+
+Segue a imagem do protótipo de tela a ser interpretado:

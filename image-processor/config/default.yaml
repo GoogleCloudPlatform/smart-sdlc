@@ -14,18 +14,11 @@
 
 aiplatform:
   location: us-central1
-  # chat-bison-32k@002 / text-bison-32k@002 / gemini-1.0-pro-001
-  model: text-bison-32k@002
-  temperature: 0.2
-  maxtokens: 8192
-  keepalive_timeout: 30000
-  keepalive_time: 10000
-  enable_retries: 1
-  dns_min_time_between_resolutions_ms: 10000
-  initial_reconnect_backoff_ms: 10000
-  max_reconnect_backoff_ms: 60000
-  client_idle_timeout_ms: 60000
-  # en / br : Must match .txt file name
+  # gemini-1.0-pro-vision-001
+  model: gemini-1.0-pro-vision-001
+  temperature: 0.1
+  maxtokens: 2048
+  # en / br : Must match prompt_XX.txt file name
   language: en
 grpc:
   retry: true
@@ -34,4 +27,4 @@ grpc:
 logging:
   format: combined
 server:
-  name: evaluator
+  name: image-processor

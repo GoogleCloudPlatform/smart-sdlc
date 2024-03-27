@@ -12,26 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-aiplatform:
-  location: us-central1
-  # chat-bison-32k@002 / text-bison-32k@002 / gemini-1.0-pro-001
-  model: text-bison-32k@002
-  temperature: 0.2
-  maxtokens: 8192
-  keepalive_timeout: 30000
-  keepalive_time: 10000
-  enable_retries: 1
-  dns_min_time_between_resolutions_ms: 10000
-  initial_reconnect_backoff_ms: 10000
-  max_reconnect_backoff_ms: 60000
-  client_idle_timeout_ms: 60000
-  # en / br : Must match .txt file name
-  language: en
-grpc:
-  retry: true
-  max_retries: 15
-  timeout: 60000
-logging:
-  format: combined
-server:
-  name: evaluator
+##
+# image-processor
+# Processador de Prototipos de Tela
+# Details: Dockerfile
+# 
+# Author: Marcelo Parisi (parisim@google.com)
+##
+
+ARG NODE_VERSION=21.5.0-alpine3.19
+FROM node:${NODE_VERSION}
+
+LABEL maintainers="Marcelo Parisi <parisim@google.com>" \
+      description="Processador de Prototipos de Tela" \
+      version="1.0.0" 
+
+WORKDIR /app
+
+COPY config config/
+COPY lib lib/
+COPY package.json .
+COPY index.js .
+
+RUN npm install
+
+ENTRYPOINT ["npm", "start"]

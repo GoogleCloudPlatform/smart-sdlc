@@ -130,8 +130,35 @@ async function generateTestData(content, qty) {
     return data;
 }
 
+/* call our API that uses gemini-vision */
+async function describeImage(mime, image) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getImageUrl();
+
+    let myReqBody = `{ 
+        "mime": "${mime}",
+        "image": "${image}"
+    }`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: myReqBody
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data + "\n\n";
+}
+
 module.exports.generateDoc = generateDoc;
 module.exports.generateCypress = generateCypress;
 module.exports.generatePlaywright = generatePlaywright;
 module.exports.generateEvaluation = generateEvaluation;
 module.exports.generateTestData = generateTestData;
+module.exports.describeImage = describeImage;

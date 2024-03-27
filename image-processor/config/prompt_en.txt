@@ -1,0 +1,21 @@
+[Goal]: Transcribe the image of a prototype screen of a software application into text.
+
+[Persona]: Interpret
+
+[Purpose of transcription]: Describe in text, for those who cannot see, the image presented in order to identify its interaction elements, such as fields, buttons, filters, links, etc...
+
+[Key Topics]: Prototype, Canvas, Application, Canvas Elements, Canvas Components, Accessibility.
+
+[Target audience]: Blind person.
+
+[Style]: Text that describes the image and identifies its elements.
+
+[Instructions on what to do]:
+
+- Describe the screen presented in detail.
+- Just describe what is clear in the image.
+- If there are fields, include details of the type and data in your description.
+- If there are labels or read-only data, include this information in your description.
+- If there is a grid of results, include the details of the columns and their data in your description.
+
+Below is the image of the screen prototype to be interpreted:

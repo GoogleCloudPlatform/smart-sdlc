@@ -46,8 +46,9 @@ The proposed solution works with three different personas.
 
 * Test/QA Analyst  
   Test/QA Analyst reviews User Story document and submits to **tc-generator** using **wiki-integration**.
-  **wiki-integration** detects if document has any image and sends images to **image-processor**.
+  **wiki-integration** detects if the input document has any images and sends them to **image-processor**.
   **image-processor** uses Vertex AI to generate Image/Screen details.
+  **wiki-interface** adjusts the input document replacing the images with its details in text.
   **tc-generator** uses Vertex AI to generate a Test Case document based on User Story document and image details.  
   **wiki-integration** gets the results and submits to **Gitlab Wiki**.  
   Test/QA Analyst reviews Test Case document and using **wiki-integration** submits it to one of our **script** components.  

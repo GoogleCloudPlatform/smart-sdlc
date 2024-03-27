@@ -19,7 +19,7 @@ aiplatform:
   temperature: 0.1
   maxtokens: 2048
   # en / br : Must match prompt_XX.txt file name
-  language: br
+  language: en
 grpc:
   retry: true
   max_retries: 15

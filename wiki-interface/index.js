@@ -35,6 +35,7 @@ const htmlFunctions = require('./lib/html/functions');
 const aiOperator = require('./lib/rest-ai/client');
 const mdOperator = require('./lib/markdown/mdhelper');
 const imgOperator = require('./lib/markdown/imghelper');
+const gitOperator = require('./lib/gitlab/git');
 const metricOperator = require('./lib/metrificator/operator');
 const { v4: uuidv4 } = require('uuid');
 

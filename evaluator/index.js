@@ -78,19 +78,19 @@ app.post('/process', async (req, res) => {
     let response = "";
     let model = configFile.getModel();
     if(model.includes("text-bison") || model.includes("code-bison")) {
-        response = await gcpAiPlatformText.evaluateContent(req.body);
+        response = await gcpAiPlatformText.evaluateFormat(req.body);
         response += "\n--------------------\n";
-        response += await gcpAiPlatformText.evaluateFormat(req.body);
+        response += await gcpAiPlatformText.evaluateContent(req.body);
         res.status = 200;
     } else if (model.includes("chat-bison") || model.includes("codechat-bison")) {
-        response = await gcpAiPlatformChat.evaluateContent(req.body);
+        response = await gcpAiPlatformChat.evaluateFormat(req.body);
         response += "\n--------------------\n";
-        response += await gcpAiPlatformChat.evaluateFormat(req.body);
+        response += await gcpAiPlatformChat.evaluateContent(req.body);
         res.status = 200;
     } else if (model.includes("gemini")) {
-        response = await gcpAiPlatformGemini.evaluateContent(req.body);
+        response = await gcpAiPlatformGemini.evaluateFormat(req.body);
         response += "\n--------------------\n";
-        response += await gcpAiPlatformGemini.evaluateFormat(req.body);
+        response += await gcpAiPlatformGemini.evaluateContent(req.body);
         res.status = 200;
     } else {
         response = "Internal error";

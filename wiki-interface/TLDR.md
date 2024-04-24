@@ -106,6 +106,11 @@ gcloud projects add-iam-policy-binding $MY_PROJECT_ID \
        --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \
        --role="roles/bigquery.dataOwner" \
        --condition=None
+
+gcloud projects add-iam-policy-binding $MY_PROJECT_ID \
+       --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \
+       --role="roles/bigquery.jobUser" \
+       --condition=None
 ```
 
 Grant a few IAM permissions:

@@ -108,6 +108,8 @@ Select **Comments** and **Merge Request events** on the checkboxes:
 
 ![webhook02](img/webhook02.png "Webhook 02: smart-sdlc")
 
+*Note: Depending on Gitlab Version or Github Usage, if **Content Type** is present it should be set to **application/json** for the webhook call.*
+
 ## Contributing
 
 Check [CONTRIBUTING.md](CONTRIBUTING.md) file.

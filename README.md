@@ -80,6 +80,16 @@ Each component of the solution has a deployment/installation guide on its subdir
 * There are resources that are shared between multiple components, like Secret Manager entries.
 * Pay attention not to recreate those shared components and break the solution.
 
+**SUGGESTED COMPONENTS INSTALLATION ORDER:**
+1. **evaluator**
+2. **image-processor**
+3. **script-cypress**
+4. **script-playwright**
+5. **tc-generator**
+6. **test-data**
+7. **wiki-interface**
+8. **pull-request-evaluator**
+
 ## Documentation
 
 Almost each component of the solution has a README.md file with details about it.  

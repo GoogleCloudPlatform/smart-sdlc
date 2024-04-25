@@ -14,8 +14,8 @@
 
 aiplatform:
   location: us-central1
-  # chat-bison-32k@002 / text-bison-32k@002 / gemini-1.0-pro-001
-  model: gemini-1.0-pro-001
+  # chat-bison-32k@002 / text-bison-32k@002 / gemini-1.0-pro-002
+  model: gemini-1.0-pro-002
   temperature: 0.6
   maxtokens: 8192
   keepalive_timeout: 30000

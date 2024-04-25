@@ -63,7 +63,8 @@ Create a Docker Repo on Artifact Registry:
 gcloud artifacts repositories create docker-repo \
        --repository-format=docker \
        --location=$MY_LOCATION \
-       --description="My Docker Repository"
+       --description="My Docker Repository" \
+       --no-immutable-tags
 ``` 
 
 Create a secret to hold Git Authentication Token if you haven't already:

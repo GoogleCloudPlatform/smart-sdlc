@@ -46,7 +46,7 @@ gcloud projects add-iam-policy-binding $MY_PROJECT_ID \
        --condition=None
 
 gcloud projects add-iam-policy-binding $MY_PROJECT_ID \
-       --member="serviceAccount:$GOOGLE_PROJECT_NO@cloudbuild.gserviceaccount.com" \
+       --member="serviceAccount:$MY_PROJECT_NO@cloudbuild.gserviceaccount.com" \
        --role="roles/iam.serviceAccountUser" \
        --condition=None
 

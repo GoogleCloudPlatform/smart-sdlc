@@ -55,7 +55,7 @@ steps:
         '--set-secrets=APIKEY=apikey:latest',
         '--set-secrets=GIT_TOKEN=gittoken:latest',
         '--min-instances=1', '--max-instances=10',
-        '--memory=2Gi','--cpu=2',
+        '--memory=8Gi','--cpu=4',
         '--no-cpu-throttling', '--cpu-boost',
         '--timeout=900',
         '--allow-unauthenticated'

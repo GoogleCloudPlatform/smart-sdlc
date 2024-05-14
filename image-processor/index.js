@@ -62,7 +62,8 @@ app.use(morgan(configFile.getLogFormat()));
 app.use(obfuscatorMid);
 
 /* Middleware Setup */
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '250mb'}));
+app.use(bodyParser.urlencoded({limit: '250mb', extended: true}));
 app.use('/process', authenticationMid); /* Authenticate Request */
 app.use('/process', authorizationMid);  /* Authorize Request    */
 

@@ -5,7 +5,7 @@
   "author": "Marcelo Parisi (parisim@google.com)",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node --stack-size=2048 index.js",
     "clean": "rm -rf node_modules/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

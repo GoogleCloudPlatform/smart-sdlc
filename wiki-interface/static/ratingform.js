@@ -17,6 +17,8 @@
 /* Send rating data */
 function sendRatingData() {
     disableRating();
+    document.getElementById("about").style.display = "none";
+    document.getElementById("loading").style.display = "block";
     document.getElementById('ratingform').submit();
 }
 

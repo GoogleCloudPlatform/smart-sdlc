@@ -24,7 +24,7 @@
 
 const configHelper = require('../../lib/config/file');
 
- module.exports = function authorizeRequest(req, res, next) {
+module.exports = function authorizeRequest(req, res, next) {
 
     /* Validating Referer */
     const refererReq = req.headers['Referer'] || req.headers['referer'];
@@ -37,6 +37,7 @@ const configHelper = require('../../lib/config/file');
             !refererReq.toLowerCase().includes(myServerName))) {
         res.statusCode = 401;
         res.end('Unauthorized\n');
+        return null;
     }
 
     /* Validating Origin Site */
@@ -47,6 +48,7 @@ const configHelper = require('../../lib/config/file');
             secfetchsiteReq.toLowerCase() != "same-origin")) {
         res.statusCode = 401;
         res.end('Unauthorized\n');
+        return null;
     }
 
     next();

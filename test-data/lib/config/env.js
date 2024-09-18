@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * test-data
- * Gerador de Dados
- * Details: Handle Environment Variables
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 function checkEnvironment() {
     /* Check if APIKEY is setup as ENV */
     if (!process.env.APIKEY) {

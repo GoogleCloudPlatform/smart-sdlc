@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * tc-generator
- * Gerador de Documento de Testes
- * Details: Handle Server Header Obfuscation
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configFile = require('../../lib/config/file');
 
 module.exports = function obfuscateServer(req, res, next) {

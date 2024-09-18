@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * tc-generator
- * Gerador de Documento de Testes
- * Details: Handle Environment Variables
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 function checkEnvironment() {
     /* Check if APIKEY is setup as ENV */
     if (!process.env.APIKEY) {

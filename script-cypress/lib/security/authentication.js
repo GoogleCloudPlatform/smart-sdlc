@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * script-cypress
- * Gerador de Documento de Testes Cypress
- * Details: Handle API_KEY Header Authentication
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configEnv = require('../../lib/config/env');
 
 module.exports = function authenticateRequest(req, res, next) {

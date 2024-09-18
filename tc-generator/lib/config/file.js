@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * tc-generator
- * Gerador de Documento de Testes
- * Details: Handle Config File
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const config = require('config');
 
 function checkConfigFile() {

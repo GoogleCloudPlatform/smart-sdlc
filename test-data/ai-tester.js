@@ -19,21 +19,15 @@ const process = require('node:process');
 const configEnv = require('./lib/config/env');
 const configFile = require('./lib/config/file');
 const contextFile = require('./lib/config/ctx');
-const gcpAiPlatformText = require('./lib/gcp/texthelper');
-const gcpAiPlatformChat = require('./lib/gcp/chathelper');
 const gcpAiPlatformGemini = require('./lib/gcp/geminihelper');
 
 async function processAi(input, qty) {
     let response = "";
     let model = "";
-    model = configFile.getModel();
-    if(model.includes("text-bison") || model.includes("code-bison")) {
-        response = await gcpAiPlatformText.callPredict(input, qty);
-    } else if (model.includes("chat-bison") || model.includes("codechat-bison")) {
-        response = await gcpAiPlatformChat.callPredict(input, qty);
-    } else if (model.includes("gemini")) {
+    try {
         response = await gcpAiPlatformGemini.callPredict(input, qty);
-    } else {
+    } catch(e) {
+        console.log(e);
         response = "Internal error";
     }
     return response;

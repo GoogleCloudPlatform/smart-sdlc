@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * script-cypress
- * Gerador de Script de Testes Cypress
- * Details: Main Solution Handler
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const morgan = require('morgan');
 const express = require('express');
 const process = require('node:process');

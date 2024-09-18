@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * evaluator
- * Avaliar Documento de User Story
- * Details: Handle User-Agent Authorization
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configEnv = require('../../lib/config/env');
 
 module.exports = function authorizeRequest(req, res, next) {

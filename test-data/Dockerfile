@@ -12,14 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-##
-# test-data
-# Gerador de Dados
-# Details: Dockerfile
-# 
-# Author: Marcelo Parisi (parisim@google.com)
-##
-
 ARG NODE_VERSION=21.5.0-alpine3.19
 FROM node:${NODE_VERSION}
 

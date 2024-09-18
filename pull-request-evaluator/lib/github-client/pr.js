@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Pull Request Handler
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const githubClient = require('../../lib/github-client/client');
 const staticHelper = require('../../lib/config/statics');
 const excludeHelper = require('../../lib/config/excluder');

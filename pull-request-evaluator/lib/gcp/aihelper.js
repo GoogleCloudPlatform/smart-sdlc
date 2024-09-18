@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-const configFile = require('../config/file');
 const configPrompts = require('../config/prompts');
 const gcpAiPlatformGemini = require('../../lib/gcp/geminihelper');
 

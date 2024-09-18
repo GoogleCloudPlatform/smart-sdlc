@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * evaluator
- * Avaliar Documento de User Story
- * Details: Handle Environment Variables
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 function checkEnvironment() {
     /* Check if APIKEY is setup as ENV */
     if (!process.env.APIKEY) {

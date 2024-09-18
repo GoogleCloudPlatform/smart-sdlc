@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * script-cypress
- * Gerador de Documento de Testes Cypress
- * Details: Handle Server Header Obfuscator
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configFile = require('../../lib/config/file');
 
 module.exports = function obfuscateServer(req, res, next) {

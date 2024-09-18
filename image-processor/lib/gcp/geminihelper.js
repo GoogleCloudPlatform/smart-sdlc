@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * image-processor
- * Processador de Prototipos de Tela
- * Details: GCP Vertex AI Helper Functions
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configEnv = require('../config/env');
 const configFile = require('../config/file');
 const contextFile = require('../config/ctx');

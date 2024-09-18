@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * image-processor
- * Processador de Prototipos de Tela
- * Details: Handle Config File
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const config = require('config');
 
 function checkConfigFile() {

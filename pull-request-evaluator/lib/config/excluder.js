@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Handle Exclude Config File
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const fs = require('node:fs');
 
 /* Check if exclude file is present */

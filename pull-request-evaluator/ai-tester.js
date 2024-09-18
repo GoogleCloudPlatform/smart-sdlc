@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: TEST/TUNE AI
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const process = require('node:process');
 const githubHelper = require('./lib/github-client/pr');
 const gitlabHelper = require('./lib/gitlab-client/mr');

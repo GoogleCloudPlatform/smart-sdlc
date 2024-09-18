@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: GitLab Client
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
 const { Gitlab } = require('@gitbeaker/rest');
 const gitlabConfig = require('../../lib/config/gitlab');
 const envHelper = require('../../lib/config/env');

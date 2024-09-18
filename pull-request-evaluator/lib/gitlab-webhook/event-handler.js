@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Event Handler
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const gitlabMr = require('../../lib/gitlab-client/mr');
 const configHelper = require('../../lib/config/file');
 const aiHelper = require('../../lib/gcp/aihelper');

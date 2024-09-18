@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Authorize the request
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const crypto = require('node:crypto');
 const envHelper = require('../config/env');
 

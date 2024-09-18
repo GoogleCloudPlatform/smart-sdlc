@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * script-playwright
- * Gerador de Script de Testes Playwright
- * Details: Handle Config File
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const config = require('config');
 
 function checkConfigFile() {

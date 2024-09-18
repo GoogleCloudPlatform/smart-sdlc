@@ -12,13 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-##
-# script-playwright
-# Gerador de Script de Testes Playwright
-# Details: cloudtbuild.yaml
-# 
-# Author: Marcelo Parisi (parisim@google.com)
-##
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Build'

@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * script-playwright
- * Gerador de Script de Testes Playwright
- * Details: Handle AI CodeChat Context
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const fs = require('node:fs');
 const configFile = require('../../lib/config/file');
 

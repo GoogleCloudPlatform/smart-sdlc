@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Authenticate a Github Event
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const envHelper = require('../../lib/config/env');
 const configFile = require('../../lib/config/file');
 const authHelper = require('../../lib/github-webhook/authenticate');

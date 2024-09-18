@@ -32,8 +32,6 @@ const authorizationMid = require('./lib/security/authorization');
 const configEnv = require('./lib/config/env');
 const configFile = require('./lib/config/file');
 const contextFile = require('./lib/config/ctx');
-const gcpAiPlatformText = require('./lib/gcp/texthelper');
-const gcpAiPlatformChat = require('./lib/gcp/chathelper');
 const gcpAiPlatformGemini = require('./lib/gcp/geminihelper');
 
 /* Server Listening Port */
@@ -76,23 +74,13 @@ app.get('/hc', async (req, res) => {
 /* Process Request */
 app.post('/process', async (req, res) => {
     let response = "";
-    let model = configFile.getModel();
-    if(model.includes("text-bison") || model.includes("code-bison")) {
-        response = await gcpAiPlatformText.evaluateFormat(req.body);
-        response += "\n--------------------\n";
-        response += await gcpAiPlatformText.evaluateContent(req.body);
-        res.status = 200;
-    } else if (model.includes("chat-bison") || model.includes("codechat-bison")) {
-        response = await gcpAiPlatformChat.evaluateFormat(req.body);
-        response += "\n--------------------\n";
-        response += await gcpAiPlatformChat.evaluateContent(req.body);
-        res.status = 200;
-    } else if (model.includes("gemini")) {
+    try {
         response = await gcpAiPlatformGemini.evaluateFormat(req.body);
         response += "\n--------------------\n";
         response += await gcpAiPlatformGemini.evaluateContent(req.body);
         res.status = 200;
-    } else {
+    } catch(e) {
+        console.log(e);
         response = "Internal error";
         res.status = 503;
     }

@@ -1,7 +1,7 @@
 ## TLDR;
 
 **REVIEW** the `config/default.yaml` file:
-```
+```yaml
 evaluator:
   url: https://evaluator-xxxxxxxxxxxxxxx.app/process
   sufix: "Eval"
@@ -20,9 +20,21 @@ image:
   url: https://image-processor-xxxxxxxxxxxxxxx.app/process
 gitlab:
   url: http://XXX-XXX-XXX-XXX.nip.io
+  callback: http://wiki-interface-xxxxxxxxxxxxxxx.app/gitlab/callback
   timeout: 60000
 bigquery:
   dataset: metrificator
+redis:
+  url: redis://XXX.XXX.XXX.XXX:6379
+ai:
+  bucket: bucket-name-for-chat
+  workdir: /tmp/work
+  aiproject: gcp-project-id
+  aimodel: gemini-1.5-pro-001
+  ailocation: us-east1
+  aioutputtokens: 8192
+  aitemperature: 0.2
+  chathistory: 6
 main:
   # en / br : Must match _xx on templates
   language: en
@@ -38,6 +50,8 @@ export MY_PROJECT_ID="gcp-project-id"
 export MY_PROJECT_NO="1234567890"
 export MY_LOCATION="southamerica-east1"
 export MY_DATASET_ID="metrificator"
+export MY_REDIS_ID="wiki-session"
+export MY_PROJECT_VPC="my-vpc"
 ``` 
 
 Set our project id:
@@ -54,6 +68,7 @@ gcloud services enable cloudbuild.googleapis.com \
                        artifactregistry.googleapis.com \
                        secretmanager.googleapis.com \
                        bigquery.googleapis.com \
+                       redis.googleapis.com \
                        aiplatform.googleapis.com \
                        --project=$MY_PROJECT_ID
 ```
@@ -83,6 +98,26 @@ gcloud secrets create apikey --replication-policy="automatic"
 echo -n "a random generate 64 char string" | gcloud secrets versions add apikey --data-file=-
 
 gcloud secrets add-iam-policy-binding apikey \
+       --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \
+       --role="roles/secretmanager.secretAccessor"
+```
+
+If you haven't create the GITLAB_APP_ID secret:
+```bash
+gcloud secrets create gitlab-app-id --replication-policy="automatic"
+echo -n "YOUR_GITLAB_APP_ID" | gcloud secrets versions add gitlab-app-id --data-file=-
+
+gcloud secrets add-iam-policy-binding gitlab-app-id \
+       --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \
+       --role="roles/secretmanager.secretAccessor"
+```
+
+If you haven't create the GITLAB_APP_SECRET secret:
+```bash
+gcloud secrets create gitlab-app-secret --replication-policy="automatic"
+echo -n "YOUR_GITLAB_APP_SECRET" | gcloud secrets versions add gitlab-app-secret --data-file=-
+
+gcloud secrets add-iam-policy-binding gitlab-app-secret \
        --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \
        --role="roles/secretmanager.secretAccessor"
 ```
@@ -136,6 +171,24 @@ gcloud projects add-iam-policy-binding $MY_PROJECT_ID \
        --role="roles/artifactregistry.admin" \
        --condition=None
 
+```
+
+Create Redis instance:
+```bash
+gcloud redis instances create --project=$MY_PROJECT_ID \
+       $MY_REDIS_ID --tier=basic --size=2 \
+       --region=$MY_LOCATION \
+       --redis-version=redis_7_0 \
+       --network=projects/$MY_PROJECT_ID/global/networks/$MY_PROJECT_VPC \
+       --connect-mode=DIRECT_PEERING
+```
+
+Grant Redis Permissions:
+```bash
+gcloud projects add-iam-policy-binding $MY_PROJECT_ID \
+       --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \
+       --role="roles/redis.editor" \
+       --condition=None
 ```
 
 Adjust substitutions on `cloudbuild.yaml` file:

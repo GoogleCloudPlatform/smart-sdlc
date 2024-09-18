@@ -12,13 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-##
-# wiki-interface
-# Interface com Gitlab Wiki
-# Details: cloudtbuild.yaml
-# 
-# Author: Marcelo Parisi (parisim@google.com)
-##
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Build'
@@ -54,11 +47,22 @@ steps:
         '--set-env-vars=USER_AGENT=$_USER_AGENT', 
         '--set-secrets=APIKEY=apikey:latest',
         '--set-secrets=GIT_TOKEN=gittoken:latest',
+        '--set-secrets=GITLAB_APP_ID=gitlab-app-id:latest',
+        '--set-secrets=GITLAB_APP_SECRET=gitlab-app-secret:latest',
         '--min-instances=1', '--max-instances=10',
         '--memory=8Gi','--cpu=4',
         '--no-cpu-throttling', '--cpu-boost',
         '--timeout=900',
         '--allow-unauthenticated'
+    ]
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'Map Volume'
+    args: [
+        'beta', 'run',
+        'services', 'update', '$_SERVICE_NAME',
+        '-add-volume=name=workvolume,type=in-memory,size-limit=10G',
+        '--add-volume-mount=volume=workvolume,mount-path=/work'
     ]
 
 substitutions:

@@ -163,6 +163,14 @@ function checkConfigFile() {
         return false;
     }
 
+    /* Check redis.url */
+    try {
+        test = config.get('redis.url');
+    } catch (e) {
+        console.log("No redis.url set in config file");
+        return false;
+    }
+
     return true;
 }
 
@@ -387,6 +395,19 @@ function getDataset() {
     return dataset;
 }
 
+function getRedisURL() {
+    let url;
+
+    /* Get redis.url */
+    try {
+        url = config.get('redis.url');
+    } catch (e) {
+        return "";
+    }
+
+    return url;
+}
+
 module.exports.getEvaluatorUrl = getEvaluatorUrl;
 module.exports.getEvaluatorsufix = getEvaluatorsufix;
 module.exports.getGeneratorUrl = getGeneratorUrl;
@@ -405,3 +426,4 @@ module.exports.getGitlabUrl = getGitlabUrl;
 module.exports.getGitlabCallback = getGitlabCallback;
 module.exports.getLanguage = getLanguage;
 module.exports.getDataset = getDataset;
+module.exports.getRedisURL = getRedisURL;

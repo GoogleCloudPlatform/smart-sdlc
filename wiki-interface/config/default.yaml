@@ -34,6 +34,17 @@ gitlab:
   timeout: 60000
 bigquery:
   dataset: metrificator
+redis:
+  url: redis://XXX.XXX.XXX.XXX:6379
+ai:
+  bucket: parisim-chatbot-test
+  workdir: /tmp/work
+  aiproject: parisim-default-labs
+  aimodel: gemini-1.5-pro-001
+  ailocation: us-east1
+  aioutputtokens: 8192
+  aitemperature: 0.2
+  chathistory: 6
 main:
   # en / br : Must match _xx on templates
   language: en

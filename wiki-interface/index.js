@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Main Solution Handler
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const morgan = require('morgan');
 const express = require('express');
 const process = require('node:process');

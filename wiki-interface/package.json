@@ -4,24 +4,28 @@
   "description": "Interface com Gitlab Wiki",
   "main": "index.js",
   "scripts": {
-    "start": "node --stack-size=2048 index.js",
+    "start": "node --stack-size=4096 index.js",
     "clean": "rm -rf node_modules/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@gitbeaker/rest": "^39.34.2",
-    "@google-cloud/bigquery": "^7.5.0",
-    "body-parser": "^1.20.2",
-    "config": "^3.3.11",
-    "express": "^4.19.2",
+    "@gitbeaker/rest": "^39.34.3",
+    "@google-cloud/bigquery": "^7.9.0",
+    "@google-cloud/storage": "^7.13.0",
+    "@google-cloud/vertexai": "^1.7.0",
+    "body-parser": "^1.20.3",
+    "config": "^3.3.12",
+    "connect-redis": "^7.1.1",
+    "express": "^4.21.0",
     "express-session": "^1.18.0",
-    "isomorphic-git": "^1.25.6",
+    "isomorphic-git": "^1.27.1",
     "js-yaml": "^4.1.0",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
     "passport-gitlab": "^0.5.0",
+    "redis": "^4.7.0",
     "uuid": "^9.0.1"
   }
 }

@@ -78,16 +78,11 @@ app.post('/process/:qty', async (req, res) => {
     let response = "";
     let qty = req.params.qty;
     let model = configFile.getModel();
-    if(model.includes("text-bison") || model.includes("code-bison")) {
-        response = await gcpAiPlatformText.callPredict(req.body, qty);
-        res.status = 200;
-    } else if (model.includes("chat-bison") || model.includes("codechat-bison")) {
-        response = await gcpAiPlatformChat.callPredict(req.body, qty);
-        res.status = 200;
-    } else if (model.includes("gemini")) {
+    try {
         response = await gcpAiPlatformGemini.callPredict(req.body, qty);
         res.status = 200;
-    } else {
+    } catch(e) {
+        console.log(e);
         response = "Internal error";
         res.status = 503;
     }

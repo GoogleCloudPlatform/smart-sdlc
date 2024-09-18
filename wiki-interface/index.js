@@ -29,7 +29,6 @@ const bodyParser = require('body-parser');
 const configEnv = require('./lib/config/env');
 const configFile = require('./lib/config/file');
 const obfuscatorMid = require('./lib/security/obfuscator');
-const authorizerMid = require('./lib/security/authorizer');
 const wikiOperator = require('./lib/gitlab/wiki');
 const htmlFunctions = require('./lib/html/functions');
 const aiOperator = require('./lib/rest-ai/client');
@@ -60,7 +59,6 @@ app.use(morgan(configFile.getLogFormat()));
 
 /* Middleware Setup */
 app.use(obfuscatorMid);
-app.use(authorizerMid);
 
 /* Body Parser */
 app.use('/process', bodyParser.urlencoded({ extended: true }));

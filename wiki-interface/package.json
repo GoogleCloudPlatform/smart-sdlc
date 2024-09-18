@@ -16,9 +16,12 @@
     "body-parser": "^1.20.2",
     "config": "^3.3.11",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "isomorphic-git": "^1.25.6",
     "js-yaml": "^4.1.0",
     "morgan": "^1.10.0",
+    "passport": "^0.7.0",
+    "passport-gitlab": "^0.5.0",
     "uuid": "^9.0.1"
   }
 }

@@ -131,6 +131,14 @@ function checkConfigFile() {
         return false;
     }
 
+    /* Check gitlab.callback */
+    try {
+        test = config.get('gitlab.callback');
+    } catch (e) {
+        console.log("No gitlab.callback set in config file");
+        return false;
+    }
+
     /* Check gitlab.timeout */
     try {
         test = config.get('gitlab.timeout');
@@ -340,6 +348,19 @@ function getGitlabUrl() {
     return url;
 }
 
+function getGitlabCallback() {
+    let callback;
+
+    /* Check gitlab.url */
+    try {
+        callback = config.get('gitlab.callback');
+    } catch (e) {
+        return "";
+    }
+
+    return callback;
+}
+
 function getLanguage() {
     let language;
 
@@ -381,5 +402,6 @@ module.exports.getServerName = getServerName;
 module.exports.checkConfigFile = checkConfigFile;
 module.exports.getGitlabTimeout = getGitlabTimeout;
 module.exports.getGitlabUrl = getGitlabUrl;
+module.exports.getGitlabCallback = getGitlabCallback;
 module.exports.getLanguage = getLanguage;
 module.exports.getDataset = getDataset;

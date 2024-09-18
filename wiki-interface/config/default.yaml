@@ -30,6 +30,7 @@ image:
   url: https://image-processor-xxxxxxxxxxxxxxx.app/process
 gitlab:
   url: http://XXX-XXX-XXX-XXX.nip.io
+  callback: http://wiki-interface-xxxxxxxxxxxxxxx.app/gitlab/callback
   timeout: 60000
 bigquery:
   dataset: metrificator

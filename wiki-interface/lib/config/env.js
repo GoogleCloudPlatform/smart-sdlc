@@ -35,6 +35,18 @@ function checkEnvironment() {
         return false;
     }
 
+    /* Check if GITLAB_APP_ID is setup as ENV */
+    if (!process.env.GITLAB_APP_ID) {
+        console.log("Please set GITLAB_APP_ID value");
+        return false;
+    }
+
+    /* Check if GITLAB_APP_SECRET is setup as ENV */
+    if (!process.env.GITLAB_APP_SECRET) {
+        console.log("Please set GITLAB_APP_SECRET value");
+        return false;
+    }
+
     return true;
 }
 
@@ -48,6 +60,18 @@ function getGitToken() {
     return token;
 }
 
+function getGitlabAppId() {
+    let appid = process.env.GITLAB_APP_ID || "";
+    return appid;
+}
+
+function getGitlabAppSecret() {
+    let appsecret = process.env.GITLAB_APP_SECRET || "";
+    return appsecret;
+}
+
 module.exports.getApikey = getApikey;
 module.exports.getGitToken = getGitToken;
+module.exports.getGitlabAppId = getGitlabAppId;
+module.exports.getGitlabAppSecret = getGitlabAppSecret;
 module.exports.checkEnvironment = checkEnvironment;

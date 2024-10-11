@@ -1,0 +1,25 @@
+<br />
+<h3>Test Data</h3>
+<i>The input must be either in CSV or JSON. Use the sample data to create your template.</i>
+<br /><br />
+<!-- FORM -->
+<div>
+    <select name="inputModelId" id="inputModelId" onchange="changeTestData()">
+        <option value="0" disabled selected>Select</option>
+         <option value="csv">CSV</option>
+        <option value="json">JSON</option>
+    </select>
+    <br /><br />
+    <label for="inputDocumentId">Enter with an example:</label><br />
+    <textarea id="inputDocumentId" name="inputDocumentId" rows="10" cols="150"></textarea>
+    <br />
+    <br />
+    <label for="datasampleqty">Quantity: &nbsp;</label>
+    <input type="range" id="inputDataSampleQty" name="inputDataSampleQty"
+           min="0" max="80" onchange="showQtd()" onclick="showQtd()">&nbsp;&nbsp;<label for="datasampleqty"
+           id="sampleqty">40</label>
+    <br />
+    <br />
+    <button id="processar" onclick="sendSampleData()">Generate</button>
+</div>
+<br />&nbsp;<br />

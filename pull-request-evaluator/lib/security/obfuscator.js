@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Handle Server Header Obfuscation
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configFile = require('../../lib/config/file');
 
 module.exports = function obfuscateServer(req, res, next) {

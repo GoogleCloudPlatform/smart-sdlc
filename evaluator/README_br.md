@@ -23,10 +23,10 @@ A aplicação utiliza o arquivo `config/default.yaml` para configuração:
 
 ```yaml
 aiplatform:
-  location: us-central1
-  # chat-bison-32k@002 / text-bison-32k@002 / gemini-1.0-pro-001
-  model: chat-bison-32k@002
-  temperature: 0.2
+  location: us-east1
+  # gemini-1.0-pro-001 / gemini-1.5-flash-001 / gemini-1.5-pro-001
+  model: gemini-1.5-pro-001
+  temperature: 0.6
   maxtokens: 8192
   keepalive_timeout: 30000
   keepalive_time: 10000
@@ -36,7 +36,7 @@ aiplatform:
   max_reconnect_backoff_ms: 60000
   client_idle_timeout_ms: 60000
   # en / br : Must match .txt file name
-  language: br
+  language: en
 grpc:
   retry: true
   max_retries: 15

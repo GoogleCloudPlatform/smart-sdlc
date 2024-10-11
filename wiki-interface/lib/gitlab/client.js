@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Gitlab Client
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const { Gitlab } = require('@gitbeaker/rest');
 const configHelper = require('../../lib/config/file');
 const envHelper = require('../../lib/config/env');

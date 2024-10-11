@@ -26,4 +26,4 @@ USER_AGENT="string to look for in user agent header"
 
 O valor de **APIKEY** deve ser uma string de 64 caracteres. A mesma pode ser gerada randomicamente utilizando um gerador qualquer, como por exemplo: https://pinetools.com/random-string-generator
 
-O valor de **USER_AGENT** deve conter uma *string* que será verificada contra o *header* **User-Agent**. Um exemplo pode ser: *curl*
+O valor de **USER_AGENT** deve conter uma *string* que será verificada contra o *header* **User-Agent**. Um exemplo pode ser: *wiki-interface*

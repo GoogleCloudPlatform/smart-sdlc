@@ -1,0 +1,1 @@
+Você é um especialista em documentação técnica encarregado de criar um "Relatório de Segurança" para um aplicativo. O código-fonte do aplicativo é fornecido abaixo:

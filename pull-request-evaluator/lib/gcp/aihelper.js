@@ -14,18 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: GCP Vertex AI Helper Functions
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
-const configFile = require('../config/file');
 const configPrompts = require('../config/prompts');
-const gcpAiPlatformText = require('../../lib/gcp/texthelper');
-const gcpAiPlatformChat = require('../../lib/gcp/chathelper');
 const gcpAiPlatformGemini = require('../../lib/gcp/geminihelper');
 
 /*
@@ -49,16 +38,10 @@ async function diffRank(changeList) {
         myInput += actualFile.fileDiff;
         myInput += "\n########## FIM #########\n\n";
 
-        const model = configFile.getCodeModel();
         const myprompt = configPrompts.getDiffRank();
 
-        if(model.includes("code-bison") || model.includes("text-bison")) {
-            myResponse += await gcpAiPlatformText.callPredictCode(myprompt, myInput);
-        } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
-            myResponse += await gcpAiPlatformChat.callPredictCode(myprompt, myInput);
-        } else if(model.includes("gemini")) {
-            myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
-        }
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
+
 
         myResponse += "  \n";
         myInput = "";
@@ -87,16 +70,9 @@ async function diffSummary(changeList) {
         myInput += actualFile.fileDiff;
         myInput += "\n########## FIM #########\n\n";
 
-        const model = configFile.getTextModel();
         const myprompt = configPrompts.getDiffSummary();
 
-        if(model.includes("text-bison") || model.includes("code-bison")) {
-            myResponse += await gcpAiPlatformText.callPredictText(myprompt, myInput);
-        } else if(model.includes("chat-bison") || model.includes("codechat-bison")) {
-            myResponse += await gcpAiPlatformChat.callPredictText(myprompt, myInput);
-        } else if(model.includes("gemini")) {
-            myResponse += await gcpAiPlatformGemini.callPredictText(myprompt, myInput);
-        }
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
 
         myResponse += "  \n";
         myInput = "";
@@ -122,17 +98,10 @@ async function prSummary(changeList) {
         myInput += "\n########## FIM ##########\n\n";
     }
 
-    const model = configFile.getCodeModel();
     const myprompt = configPrompts.getPrSummary();
 
-    if(model.includes("code-bison") || model.includes("text-bison")) {
-        response = await gcpAiPlatformText.callPredictCode(myprompt, myInput);
-    } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
-        response = await gcpAiPlatformChat.callPredictCode(myprompt, myInput);
-    } else if(model.includes("gemini")) {
-        response = await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
-    }
-    
+    response = await gcpAiPlatformGemini.callPredict(myprompt, myInput);
+
     return response;
 }
 
@@ -152,17 +121,10 @@ async function fileSummary(changeList) {
         myInput += actualFile.newContent;
         myInput += "\n########## FIM #########\n\n";
 
-        const model = configFile.getCodeModel();
         const myprompt = configPrompts.getFileSummary();
 
-        if(model.includes("code-bison") || model.includes("text-bison")) {
-            myResponse += await gcpAiPlatformText.callPredictCode(myprompt, myInput);
-        } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
-            myResponse += await gcpAiPlatformChat.callPredictCode(myprompt, myInput);
-        } else if(model.includes("gemini")) {
-            myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
-        }
-        
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
+
         myResponse += "  \n";
         myInput = "";
     }
@@ -185,16 +147,9 @@ async function filePerformance(changeList) {
         myInput += actualFile.newContent;
         myInput += "\n########## FIM #########\n\n";
 
-        const model = configFile.getCodeModel();
         const myprompt = configPrompts.getFilePerformance();
 
-        if(model.includes("code-bison") || model.includes("text-bison")) {
-            myResponse += await gcpAiPlatformText.callPredictCode(myprompt, myInput);
-        } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
-            myResponse += await gcpAiPlatformChat.callPredictCode(myprompt, myInput);
-        } else if(model.includes("gemini")) {
-            myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
-        }
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
 
         myResponse += "  \n";
         myInput = "";
@@ -218,16 +173,9 @@ async function fileSecurity(changeList) {
         myInput += actualFile.newContent;
         myInput += "\n########## FIM #########\n\n";
 
-        const model = configFile.getCodeModel();
         const myprompt = configPrompts.getFileSecurity();
 
-        if(model.includes("code-bison") || model.includes("text-bison")) {
-            myResponse += await gcpAiPlatformText.callPredictCode(myprompt, myInput);
-        } else if(model.includes("codechat-bison") || model.includes("chat-bison")) {
-            myResponse += await gcpAiPlatformChat.callPredictCode(myprompt, myInput); 
-        } else if(model.includes("gemini")) {
-            myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
-        }
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
 
         myResponse += "  \n";
         myInput = "";

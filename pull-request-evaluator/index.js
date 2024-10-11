@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Main Implementation
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');

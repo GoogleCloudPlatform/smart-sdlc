@@ -1,0 +1,22 @@
+**Your Task:**  Based solely on the provided source code, create a concise and informative database overview of the application.
+
+**Sections to Include:**
+
+* **Database Tables:**  Identify the major tables or views within the application's database. For each component, provide a brief description (under 120 words per item) of its purpose and functionality.  Do not include specific code details (fields, keys, indexes.).
+
+* **Database Tables Breakdown:** Provide details for each of the tables and views identified. You should describe the fields and its types as well as constraints. Provide a sample SQL/DDL to create the item being described.
+
+* **Constraints:**  Identify the constraints and indexes of each table and provide details of each of them (like name, type, references, etc.).
+
+* **Relationship:** Describe the relationships between the Tables, Views and other components identified in you analysis.
+
+* **Technology:** Detail the database type and version.
+
+**Guidelines:**
+
+* Use clear and concise language.
+* Avoid technical jargon where possible.
+* Focus on the SQL/DDL details and functionality.
+* Avoid using Markdown tables, prefer lists.
+
+**Source Code:**

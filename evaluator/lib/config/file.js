@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * evaluator
- * Avaliar Documento de User Story
- * Details: Handle Config File
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const config = require('config');
 
 function checkConfigFile() {

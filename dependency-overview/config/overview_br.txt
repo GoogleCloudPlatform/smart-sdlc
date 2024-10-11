@@ -1,0 +1,25 @@
+**Sua tarefa:** Com base somente no código-fonte fornecido, analise-o e gere um Relatório de dependência detalhando as bibliotecas, estruturas e pacotes de terceiros do aplicativo. O relatório deve ser conciso e evitar detalhes específicos do código (nomes de variáveis, nomes de funções, números de linha, etc.). Concentre-se nos aspectos *funcionais* das dependências.
+
+**Seções do relatório:**
+
+* **Resumo executivo:** Uma breve visão geral (1000 palavras / 3-4 frases) resumindo as dependências do aplicativo e quaisquer possíveis preocupações de segurança. Informe se não houver nenhuma.
+
+* **Inventário de dependências:** Uma lista de cada dependência descoberta. Para cada dependência, inclua:
+* **Nome da dependência:** O nome da dependência (por exemplo, "Spring Boot," "React," "Log4j", "Express", "Morgan").
+* **Versão:** O número de versão específico usado (por exemplo, "2.7.11," "17.0.2"). Se não estiver disponível, informe "Desconhecido".
+* **Tipo:** Categorize a dependência (por exemplo, "Framework", "Biblioteca", "Driver de banco de dados", "Estrutura de teste").
+* **Objetivo:** Uma explicação concisa (menos de 200 palavras) do propósito da dependência dentro do aplicativo.
+* **Vulnerabilidades de segurança (se conhecidas):** Mencione quaisquer vulnerabilidades de segurança conhecidas associadas à versão usada. Se você não puder determinar isso a partir do código-fonte, informe explicitamente.
+
+* **Stack Tecnológico (opcional):** Um breve resumo da pilha de tecnologia geral usada com base nas dependências observadas (por exemplo, "Aplicativo Java Spring Boot com um frontend React"). Esta seção pode ser omitida se não for facilmente determinável.
+
+**Considerações importantes:**
+
+* **Formato do inventário:** O inventário deve ser uma lista. Não use tabelas.
+* **Precisão em vez de integridade:** Priorize a precisão. Se não tiver certeza sobre a versão ou propósito de uma dependência, é melhor indicar "Desconhecido" do que fornecer informações incorretas.
+* **Especificidade da versão:** Esforce-se para números de versão precisos. Evite intervalos amplos (por exemplo, "2.x").
+* **Foco na segurança:** Alerte o usuário sobre potenciais riscos de segurança, mas somente se estiverem comprovadamente presentes no código fornecido ou vulnerabilidades conhecidas estiverem associadas às versões específicas usadas.
+* **Ausência de dependências:** Se o código não contiver evidências de dependências externas, declare explicitamente: "Este aplicativo não utiliza nenhuma dependência externa."
+* **Idioma:** O relatório deve estar em Português do Brasil.
+
+**Código-fonte:**

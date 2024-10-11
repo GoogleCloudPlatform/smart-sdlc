@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Handle Gitlab Config File
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const config = require('config');
 
 function checkConfigFile() {

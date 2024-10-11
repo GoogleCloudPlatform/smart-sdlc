@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * script-cypress
- * Gerador de Documento de Testes Cypress
- * Details: GCP Vertex AI Helper Functions
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configEnv = require('../config/env');
 const configFile = require('../config/file');
 const contextFile = require('../config/ctx');
@@ -41,7 +33,7 @@ async function callPredict(mycontent) {
         location: location
     });
 
-    // Instantiate the models
+    /* Instantiate the models */
     const generativeModel = vertex_ai.preview.getGenerativeModel({
         model: model,
         generation_config: {

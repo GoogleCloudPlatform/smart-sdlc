@@ -1,0 +1,9 @@
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "email": "jsmith@email.com",
+  "password": "P@ssw0rd",
+  "address": "123 Main St",
+  "zipCode": "12345",
+  "phoneNumber": "111-22-3333"
+}

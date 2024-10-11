@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Gitlab Wiki Api
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const gitlabClient = require('./client');
 
 /* List wiki pages */
@@ -85,8 +77,35 @@ async function getProjectUrl(projectId) {
     }
 }
 
+/* Get Gitlab Project Id */
+async function getProjectName(projectId) {
+    let name;
+    try {
+        let fullProject = await gitlabClient.Projects.show(projectId);
+        name = fullProject.name;
+        return name;
+    } catch (err) {
+        console.log(JSON.stringify(err));
+        return null;
+    }
+}
+
+/* List Gitlab Projects */
+async function getProjectList() {
+    let prjList;
+    try {
+        let fullPrj = await gitlabClient.Projects.all();
+        return fullPrj
+    } catch (err) {
+        console.log(JSON.stringify(err))
+        return null;
+    }
+}
+
 module.exports.createWikiPage = createWikiPage;
 module.exports.listWiki = listWiki;
 module.exports.getWiki = getWiki;
 module.exports.deleteWikiPage = deleteWikiPage;
 module.exports.getProjectUrl = getProjectUrl;
+module.exports.getProjectList = getProjectList;
+module.exports.getProjectName = getProjectName;

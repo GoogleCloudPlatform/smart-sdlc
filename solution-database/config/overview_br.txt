@@ -1,0 +1,23 @@
+**Sua tarefa:** Com base somente no código-fonte fornecido, crie uma visão geral concisa e informativa do banco de dados do aplicativo.
+
+**Seções a serem incluídas:**
+
+* **Tabelas do banco de dados:** Identifique as principais tabelas ou visualizações no banco de dados do aplicativo. Para cada componente, forneça uma breve descrição (menos de 120 palavras por item) de sua finalidade e funcionalidade. Não inclua detalhes específicos do código (campos, chaves, índices).
+
+* **Detalhamento das tabelas do banco de dados:** Forneça detalhes para cada uma das tabelas e visualizações identificadas. Você deve descrever os campos e seus tipos, bem como as restrições. Forneça um SQL/DDL de amostra para criar o item que está sendo descrito.
+
+* **Restrições:** Identifique as restrições e índices de cada tabela e forneça detalhes de cada um deles (como nome, tipo, referências, etc.).
+
+* **Relacionamento:** Descreva os relacionamentos entre as tabelas, visualizações e outros componentes identificados em sua análise.
+
+* **Tecnologia:** Detalhe o tipo e a versão do banco de dados.
+
+**Diretrizes:**
+
+* Use uma linguagem clara e concisa.
+* Evite jargões técnicos sempre que possível.
+* Concentre-se nos detalhes e funcionalidades do SQL/DDL.
+* Evite usar tabelas Markdown, prefira listas.
+* O relatório deve estar em Português do Brasil.
+
+**Código-fonte:**

@@ -1,0 +1,108 @@
+# script-selenium
+
+App/Service in NodeJS + Express to generate Test Case Scripts in **Selenium**.  
+This application is designed to run in Docker on **Google Cloud Run**.  
+Google Cloud's **Vertex AI** is used in the implementation.
+
+## TLDR
+For those in a rush, head to [TLDR.md](TLDR.md) file.
+
+## Variables and Environment
+
+This app relies on the following environment variables to execute:
+
+```bash
+export PORT=8080
+export APIKEY="random generated api key"
+export PROJECT_ID="gcp-project-id"
+export USER_AGENT="string to look for in user agent header"
+```
+
+*Note:* APIKEY should be 64 random char string.
+
+## Config
+
+The app uses file `config/default.yaml` as its config file:
+
+```yaml
+aiplatform:
+  location: us-east1
+  # gemini-1.0-pro-001 / gemini-1.5-flash-001 / gemini-1.5-pro-001
+  model: gemini-1.5-pro-001
+  temperature: 0.3
+  maxtokens: 8192
+  keepalive_timeout: 30000
+  keepalive_time: 10000
+  enable_retries: 1
+  dns_min_time_between_resolutions_ms: 10000
+  initial_reconnect_backoff_ms: 10000
+  max_reconnect_backoff_ms: 60000
+  client_idle_timeout_ms: 60000
+  # en / br : Must match prompt_XX.txt file name
+  language: en
+grpc:
+  retry: true
+  max_retries: 15
+  timeout: 60000
+logging:
+  format: combined
+server:
+  name: script-selenium
+```
+
+## Prompt
+
+The prompt that is sent to **Vertex AI** is present on the following file `config/prompt_XX.txt`.  
+*Note:* The prompt works as a config file for **Vertex AI**.
+
+## Build
+
+The local build can be performed by following the steps below:
+
+```bash
+export PROJECT_ID="gcp-project-id"
+export REPOSITORY_LOCATION="southamerica-east1"
+export REPOSITORY_ID="docker-repo"
+export TAG="1.0.0"
+docker build -t ${REPOSITORY_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY_ID}/script-selenium/script-selenium:${TAG} .
+docker push ${REPOSITORY_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY_ID}/script-selenium/script-selenium:${TAG}
+```
+
+## Deploy
+
+To deploy the app follow the steps:
+
+```bash
+export PROJECT_ID="gcp-project-id"
+export REPOSITORY_LOCATION="southamerica-east1"
+export REPOSITORY_ID="docker-repo"
+export CLOUDRUN_LOCATION="southamerica-east1"
+export TAG="1.0.0"
+gcloud run deploy script-selenium --image ${REPOSITORY_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY_ID}/script-selenium/script-selenium:${TAG} --region ${CLOUDRUN_LOCATION} --project ${PROJECT_ID} --allow-unauthenticated
+
+```
+
+## Google Cloud
+
+Google Cloud's CLI/SDK can be set up as the example:
+
+```bash
+gcloud auth login
+gcloud config set project gcp-project-id
+gcloud auth configure-docker us-central1-docker.pkg.dev,southamerica-east1-docker.pkg.dev
+```
+
+## Running locally
+
+To run locally:
+
+```bash
+export PORT=8080
+export APIKEY="random generated api key"
+export PROJECT_ID="gcp-project-id"
+export USER_AGENT="string to look for in user agent header"
+
+npm install
+
+npm start
+```

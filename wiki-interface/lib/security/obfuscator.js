@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Azure DevOps Wiki
- * Details: Changes our Server Name
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configFile = require('../../lib/config/file');
 
 module.exports = function obfuscateServer(req, res, next) {

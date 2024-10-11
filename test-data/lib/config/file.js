@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * test-data
- * Gerador de Dados
- * Details: Handle Config File
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const config = require('config');
 
 function checkConfigFile() {

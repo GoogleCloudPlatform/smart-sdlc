@@ -1,0 +1,11 @@
+<div class="chat-container">
+    <div class="chat-title">Chat Session</div>
+    <div class="chat-body" id="chat-body">
+        <!-- Messages will be dynamically added here -->
+    </div>
+    <div class="chat-footer">
+        <input type="text" id="user-input" placeholder="Type your message here..." onkeydown="handleEnterKey(event)"/>
+        <input type="hidden" id="bot-type" name="bot-type" value="__BOT_TYPE__">
+        <button id="send-button" onclick="sendMessage()">Send</button>
+    </div>
+</div>

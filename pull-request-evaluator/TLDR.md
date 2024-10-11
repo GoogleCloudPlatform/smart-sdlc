@@ -2,23 +2,10 @@
 
 **REVIEW** the `config/default.yaml` file:
 ```yaml
-aitext:
+aiplatform:
   location: us-central1
-  # text-bison-32k@002 / chat-bison-32k@002 / gemini-1.0-pro-001
-  model: text-bison-32k@002
-  temperature: 0.2
-  maxtokens: 8192
-  keepalive_timeout: 30000
-  keepalive_time: 8000
-  enable_retries: 1
-  dns_min_time_between_resolutions_ms: 10000
-  initial_reconnect_backoff_ms: 10000
-  max_reconnect_backoff_ms: 60000
-  client_idle_timeout_ms: 60000
-aicode:
-  location: us-central1
-  # codechat-bison-32k@002 / code-bison-32k@002 / gemini-1.0-pro-001
-  model: codechat-bison-32k@002
+  # gemini-1.0-pro-001 / gemini-1.5-pro-001 / gemini-1.5-flash-001
+  model: gemini-1.5-pro-001
   temperature: 0.2
   maxtokens: 8192
   keepalive_timeout: 30000
@@ -33,13 +20,13 @@ grpc:
   max_retries: 15
   timeout: 60000
 git:
-  type: github
+  type: gitlab
 github:
   timeout: 60000
   throttle: true
   retry: true
 gitlab:
-  url: http://123-123-123-123.nip.io
+  url: http://XXX-XXX-XXX-XXX.nip.io
   timeout: 60000
 functions:
   # en / br : Must match prompt_XX.txt files and static/ files

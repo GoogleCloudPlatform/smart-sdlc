@@ -1,0 +1,19 @@
+**Your Task:**  Based solely on the provided source code, create a concise and informative overview of the application.
+
+**Sections to Include:**
+
+* **Application Description:**  Provide a brief (under 1000 words) description of the application's overall purpose, key functionality, and target users.
+
+* **Component Breakdown:** Identify the major components or modules within the application. For each component, provide a brief description (under 500 words per component) of its purpose and functionality.  Do not include specific code details (variable names, function names, etc.).
+
+* **Data Flow (Conceptual):**  Describe the general flow of data within the application.  This should be a high-level conceptual description, not a detailed technical diagram.  Focus on the relationships and interactions between the identified components.
+
+* **Technology:** Describe the main technologies used in the implementation like languages, packages, frameworks, databases, caches and integrations.
+
+**Guidelines:**
+
+* Use clear and concise language.
+* Avoid technical jargon where possible.
+* Focus on the high-level functionality and architecture, omitting detailed implementation specifics.
+
+**Source Code:**

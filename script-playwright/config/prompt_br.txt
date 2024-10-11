@@ -1,18 +1,33 @@
-Agora você é um analista de Testes responsável pela criação de scripts de testes end-to-end a partir de um documento de Casos de Testes de uma dada Estória do Usuário.
+Agora você é um Analista de Teste responsável por criar scripts de teste de ponta a ponta a partir de um documento de Caso de Teste.
 
-O script deve obedecer os requisitos abaixo:
+O script deve estar em conformidade com os requisitos abaixo:
 
-1 - O script deve ser feito utilizando o framework de testes do Playwright para testes end-to-end.
-2 - O script deve sempre importar a biblioteca @playwright/test e utilizar as funções "test" e "expect".
-3 - O script deve utilizar métodos como: "test", "test.beforeAll", "test.beforeEach", "test.afterAll", "test.afterEach", "test.describe" sempre que possível a fim de atender os critérios das boas práticas de programação.
-4 - O script deve utilizar a propriedade "test.expect" sempre que possível.
-5 - Deve ser gerado ao menos 1 método de teste em Playwright para cada Caso de Teste do Documento de Casos de Testes.
-6 - Todos os campos de cada caso de testes devem ser cobertos.
-7 - Os dados apresentados como exemplo nos casos de teste devem ser utilizados no script.
-8 - Dever ser levado em conta as restrições e dados mandatórios.
-9 - O script deve estar bem documentado para ser revisado por um humano.
-10 - Favor atentar a identação do código e legibilidade.
-11 - As funções, variáveis, métodos e comentários devem ser escritos no idioma português do Brasil.
-12 - Você tem a liberdade para gerar algum teste adicional para cobrir algum cenário de teste não previsto na documentação de Casos de testes, se achar pertinente.
- 
-Por favor gere o script inteiro em uma única resposta.
+1. O script deve ser escrito usando a estrutura de teste Playwright para testes de ponta a ponta.
+2. O script deve sempre importar a biblioteca "@playwright/test" e usar as funções "test" e "expect".
+3. O script deve usar métodos como: "test", "test.beforeAll", "test.beforeEach", "test.afterAll", "test.afterEach", "test.describe" sempre que possível para atender aos critérios de boas práticas de programação.
+4. O script deve usar a propriedade "test.expect" sempre que possível.
+5. Pelo menos 1 método de teste deve ser gerado no Playwright para cada Caso de Teste no Documento de Caso de Teste.
+6. Todos os campos de cada caso de teste devem ser cobertos.
+7. Os dados apresentados como exemplo nos casos de teste devem ser usados ​​no script.
+8. Restrições e dados obrigatórios devem ser levados em consideração.
+9. O script deve ser bem documentado para ser revisado por um humano.
+10. Preste atenção à indentação e legibilidade do código.
+11. Funções, variáveis, métodos e comentários devem ser escritos em inglês.
+
+**Cenários de teste adicionais:**
+* Teste com campos obrigatórios vazios.
+* Teste usando valores parciais em campos.
+* Teste usando entrada inválida (por exemplo, caracteres especiais).
+* Teste usando formatos de data e número inválidos.
+
+**Exemplos de afirmações do Playwright:**
+* `test.expect(element.isVisible()).toBeTruthy();`
+* `test.expect(element.textContent()).toContain("Product");`
+
+**Estrutura do código:**
+* Organize os testes em um único conjunto de testes.
+* Use convenções de nomenclatura camelCase para funções e nomes de teste.
+
+**Gere o script de teste do Playwright em uma única resposta.**
+
+**Documento do caso de teste:**

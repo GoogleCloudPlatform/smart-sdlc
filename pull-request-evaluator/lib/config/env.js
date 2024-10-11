@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Handle Environment Variables
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 function checkEnvironment() {
     /* Check if WEBHOOK_SECRET is setup as ENV */
     if (!process.env.WEBHOOK_SECRET) {

@@ -14,33 +14,25 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: GCP Vertex AI Helper Functions
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configEnv = require('../config/env');
 const configFile = require('../config/file');
 const {VertexAI} = require('@google-cloud/vertexai');
 
-async function callPredictText(mycontext, mycontent) {
+async function callPredict(mycontext, mycontent) {
 
     /* Config Parameters */
     const project = configEnv.getProject();
-    const location = configFile.getTextLocation();
-    const model = configFile.getTextModel();
-    const thistemperature = parseFloat(configFile.getTextTemperature());
-    const thismaxtokens = parseFloat(configFile.getTextMaxtokens());
+    const location = configFile.getLocation();
+    const model = configFile.getModel();
+    const thistemperature = parseFloat(configFile.getTemperature());
+    const thismaxtokens = parseFloat(configFile.getMaxtokens());
 
     const vertex_ai = new VertexAI({
         project: project,
         location: location
     });
 
-    // Instantiate the models
+    /* Instantiate the models */
     const generativeModel = vertex_ai.preview.getGenerativeModel({
         model: model,
         generation_config: {
@@ -84,63 +76,4 @@ async function callPredictText(mycontext, mycontent) {
     }
 }
 
-async function callPredictCode(mycontext, mycontent) {
-
-    /* Config Parameters */
-    const project = configEnv.getProject();
-    const location = configFile.getCodeLocation();
-    const model = configFile.getCodeModel();
-    const thistemperature = parseFloat(configFile.getCodeTemperature());
-    const thismaxtokens = parseFloat(configFile.getCodeMaxtokens());
-
-    const vertex_ai = new VertexAI({
-        project: project,
-        location: location
-    });
-
-    // Instantiate the models
-    const generativeModel = vertex_ai.preview.getGenerativeModel({
-        model: model,
-        generation_config: {
-            "max_output_tokens": thismaxtokens,
-            "temperature": thistemperature,
-            "top_p": 1
-        },
-        safety_settings: [
-            {
-                "category": "HARM_CATEGORY_HATE_SPEECH",
-                "threshold": "BLOCK_ONLY_HIGH"
-            },
-            {
-                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-                "threshold": "BLOCK_ONLY_HIGH"
-            },
-            {
-                "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-                "category": "HARM_CATEGORY_HARASSMENT",
-                "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-            }
-        ],
-    });
-
-    /* Building our request */
-    const req = {
-        contents: [{role: 'user', parts: [{text: mycontext + "\n\n" + mycontent}]}],
-    };
-    
-    const streamingResp = await generativeModel.generateContentStream(req);
-
-    const response = await streamingResp.response;
-    
-    if(response.candidates[0].content.parts[0].text != "") {
-        return response.candidates[0].content.parts[0].text;
-    } else {
-        return "";
-    }
-}
-
-module.exports.callPredictText = callPredictText;
-module.exports.callPredictCode = callPredictCode;
+module.exports.callPredict= callPredict;

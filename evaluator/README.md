@@ -26,10 +26,10 @@ The app uses file `config/default.yaml` as its config file:
 
 ```yaml
 aiplatform:
-  location: us-central1
-  # chat-bison-32k@002 / text-bison-32k@002 / gemini-1.0-pro-001
-  model: chat-bison-32k@002
-  temperature: 0.2
+  location: us-east1
+  # gemini-1.0-pro-001 / gemini-1.5-flash-001 / gemini-1.5-pro-001
+  model: gemini-1.5-pro-001
+  temperature: 0.6
   maxtokens: 8192
   keepalive_timeout: 30000
   keepalive_time: 10000

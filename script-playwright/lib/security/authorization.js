@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * script-playwright
- * Gerador de Script de Testes Playwright
- * Details: Handle User-Agent Authorization
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configEnv = require('../config/env');
 
 module.exports = function authorizeRequest(req, res, next) {

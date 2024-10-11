@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Metric Preparator
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
 const metricModel = require('../../lib/metrificator/model');
 const bqHelper = require('../../lib/metrificator/bqhelper');
 
 /* build and insert metric */
-async function insertMetric(id, project, user_story, document, model) {
+async function insertMetric(id, username, project, input_doc, document, model) {
 
     let myMetric = metricModel.metric;
 
     myMetric.id = id;
+    myMetric.gitlab_user = username;
     myMetric.date = new Date().toISOString();
     myMetric.project = project;
-    myMetric.user_story = user_story;
+    myMetric.input_doc = input_doc;
     myMetric.document = document;
     myMetric.model = model;
 

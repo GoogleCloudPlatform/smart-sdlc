@@ -12,29 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-##
-# wiki-interface
-# Interface com Gitlab Wiki
-# Details: Dockerfile
-# 
-# Author: Marcelo Parisi (parisim@google.com)
-##
-
-ARG NODE_VERSION=21.5.0-alpine3.19
+ARG NODE_VERSION=22.9.0-alpine3.20
 FROM node:${NODE_VERSION}
 
 LABEL maintainers="Marcelo Parisi <parisim@google.com>" \
-      description="Interface para Wiki" \
+      description="Interface para Gitlab" \
       version="1.0.0" 
+
+RUN apk update && apk add git
 
 WORKDIR /app
 
 COPY config config/
 COPY lib lib/
-COPY img img/
-COPY static static/
-COPY templates templates/
-ADD https://md-block.verou.me/md-block.js static/
+COPY ui ui/
 COPY package.json .
 COPY index.js .
 

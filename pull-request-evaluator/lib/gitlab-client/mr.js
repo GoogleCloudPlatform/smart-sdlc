@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Merge Request Handler
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const gitlabClient = require('./client');
 const staticHelper = require('../../lib/config/statics');
 

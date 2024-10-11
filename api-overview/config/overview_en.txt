@@ -1,0 +1,23 @@
+**Your Task:**  Based solely on the provided source code, analyze it and generate an API Exposure Report detailing any APIs exposed by the application. The report should be concise and avoid specific code details (variable names, function names, line numbers, etc.). Focus on the *functional* aspects of the APIs and their security implementations.
+
+**Report Sections:**
+
+* **Executive Summary:** A brief overview (1000 words / 3-4 sentences) summarizing the application's exposed APIs, their technologies, and security measures. State if no APIs are exposed.
+
+* **API Inventory:** A table listing each exposed API. For each API, include:
+    * **API Endpoint (if available):** The relative path or URL of the API endpoint (e.g., `/users`, `/products/search`). If unavailable from the code, state "Not Available".
+    * **HTTP Method:** The HTTP method used (GET, POST, PUT, DELETE, etc.).
+    * **Protocol:** The communication protocol (e.g., REST, gRPC, SOAP).
+    * **Purpose:** A concise explanation (under 100 words) of the API's purpose and functionality.
+    * **Request Parameters (if available):** A brief description of the input parameters expected by the API.  Avoid specific data types or names.
+    * **Response Data (if available):** A brief description of the data returned by the API. Avoid specific data types or names.
+    * **Authentication/Authorization:** Describe the authentication and authorization mechanisms used (e.g., API key, OAuth 2.0, JWT, basic authentication). If none are explicitly implemented, state "None (Insecure)".
+
+**Important Considerations:**
+
+* **Inventory Format:** The inventory should be a list. Do not use tables.
+* **Accuracy over Completeness:** Prioritize accuracy over completeness. If unsure about an API's details, it's better to indicate "Unknown" than provide incorrect information.
+* **Security Focus:** Explicitly highlight the security mechanisms used (or lack thereof).  An insecure API should be clearly indicated as such.
+* **Absence of APIs:** If the code contains no evidence of exposed APIs, explicitly state: "This application does not expose any APIs."
+
+**Source Code:**

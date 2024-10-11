@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * tc-generator
- * Gerador de Documento de Testes
- * Details: Main Solution Handler
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const morgan = require('morgan');
 const express = require('express');
 const process = require('node:process');
@@ -32,8 +24,6 @@ const authorizationMid = require('./lib/security/authorization');
 const configEnv = require('./lib/config/env');
 const configFile = require('./lib/config/file');
 const contextFile = require('./lib/config/ctx');
-const gcpAiPlatformText = require('./lib/gcp/texthelper');
-const gcpAiPlatformChat = require('./lib/gcp/chathelper');
 const gcpAiPlatformGemini = require('./lib/gcp/geminihelper');
 
 /* Server Listening Port */
@@ -77,16 +67,11 @@ app.get('/hc', async (req, res) => {
 app.post('/process', async (req, res) => {
     let response = "";
     let model = configFile.getModel();
-    if(model.includes("text-bison") || model.includes("code-bison")) {
-        response = await gcpAiPlatformText.callPredict(req.body);
-        res.status = 200;
-    } else if (model.includes("chat-bison") || model.includes("codechat-bison")) {
-        response = await gcpAiPlatformChat.callPredict(req.body);
-        res.status = 200;
-    } else if (model.includes("gemini")) {
+    try {
         response = await gcpAiPlatformGemini.callPredict(req.body);
         res.status = 200;
-    } else {
+    } catch(e) {
+        console.log(e);
         response = "Internal error";
         res.status = 503;
     }

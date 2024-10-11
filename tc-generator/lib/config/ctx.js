@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * tc-generator
- * Gerador de Documento de Testes
- * Details: Handle AI Chat Context
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const fs = require('node:fs');
 const configFile = require('../../lib/config/file');
 

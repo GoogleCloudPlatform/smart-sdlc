@@ -1,0 +1,23 @@
+**Sua tarefa:** Analise o código-fonte fornecido e gere um Relatório de integrações detalhando como o aplicativo interage com sistemas externos. O relatório deve ser conciso e evitar detalhes específicos do código (nomes de variáveis, nomes de funções, números de linha, etc.). Concentre-se nos aspectos *funcionais* das integrações.
+
+**Seções do relatório:**
+
+* **Resumo executivo:** Uma breve visão geral (1000 palavras / 2-3 frases) resumindo as integrações externas do aplicativo. Informe se não houver nenhuma.
+
+* **Inventário de integração:** Uma lista de cada integração externa descoberta. Para cada integração, inclua:
+* **Nome da integração:** Um nome descritivo para a integração (por exemplo, "Integração do Customer Order Service", não "chamada REST para order-service.com").
+* **Tipo de integração:** O protocolo de comunicação (por exemplo, REST, gRPC, JMS, Kafka, HTTP, HTTPS, SOAP, etc.).
+* **Sistema de destino:** Uma breve descrição do sistema externo que está sendo integrado (por exemplo, "Processador de pagamento de terceiros", "Sistema de gerenciamento de pedidos interno"). Evite URLs ou nomes de host específicos, a menos que seja absolutamente necessário.
+* **Objetivo:** Uma explicação concisa (menos de 100 palavras) do propósito da integração dentro do aplicativo.
+* **Localização (aproximada):** Uma indicação geral de onde no aplicativo essa integração é usada (por exemplo, "Módulo de processamento de pedidos", "Módulo de autenticação do usuário"). Evite caminhos de arquivo ou nomes de classe específicos.
+
+* **Pilha de tecnologia (opcional):** Se for facilmente aparente no código, liste todas as bibliotecas ou estruturas relevantes usadas para essas integrações (por exemplo, Spring Boot para REST, cliente Apache Kafka, etc.). Esta seção pode ser omitida se as informações não forem facilmente extraíveis.
+
+**Considerações importantes:**
+
+* **Formato do inventário:** O inventário deve ser uma lista. Não use tabelas.
+* **Precisão:** Priorize a precisão em vez da completude. Se você não tiver certeza sobre o propósito ou tipo de uma integração, é melhor omiti-la do que fornecer informações imprecisas.
+* **Ausência de integrações:** Se o código não contiver evidências de integrações externas, declare explicitamente: "Este aplicativo não utiliza nenhuma integração externa."
+* **Idioma:** O relatório deve estar em Português do Brasil.
+
+**Código-fonte:**

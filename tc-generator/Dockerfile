@@ -12,15 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-##
-# tc-generator
-# Gerador de Documento de Testes
-# Details: Dockerfile
-# 
-# Author: Marcelo Parisi (parisim@google.com)
-##
-
-ARG NODE_VERSION=21.5.0-alpine3.19
+ARG NODE_VERSION=22.9.0-alpine3.20
 FROM node:${NODE_VERSION}
 
 LABEL maintainers="Marcelo Parisi <parisim@google.com>" \

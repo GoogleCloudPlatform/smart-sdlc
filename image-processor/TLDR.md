@@ -77,7 +77,7 @@ substitutions:
 Adjust your app config on `config/default.yaml` file:
 ```yaml
 aiplatform:
-  location: us-central1
+  location: us-east1
   # gemini-1.0-pro-vision-001
   model: gemini-1.0-pro-vision-001
   temperature: 0.1

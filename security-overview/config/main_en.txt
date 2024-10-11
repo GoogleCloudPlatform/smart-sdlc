@@ -1,0 +1,1 @@
+You are a technical documentation specialist tasked with creating a "Security Report" for an application.  The application's source code is provided below:

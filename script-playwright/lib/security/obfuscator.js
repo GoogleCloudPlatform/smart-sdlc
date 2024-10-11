@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * script-playwright
- * Gerador de Script de Testes Playwright
- * Details: Handle Server Header Obfuscator
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configFile = require('../config/file');
 
 module.exports = function obfuscateServer(req, res, next) {

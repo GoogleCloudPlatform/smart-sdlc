@@ -14,36 +14,38 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Main Solution Handler
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const morgan = require('morgan');
 const express = require('express');
 const process = require('node:process');
 const bodyParser = require('body-parser');
+const session = require("express-session")
+const crypto = require("crypto");
+
+const oauthHelper = require('./lib/gitlab/oauth2');
+const redisSession = require('./lib/redis/session');
 const configEnv = require('./lib/config/env');
 const configFile = require('./lib/config/file');
+const ctxHelper = require('./lib/config/ctx');
 const obfuscatorMid = require('./lib/security/obfuscator');
-const authorizerMid = require('./lib/security/authorizer');
-const wikiOperator = require('./lib/gitlab/wiki');
-const htmlFunctions = require('./lib/html/functions');
-const aiOperator = require('./lib/rest-ai/client');
-const mdOperator = require('./lib/markdown/mdhelper');
-const imgOperator = require('./lib/markdown/imghelper');
-const gitOperator = require('./lib/gitlab/git');
+const sessionMid = require('./lib/security/session');
+const gitlabOperator = require('./lib/gitlab/wiki');
 const metricOperator = require('./lib/metrificator/operator');
-const { v4: uuidv4 } = require('uuid');
+const uiFunctions = require('./lib/html/ui');
+const gitUtils = require('./lib/git/utils');
+const fileUtils = require('./lib/file/file');
+const gcsUtils = require('./lib/gcs/gcs');
+const apiv1 = require("./lib/api/v1");
 
 /* Server Listening Port */
 const port = process.env.PORT || 8080;
 
 /* Checking our Config File */
 if (!configFile.checkConfigFile()) {
+    process.exit(1);
+}
+
+/* Checking our Contexts */
+if (!ctxHelper.checkContext()) {
     process.exit(1);
 }
 
@@ -60,168 +62,485 @@ app.use(morgan(configFile.getLogFormat()));
 
 /* Middleware Setup */
 app.use(obfuscatorMid);
-app.use(authorizerMid);
 
-/* Body Parser */
-app.use('/process', bodyParser.urlencoded({ extended: true }));
-app.use('/rate', bodyParser.urlencoded({ extended: true }));
+/******************** 
+ * SESSION SETUP
+ ********************/
+let ourPassport = oauthHelper.getPassport();
+app.use(
+    session({
+        store: redisSession.getRedisStore(),
+        resave: true,
+        saveUninitialized: false,
+        cookie: { secure: false },
+        secret: configEnv.getSessionSecret(),
+    }),
+)
+app.use(ourPassport.initialize());
+app.use(ourPassport.session());
+app.use('/api', sessionMid);
+app.use('/ui', sessionMid);
 
-/* Our Static Content */
-app.use('/img', express.static('img'));
-app.use('/static', express.static('static'));
+/********************
+ * GITLAB Oauth 
+ ********************/
+app.get(`/gitlab`, (req, res, next) => {
+    const state = "/ui/";
+    const authenticator = ourPassport.authenticate('gitlab', { scope: ["read_user"], state })
+    authenticator(req, res, next)
+})
 
-/* Initial Page */
-app.get('/webui/:project', async (req, res) => {
+app.get("/gitlab/callback",
+    ourPassport.authenticate("gitlab", { failureRedirect: "/failure" }), async (req, res) => {
+        if (req.isAuthenticated()) {
+            let redirectTo = req.query["state"];
+            if (typeof redirectTo === 'string' && redirectTo.startsWith('/')) {
+                res.redirect(redirectTo)
+            } else {
+                res.redirect(configFile.getGitlabUrl());
+            }
+        }
+    }
+);
 
-    /* Getting Gitlab Project from Request */
-    const projectId = req.params.project;
+app.get('/logout', (req, res) => {
+    req.logout(function (err) {
+        if (err) {
+            return res.send("Error logging out.");
+        }
 
-    /* Loading Wiki data */
-    let myWikis = await wikiOperator.listWiki(projectId);
+        req.session.destroy(function (err) {
+            if (err) {
+                return res.send("Error destroying session.");
+            }
+            res.redirect(configFile.getGitlabUrl());
+        });
+    });
+});
 
-    /* Form HTML */
-    let myresponse = htmlFunctions.generateHtmlForm(projectId, myWikis);
-    
+/******************** 
+ * STATIC CONTENT
+ ********************/
+app.use("/images", express.static("./ui/images"));
+app.use("/css", express.static("./ui/css"));
+app.use("/js", express.static("./ui/js"));
+app.use("/static", express.static("./ui/static"));
+
+/********************
+ * UI SECTION 
+ ********************/
+/* About/Dashboard Screen */
+app.get('/ui/about', async (req, res) => {
+    let myresponse = uiFunctions.renderAbout();
+
     res.header("Content-Type", "text/html");
     res.send(myresponse);
 });
 
-/* Process the main form */
-app.post('/process', async (req, res) => {
+/* User Story Screen */
+app.get('/ui/userstory', async (req, res) => {
+    let myresponse = uiFunctions.renderUserStory();
 
-    /* Getting POST parameters */
-    let aiModel = req.body.model;
-    let projectId = req.body.project;
-    let transactionId = uuidv4();
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
 
-    /* figuring out which AI Api to call */
-    if (aiModel == "tc-generator") {
-        let slug = req.body.inputdoc;
-        let pageObject = await wikiOperator.getWiki(projectId, slug);
-        let pageContent = pageObject.content;
+/* Test Case Screen */
+app.get('/ui/testcase', async (req, res) => {
+    let myresponse = uiFunctions.renderTestCase();
 
-        let baseUrl = await wikiOperator.getProjectUrl(projectId);
-         
-        /* Checking if markdown has images */
-        let imgCheck = await mdOperator.checkImagesOnMarkdown(pageContent);
-        if(imgCheck) {
-            /* Clone wiki git repo */
-            if(await gitOperator.cloneWiki(baseUrl, projectId)) {
-                let allImages = await mdOperator.extractImagesFromMarkdown(pageContent);
-                /* Process each image */
-                for(let i = 0; i < allImages.length; i++) {
-                    let imgName = allImages[i].altText;
-                    let imgUrl = allImages[i].url;
-                    let imgMime = await imgOperator.getMimeType(imgUrl);
-                    let imgContent = await gitOperator.getFileFromRepo(projectId, imgUrl);
-                    let imgHash = await imgOperator.getBase64(imgContent);
-                    let imageDesc = await aiOperator.describeImage(imgMime, imgHash);
-                    pageContent = await mdOperator.replaceImagesInMarkdown(pageContent, imgName, imageDesc);
-                }
-            }
-        }
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
 
-        let newPagePath = slug + "_" + configFile.getGeneratorsufix();
-        let newPageContent = await aiOperator.generateDoc(pageContent);
-        let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, newPagePath);
-        let newPageResult = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
-        if (newPageResult) {
-            await metricOperator.insertMetric(transactionId, projectId, slug, newPagePath, aiModel);
-            res.header("Content-Type", "text/html");
-            res.send(ratingContent);
-        } else {
-            res.statusCode = 500;
-            res.send("Internal Error");
-        }   
-    } else if (aiModel == "script-cypress") {
-        let slug = req.body.inputdoc;
-        let pageContent = await wikiOperator.getWiki(projectId, slug);
-        let originalPath = slug.replace("_" + configFile.getGeneratorsufix(), "");
-        let newPagePath = slug.replace(configFile.getGeneratorsufix(), configFile.getCypresssufix());
-        let newPageContent = await aiOperator.generateCypress(pageContent);
-        let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, newPagePath);
-        let newPageResult = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
-        if (newPageResult) {
-            await metricOperator.insertMetric(transactionId, projectId, originalPath, newPagePath, aiModel);
-            res.header("Content-Type", "text/html");
-            res.send(ratingContent);
-        } else {
-            res.statusCode = 500;
-            res.send("Internal Error");
-        }
-    } else if (aiModel == "script-playwright") {
-        let slug = req.body.inputdoc;
-        let pageContent = await wikiOperator.getWiki(projectId, slug);
-        let originalPath = slug.replace("_" + configFile.getGeneratorsufix(), "");
-        let newPagePath = slug.replace(configFile.getGeneratorsufix(), configFile.getPlaywrightsufix());
-        let newPageContent = await aiOperator.generatePlaywright(pageContent);
-        let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, newPagePath);
-        let newPageResult = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
-        if (newPageResult) {
-            await metricOperator.insertMetric(transactionId, projectId, originalPath, newPagePath, aiModel);
-            res.header("Content-Type", "text/html");
-            res.send(ratingContent);
-        } else {
-            res.statusCode = 500;
-            res.send("Internal Error");
-        }
-    } else if (aiModel == "evaluator") {
-        let slug = req.body.inputdoc;
-        let pageContent = await wikiOperator.getWiki(projectId, slug);
-        let newPagePath = slug + "_" + configFile.getEvaluatorsufix();
-        let newPageContent = await aiOperator.generateEvaluation(pageContent);
-        let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, newPagePath);
-        let newPageResult = await wikiOperator.createWikiPage(projectId, newPagePath, newPageContent);
-        if (newPageResult) {
-            await metricOperator.insertMetric(transactionId, projectId, slug, newPagePath, aiModel);
-            res.header("Content-Type", "text/html");
-            res.send(ratingContent);
-        } else {
-            console.log(newPageResult);
-            res.statusCode = 500;
-            res.send("Internal Error");
-        }
-    } else if (aiModel == "testdata") {
-        let pageContent = req.body.inputdoc;
-        let qty = req.body.datasampleqty;
-        let newPageContent = await aiOperator.generateTestData(pageContent, qty);
-        let ratingContent = await htmlFunctions.generateRatingPage(transactionId, newPageContent, projectId, "test-data");
-        if (newPageContent) {
-            await metricOperator.insertMetric(transactionId, projectId, "test-data", "test-data", "test-data");
-            res.header("Content-Type", "text/html");
-            res.send(ratingContent);
-        } else {
-            res.statusCode = 500;
-            res.send("Internal Error");
-        }
-    } else if (aiModel == "us-generator") {
-        res.statusCode = 404;
-        res.send("Not found!");
+/* Test Script Screen */
+app.get('/ui/testscript', async (req, res) => {
+    let myresponse = uiFunctions.renderTestScript();
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Test Data Screen */
+app.get('/ui/testdata', async (req, res) => {
+    let myresponse = uiFunctions.renderTestData();
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Document Chatbot Screen */
+app.get('/ui/docchatbot', async (req, res) => {
+    /* Generate a Chat Session */
+    let chatSession = crypto.randomUUID();
+    req.session.chatSession = chatSession;
+    /* Getting Repo URL */
+    let projectId = req.session.projectId; 
+    let repoId = await gitlabOperator.getProjectUrl(projectId);
+    repoId = repoId.replaceAll(".git", ".wiki.git");
+
+    if (repoId != "") {
+        /* Clone Repo */
+        await gitUtils.cloneGitRepo(repoId, configEnv.getGitToken(), chatSession);
+        /* Build Chat Page */
+        let myresponse = uiFunctions.renderDocChatbot();
+
+        res.header("Content-Type", "text/html");
+        res.send(myresponse);
+
+        /* Preparing context for AI */
+        let dirPath = configFile.getWorkDir() + "/" + chatSession;
+        await fileUtils.getAllFilesContentsForChat(dirPath, chatSession);
+        await gcsUtils.uploadToGCS(chatSession);
+        await gcsUtils.createAndUploadEmptyJSON(chatSession);
+        gitUtils.removeLocalSource(chatSession);
     } else {
-        res.statusCode = 400;
-        res.send("Bad Request");
+        response.status = "FAILED"
+        res.redirect('/ui/');
     }
 });
 
-app.post('/rate', async (req, res) => {
+/* Code Chatbot Screen */
+app.get('/ui/codechatbot', async (req, res) => {
+    /* Generate a Chat Session */
+    let chatSession = crypto.randomUUID();
+    req.session.chatSession = chatSession;
+    /* Getting Repo URL */
+    let projectId = req.session.projectId; 
+    let repoId = await gitlabOperator.getProjectUrl(projectId);
 
-    /* Getting request parameters */
-    let projectId = req.body.project;
-    let document = req.body.document;
-    let transactionId = req.body.id;
-    let rating = req.body.rating;
+    if (repoId != "") {
+        /* Clone Repo */
+        await gitUtils.cloneGitRepo(repoId, configEnv.getGitToken(), chatSession);
+        /* Build Chat Page */
+        let myresponse = uiFunctions.renderCodeChatbot();
 
-    await metricOperator.insertRating(transactionId, parseInt(rating));
+        res.header("Content-Type", "text/html");
+        res.send(myresponse);
 
-    /* if rate is 0 delete page */
-    if((rating == 0 || rating == "0") && document != "test-data") {
-        _ = await wikiOperator.deleteWikiPage(projectId, document);
+        /* Preparing context for AI */
+        let dirPath = configFile.getWorkDir() + "/" + chatSession;
+        await fileUtils.getAllFilesContentsForChat(dirPath, chatSession);
+        await gcsUtils.uploadToGCS(chatSession);
+        await gcsUtils.createAndUploadEmptyJSON(chatSession);
+        gitUtils.removeLocalSource(chatSession);
+    } else {
+        response.status = "FAILED"
+        res.redirect('/ui/');
+    }
+});
+
+/* Our Search Screen */
+app.get('/ui/codesearch', async (req, res) => {
+    let myresponse = uiFunctions.renderCodeSearch();
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Solution Overview Screen */
+app.get('/ui/solutionoverview', async (req, res) => {
+    let myresponse = uiFunctions.renderSolutionOverview();
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Solution Overview Screen */
+app.get('/ui/solutiondatabase', async (req, res) => {
+    let myresponse = uiFunctions.renderSolutionDatabase();
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Solution API Screen */
+app.get('/ui/solutionapi', async (req, res) => {
+    let myresponse = uiFunctions.renderSolutionAPI();
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Solution Dependency Screen */
+app.get('/ui/solutiondep', async (req, res) => {
+    let myresponse = uiFunctions.renderSolutionDep();
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Solution Integration Screen */
+app.get('/ui/solutionintegration', async (req, res) => {
+    let myresponse = uiFunctions.renderSolutionIntegration();
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Solution Security Screen */
+app.get('/ui/solutionsecurity', async (req, res) => {
+    let myresponse = uiFunctions.renderSolutionSecurity();
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Index */
+app.get('/ui', async (req, res) => {
+    let projectName = req.session.projectName;
+    let username = req.session.passport.user.displayName;
+    let myresponse = uiFunctions.renderIndex(username, projectName);
+
+    res.header("Content-Type", "text/html");
+    res.send(myresponse);
+});
+
+/* Select Project Screen */
+app.get('/ui/selectproject', async (req, res) => {
+    let projectName = req.session.projectName;
+    let username = req.session.passport.user.displayName;
+    if (!req.headers["referer"] || !req.headers["referer"].includes("/ui/")) {
+        let myresponse = uiFunctions.renderSelectProjectFull(username, projectName);
+        res.header("Content-Type", "text/html");
+        res.send(myresponse);
+    } else {
+        let myresponse = uiFunctions.renderSelectProject();
+        res.header("Content-Type", "text/html");
+        res.send(myresponse);
     }
 
-    /* Refresh URL formation */
-    let refreshUrl = await wikiOperator.getProjectUrl(projectId);
+});
 
-    res.redirect(refreshUrl);
+/* Select Project Action */
+app.get('/ui/setproject/:projectId', async (req, res) => {
+    let projectId = req.params.projectId;
+    let projectName = await apiv1.getProjectName(projectId);
+    req.session.projectId = projectId;
+    req.session.projectName = projectName;
+    res.redirect('/ui/');
+});
+
+/********************
+ * API SECTION
+ ********************/
+
+/* Check if Chatbot Doc session is present on Cloud Storage */
+app.get('/api/v1/checkdocsession', async function (req, res, next) {
+    let chatSession = req.session.chatSession;
+    response = await apiv1.checkChatSession(chatSession);
+    res.json(response);
+});
+
+/* Check if Chatbot Code session is present on Cloud Storage */
+app.get('/api/v1/checkcodesession', async function (req, res, next) {
+    let chatSession = req.session.chatSession;
+    response = await apiv1.checkChatSession(chatSession);
+    res.json(response);
+});
+
+/* send message to Document Chatbot */
+app.post('/api/v1/docmessage', bodyParser.json(), async function (req, res, next) {
+    let chatSession = req.session.chatSession;
+    let inputMessage = req.body.message;
+    let response = await apiv1.sendDocChatMessage(chatSession, inputMessage);
+    res.json(response);
+});
+
+/* send message to Code Chatbot */
+app.post('/api/v1/codemessage', bodyParser.json(), async function (req, res, next) {
+    let chatSession = req.session.chatSession;
+    let inputMessage = req.body.message;
+    let response = await apiv1.sendCodeChatMessage(chatSession, inputMessage);
+    res.json(response);
+});
+
+/* Load Project List */
+app.get('/api/v1/projects', async function (req, res, next) {
+    let response = await apiv1.getProjects()
+    res.json(response);
+});
+
+/* Load User Story List for Evaluation*/
+app.get('/api/v1/userstoryoptions', async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let response = await apiv1.getUsOptions(projectId);
+    res.json(response);
+});
+
+/* Load User Story List for Test Case Creation */
+app.get('/api/v1/testcaseoptions', async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let response = await apiv1.getTcOptions(projectId);
+    res.json(response);
+});
+
+/* Load Test Case List for Script Creation */
+app.get('/api/v1/testscriptoptions', async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let response = await apiv1.getTsOptions(projectId);
+    res.json(response);
+});
+
+/* Evaluate User Story */
+app.post('/api/v1/userstory', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let inputDoc = req.body.documentId;
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processUserStory(projectId, inputDoc);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, response.documentId, response.pagePath, "userstory-evaluator");
+    res.json(response);
+});
+
+/* Create Test Case */
+app.post('/api/v1/testcase', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let inputDoc = req.body.documentId;
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processTestCase(projectId, inputDoc);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, response.documentId, response.pagePath, "testcase-generator");
+    res.json(response);
+});
+
+/* Create Cypress Script */
+app.post('/api/v1/cypress', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let inputDoc = req.body.documentId;
+    let gitlabUser = req.session.passport.user.displayName; 
+    let response = await apiv1.processCypress(projectId, inputDoc);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, response.documentId, response.pagePath, "script-cypress");
+    res.json(response);
+});
+
+/* Create Playwright Script */
+app.post('/api/v1/playwright', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let inputDoc = req.body.documentId;
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processPlaywright(projectId, inputDoc);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, response.documentId, response.pagePath, "script-playwright");
+    res.json(response);
+});
+
+/* Create Selenium Script */
+app.post('/api/v1/selenium', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let inputDoc = req.body.documentId;
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processSelenium(projectId, inputDoc);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, response.documentId, response.pagePath, "script-selenium");
+    res.json(response);
+});
+
+/* Perform Codesearch */
+app.post('/api/v1/codesearch', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let userQuery = req.body.userQuery;
+    let repoId = await gitlabOperator.getProjectUrl(projectId);
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processCodeSearch(projectId, repoId, userQuery);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, "code-search", "code-search", "code-search");
+    res.json(response);
+});
+
+/* Code Overview */
+app.get('/api/v1/solutionoverview', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let repoId = await gitlabOperator.getProjectUrl(projectId);
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processSolutionOverview(projectId, repoId);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, "solution-overview", "solution-overview", "solution-overview");
+    res.json(response);
+});
+
+/* Database Overview */
+app.get('/api/v1/solutiondatabase', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let repoId = await gitlabOperator.getProjectUrl(projectId);
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processSolutionDatabase(projectId, repoId);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, "solution-database", "solution-database", "solution-database");
+    res.json(response);
+});
+
+/* API Overview */
+app.get('/api/v1/solutionapi', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let repoId = await gitlabOperator.getProjectUrl(projectId);
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processSolutionAPI(projectId, repoId);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, "solution-api", "solution-api", "solution-api");
+    res.json(response);
+});
+
+/* Dependency Overview */
+app.get('/api/v1/solutiondep', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let repoId = await gitlabOperator.getProjectUrl(projectId);
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processSolutionDep(projectId, repoId);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, "solution-dependency", "solution-dependency", "solution-dependency");
+    res.json(response);
+});
+
+/* Integration Overview */
+app.get('/api/v1/solutionintegration', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let repoId = await gitlabOperator.getProjectUrl(projectId);
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processSolutionIntegration(projectId, repoId);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, "solution-integration", "solution-integration", "solution-integration");
+    res.json(response);
+});
+
+/* Security Overview */
+app.get('/api/v1/solutionsecurity', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let repoId = await gitlabOperator.getProjectUrl(projectId);
+    let gitlabUser = req.session.passport.user.displayName;
+    let response = await apiv1.processSolutionSecurity(projectId, repoId);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, "solution-security", "solution-security", "solution-security");
+    res.json(response);
+});
+
+/* Check Document Exists */
+app.post('/api/v1/checkdocument', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let inputDoc = req.body.documentId;
+    let modelId = req.body.modelId;
+    let response = await apiv1.checkDocumentExists(projectId, inputDoc, modelId);
+    res.json(response);
+});
+
+/* Create Test Data */
+app.post('/api/v1/testdata', bodyParser.json(), async function (req, res, next) {
+    let projectId = req.session.projectId;
+    let gitlabUser = req.session.passport.user.displayName;
+    let inputDoc = req.body.documentId;
+    let sampleQty = req.body.sampleQty;
+    let modelId = req.body.modelId;
+    let response = await apiv1.processTestData(projectId, modelId, inputDoc, sampleQty);
+    await metricOperator.insertMetric(response.transactionId, gitlabUser, response.projectId, "test-data", "test-data", modelId);
+    res.json(response);
+});
+
+/* Rating Entry */
+app.post('/api/v1/rating', bodyParser.json(), async function (req, res, next) {
+    let response = "";
+    let projectId = req.session.projectId;
+    let documentId = req.body.documentId;
+    let documentContent = req.body.documentContent;
+    let documentPath = req.body.documentPath;
+    let transactionId = req.body.transactionId;
+    let ratingValue = req.body.ratingValue;
+
+    await metricOperator.insertRating(transactionId, parseInt(ratingValue));
+
+    if (documentId != "do-not-save") {
+        response = await apiv1.createDocument(projectId, documentPath, documentContent);
+    }
+
+    res.json(response);
 
 });
 

@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * test-data
- * Gerador de Dados
- * Details: Handle User-Agent Authorization
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configEnv = require('../../lib/config/env');
 
 module.exports = function authorizeRequest(req, res, next) {

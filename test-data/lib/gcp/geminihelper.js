@@ -14,20 +14,73 @@
  * limitations under the License.
  */
 
-/**
- * test-data
- * Gerador de Dados
- * Details: GCP Vertex AI Helper Functions
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configEnv = require('../config/env');
 const configFile = require('../config/file');
 const contextFile = require('../config/ctx');
 const {VertexAI} = require('@google-cloud/vertexai');
 
-async function callPredict(mycontent, qty) {
+async function callPredictCSV(mycontent, qty) {
+
+    /* Config Parameters */
+    const project = configEnv.getProject();
+    const location = configFile.getLocation();
+    const model = configFile.getModel();
+    const thistemperature = parseFloat(configFile.getTemperature());
+    const thismaxtokens = parseFloat(configFile.getMaxtokens());
+
+    const vertex_ai = new VertexAI({
+        project: project,
+        location: location
+    });
+
+    /* Instantiate the models */
+    const generativeModel = vertex_ai.preview.getGenerativeModel({
+        model: model,
+        generation_config: {
+            "max_output_tokens": thismaxtokens,
+            "temperature": thistemperature,
+            "top_p": 1
+        },
+        safety_settings: [
+            {
+                "category": "HARM_CATEGORY_HATE_SPEECH",
+                "threshold": "BLOCK_ONLY_HIGH"
+            },
+            {
+                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                "threshold": "BLOCK_ONLY_HIGH"
+            },
+            {
+                "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                "threshold": "BLOCK_ONLY_HIGH"
+            },
+            {
+                "category": "HARM_CATEGORY_HARASSMENT",
+                "threshold": "BLOCK_ONLY_HIGH"
+            }
+        ],
+    });
+
+    /* Getting the prompt */
+    const mycontext = contextFile.getContextCSV().replaceAll("__NUMBER__", qty.toString());
+
+    /* Building our request */
+    const req = {
+        contents: [{role: 'user', parts: [{text: mycontext + "\n\n" + mycontent}]}],
+    };
+    
+    const streamingResp = await generativeModel.generateContentStream(req);
+
+    const response = await streamingResp.response;
+    
+    if(response.candidates[0].content.parts[0].text != "") {
+        return response.candidates[0].content.parts[0].text;
+    } else {
+        return "";
+    }
+}
+
+async function callPredictJSON(mycontent, qty) {
 
     /* Config Parameters */
     const project = configEnv.getProject();
@@ -70,7 +123,7 @@ async function callPredict(mycontent, qty) {
     });
 
     /* Getting the prompt */
-    const mycontext = contextFile.getContext().replaceAll("__NUMBER__", qty.toString());
+    const mycontext = contextFile.getContextJSON().replaceAll("__NUMBER__", qty.toString());
 
     /* Building our request */
     const req = {
@@ -88,4 +141,5 @@ async function callPredict(mycontent, qty) {
     }
 }
 
-module.exports.callPredict = callPredict;
+module.exports.callPredictCSV = callPredictCSV;
+module.exports.callPredictJSON = callPredictJSON;

@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: Handle Config File
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const config = require('config');
 const gitlabConfig = require('../../lib/config/gitlab');
 const githubConfig = require('../../lib/config/github');
@@ -29,179 +21,91 @@ const githubConfig = require('../../lib/config/github');
 function checkConfigFile() {
     let test;
 
-    /* Check aitext.location */
+    /* Check aiplatform.location */
     try {
-        test = config.get('aitext.location');
+        test = config.get('aiplatform.location');
     } catch (e) {
-        console.log("No aitext.location set in config file");
+        console.log("No aiplatform.location set in config file");
         return false;
     }
 
-    /* Check aitext.model */
+    /* Check aiplatform.model */
     try {
-        test = config.get('aitext.model');
+        test = config.get('aiplatform.model');
     } catch (e) {
-        console.log("No aitext.model set in config file");
+        console.log("No aiplatform.model set in config file");
         return false;
     }
 
-    /* Check aitext.temperature */
+    /* Check aiplatform.temperature */
     try {
-        test = config.get('aitext.temperature');
+        test = config.get('aiplatform.temperature');
     } catch (e) {
-        console.log("No aitext.temperature set in config file");
+        console.log("No aiplatform.temperature set in config file");
         return false;
     }
 
-    /* Check aitext.maxtokens */
+    /* Check aiplatform.maxtokens */
     try {
-        test = config.get('aitext.maxtokens');
+        test = config.get('aiplatform.maxtokens');
     } catch (e) {
-        console.log("No aitext.maxtokens set in config file");
+        console.log("No aiplatform.maxtokens set in config file");
         return false;
     }
 
-    /* Check aitext.keepalive_timeout */
+    /* Check aiplatform.keepalive_timeout */
     try {
-        test = config.get('aitext.keepalive_timeout');
+        test = config.get('aiplatform.keepalive_timeout');
     } catch (e) {
-        console.log("No aitext.keepalive_timeout set in config file");
+        console.log("No aiplatform.keepalive_timeout set in config file");
         return false;
     }
 
-    /* Check aitext.keepalive_time */
+    /* Check aiplatform.keepalive_time */
     try {
-        test = config.get('aitext.keepalive_time');
+        test = config.get('aiplatform.keepalive_time');
     } catch (e) {
-        console.log("No aitext.keepalive_time set in config file");
+        console.log("No aiplatform.keepalive_time set in config file");
         return false;
     }
 
-    /* Check aitext.enable_retries */
+    /* Check aiplatform.enable_retries */
     try {
-        test = config.get('aitext.enable_retries');
+        test = config.get('aiplatform.enable_retries');
     } catch (e) {
-        console.log("No aitext.enable_retries set in config file");
+        console.log("No aiplatform.enable_retries set in config file");
         return false;
     }
 
-    /* Check aitext.dns_min_time_between_resolutions_ms */
+    /* Check aiplatform.dns_min_time_between_resolutions_ms */
     try {
-        test = config.get('aitext.dns_min_time_between_resolutions_ms');
+        test = config.get('aiplatform.dns_min_time_between_resolutions_ms');
     } catch (e) {
-        console.log("No aitext.dns_min_time_between_resolutions_ms set in config file");
+        console.log("No aiplatform.dns_min_time_between_resolutions_ms set in config file");
         return false;
     }
 
-    /* Check aitext.initial_reconnect_backoff_ms */
+    /* Check aiplatform.initial_reconnect_backoff_ms */
     try {
-        test = config.get('aitext.initial_reconnect_backoff_ms');
+        test = config.get('aiplatform.initial_reconnect_backoff_ms');
     } catch (e) {
-        console.log("No aitext.initial_reconnect_backoff_ms set in config file");
+        console.log("No aiplatform.initial_reconnect_backoff_ms set in config file");
         return false;
     }
 
-    /* Check aitext.max_reconnect_backoff_ms */
+    /* Check aiplatform.max_reconnect_backoff_ms */
     try {
-        test = config.get('aitext.max_reconnect_backoff_ms');
+        test = config.get('aiplatform.max_reconnect_backoff_ms');
     } catch (e) {
-        console.log("No aitext.max_reconnect_backoff_ms set in config file");
+        console.log("No aiplatform.max_reconnect_backoff_ms set in config file");
         return false;
     }
 
-    /* Check aitext.client_idle_timeout_ms */
+    /* Check aiplatform.client_idle_timeout_ms */
     try {
-        test = config.get('aitext.client_idle_timeout_ms');
+        test = config.get('aiplatform.client_idle_timeout_ms');
     } catch (e) {
-        console.log("No aitext.client_idle_timeout_ms set in config file");
-        return false;
-    }
-
-    /* Check aicode.location */
-    try {
-        test = config.get('aicode.location');
-    } catch (e) {
-        console.log("No aicode.location set in config file");
-        return false;
-    }
-
-    /* Check aicode.model */
-    try {
-        test = config.get('aicode.model');
-    } catch (e) {
-        console.log("No aicode.model set in config file");
-        return false;
-    }
-
-    /* Check aicode.temperature */
-    try {
-        test = config.get('aicode.temperature');
-    } catch (e) {
-        console.log("No aicode.temperature set in config file");
-        return false;
-    }
-
-    /* Check aicode.maxtokens */
-    try {
-        test = config.get('aicode.maxtokens');
-    } catch (e) {
-        console.log("No aicode.maxtokens set in config file");
-        return false;
-    }
-
-    /* Check aicode.keepalive_timeout */
-    try {
-        test = config.get('aicode.keepalive_timeout');
-    } catch (e) {
-        console.log("No aicode.keepalive_timeout set in config file");
-        return false;
-    }
-
-    /* Check aicode.keepalive_time */
-    try {
-        test = config.get('aicode.keepalive_time');
-    } catch (e) {
-        console.log("No aicode.keepalive_time set in config file");
-        return false;
-    }
-
-    /* Check aicode.enable_retries */
-    try {
-        test = config.get('aicode.enable_retries');
-    } catch (e) {
-        console.log("No aicode.enable_retries set in config file");
-        return false;
-    }
-
-    /* Check aicode.dns_min_time_between_resolutions_ms */
-    try {
-        test = config.get('aicode.dns_min_time_between_resolutions_ms');
-    } catch (e) {
-        console.log("No aicode.dns_min_time_between_resolutions_ms set in config file");
-        return false;
-    }
-
-    /* Check aicode.initial_reconnect_backoff_ms */
-    try {
-        test = config.get('aicode.initial_reconnect_backoff_ms');
-    } catch (e) {
-        console.log("No aicode.initial_reconnect_backoff_ms set in config file");
-        return false;
-    }
-
-    /* Check aicode.max_reconnect_backoff_ms */
-    try {
-        test = config.get('aicode.max_reconnect_backoff_ms');
-    } catch (e) {
-        console.log("No aicode.max_reconnect_backoff_ms set in config file");
-        return false;
-    }
-
-    /* Check aicode.client_idle_timeout_ms */
-    try {
-        test = config.get('aicode.client_idle_timeout_ms');
-    } catch (e) {
-        console.log("No aicode.client_idle_timeout_ms set in config file");
+        console.log("No aiplatform.client_idle_timeout_ms set in config file");
         return false;
     }
 
@@ -325,12 +229,12 @@ function checkConfigFile() {
     return true;
 }
 
-function getTextLocation() {
+function getLocation() {
     let location;
 
-    /* Get aitext.location */
+    /* Get aiplatform.location */
     try {
-        location = config.get('aitext.location');
+        location = config.get('aiplatform.location');
     } catch (e) {
         return "";
     }
@@ -338,12 +242,12 @@ function getTextLocation() {
     return location;
 }
 
-function getTextModel() {
+function getModel() {
     let model;
 
-    /* Get aitext.model */
+    /* Get aiplatform.model */
     try {
-        model = config.get('aitext.model');
+        model = config.get('aiplatform.model');
     } catch (e) {
         return "";
     }
@@ -351,12 +255,12 @@ function getTextModel() {
     return model;
 }
 
-function getTextTemperature() {
+function getTemperature() {
     let temperature;
 
-    /* Get aitext.location */
+    /* Get aiplatform.location */
     try {
-        temperature = config.get('aitext.temperature');
+        temperature = config.get('aiplatform.temperature');
     } catch (e) {
         return "";
     }
@@ -364,12 +268,12 @@ function getTextTemperature() {
     return temperature;
 }
 
-function getTextMaxtokens() {
+function getMaxtokens() {
     let maxtokens;
 
-    /* Get aitext.location */
+    /* Get aiplatform.location */
     try {
-        maxtokens = config.get('aitext.maxtokens');
+        maxtokens = config.get('aiplatform.maxtokens');
     } catch (e) {
         return "";
     }
@@ -377,12 +281,12 @@ function getTextMaxtokens() {
     return maxtokens;
 }
 
-function getTextKeepaliveTimeout() {
+function getKeepaliveTimeout() {
     let timeout;
 
-    /* Get aitext.keepalive_timeout */
+    /* Get aiplatform.keepalive_timeout */
     try {
-        timeout = config.get('aitext.keepalive_timeout');
+        timeout = config.get('aiplatform.keepalive_timeout');
     } catch (e) {
         return "";
     }
@@ -390,12 +294,12 @@ function getTextKeepaliveTimeout() {
     return timeout;
 }
 
-function getTextKeepaliveTime() {
+function getKeepaliveTime() {
     let time;
 
-    /* Get aitext.keepalive_time */
+    /* Get aiplatform.keepalive_time */
     try {
-        time = config.get('aitext.keepalive_time');
+        time = config.get('aiplatform.keepalive_time');
     } catch (e) {
         return "";
     }
@@ -403,12 +307,12 @@ function getTextKeepaliveTime() {
     return time;
 }
 
-function getTextEnableRetries() {
+function getEnableRetries() {
     let enableretries;
 
-    /* Get aitext.enable_retries */
+    /* Get aiplatform.enable_retries */
     try {
-        enableretries = config.get('aitext.enable_retries');
+        enableretries = config.get('aiplatform.enable_retries');
     } catch (e) {
         return "";
     }
@@ -416,12 +320,12 @@ function getTextEnableRetries() {
     return enableretries;
 }
 
-function getTextDnsTime() {
+function getDnsTime() {
     let dnstime;
 
-    /* Get aitext.dns_min_time_between_resolutions_ms */
+    /* Get aiplatform.dns_min_time_between_resolutions_ms */
     try {
-        dnstime = config.get('aitext.dns_min_time_between_resolutions_ms');
+        dnstime = config.get('aiplatform.dns_min_time_between_resolutions_ms');
     } catch (e) {
         return "";
     }
@@ -429,12 +333,12 @@ function getTextDnsTime() {
     return dnstime;
 }
 
-function getTextInitialBackoff() {
+function getInitialBackoff() {
     let time;
 
-    /* Get aitext.initial_reconnect_backoff_ms */
+    /* Get aiplatform.initial_reconnect_backoff_ms */
     try {
-        time = config.get('aitext.initial_reconnect_backoff_ms');
+        time = config.get('aiplatform.initial_reconnect_backoff_ms');
     } catch (e) {
         return "";
     }
@@ -442,12 +346,12 @@ function getTextInitialBackoff() {
     return time;
 }
 
-function getTextMaxBackoff() {
+function getMaxBackoff() {
     let time;
 
-    /* Get aitext.max_reconnect_backoff_ms */
+    /* Get aiplatform.max_reconnect_backoff_ms */
     try {
-        time = config.get('aitext.max_reconnect_backoff_ms');
+        time = config.get('aiplatform.max_reconnect_backoff_ms');
     } catch (e) {
         return "";
     }
@@ -455,12 +359,12 @@ function getTextMaxBackoff() {
     return time;
 }
 
-function getTextIdleTimeout() {
+function getIdleTimeout() {
     let time;
 
-    /* Get aitext.client_idle_timeout_ms */
+    /* Get aiplatform.client_idle_timeout_ms */
     try {
-        time = config.get('aitext.client_idle_timeout_ms');
+        time = config.get('aiplatform.client_idle_timeout_ms');
     } catch (e) {
         return "";
     }
@@ -479,149 +383,6 @@ function getLanguage() {
     }
 
     return language;
-}
-
-function getCodeLocation() {
-    let location;
-
-    /* Get aicode.location */
-    try {
-        location = config.get('aicode.location');
-    } catch (e) {
-        return "";
-    }
-
-    return location;
-}
-
-function getCodeModel() {
-    let model;
-
-    /* Get aicode.model */
-    try {
-        model = config.get('aicode.model');
-    } catch (e) {
-        return "";
-    }
-
-    return model;
-}
-
-function getCodeTemperature() {
-    let temperature;
-
-    /* Get aicode.location */
-    try {
-        temperature = config.get('aicode.temperature');
-    } catch (e) {
-        return "";
-    }
-
-    return temperature;
-}
-
-function getCodeMaxtokens() {
-    let maxtokens;
-
-    /* Get aicode.location */
-    try {
-        maxtokens = config.get('aicode.maxtokens');
-    } catch (e) {
-        return "";
-    }
-
-    return maxtokens;
-}
-
-function getCodeKeepaliveTimeout() {
-    let timeout;
-
-    /* Get aicode.keepalive_timeout */
-    try {
-        timeout = config.get('aicode.keepalive_timeout');
-    } catch (e) {
-        return "";
-    }
-
-    return timeout;
-}
-
-function getCodeKeepaliveTime() {
-    let time;
-
-    /* Get aicode.keepalive_time */
-    try {
-        time = config.get('aicode.keepalive_time');
-    } catch (e) {
-        return "";
-    }
-
-    return time;
-}
-
-function getCodeEnableRetries() {
-    let enableretries;
-
-    /* Get aicode.enable_retries */
-    try {
-        enableretries = config.get('aicode.enable_retries');
-    } catch (e) {
-        return "";
-    }
-
-    return enableretries;
-}
-
-function getCodeDnsTime() {
-    let dnstime;
-
-    /* Get aicode.dns_min_time_between_resolutions_ms */
-    try {
-        dnstime = config.get('aicode.dns_min_time_between_resolutions_ms');
-    } catch (e) {
-        return "";
-    }
-
-    return dnstime;
-}
-
-function getCodeInitialBackoff() {
-    let time;
-
-    /* Get aicode.initial_reconnect_backoff_ms */
-    try {
-        time = config.get('aicode.initial_reconnect_backoff_ms');
-    } catch (e) {
-        return "";
-    }
-
-    return time;
-}
-
-function getCodeMaxBackoff() {
-    let time;
-
-    /* Get aicode.max_reconnect_backoff_ms */
-    try {
-        time = config.get('aicode.max_reconnect_backoff_ms');
-    } catch (e) {
-        return "";
-    }
-
-    return time;
-}
-
-function getCodeIdleTimeout() {
-    let time;
-
-    /* Get aicode.client_idle_timeout_ms */
-    try {
-        time = config.get('aicode.client_idle_timeout_ms');
-    } catch (e) {
-        return "";
-    }
-
-    return time;
 }
 
 function getGrpcRetry() {
@@ -780,17 +541,17 @@ function getServerName() {
     return servername;
 }
 
-module.exports.getTextMaxtokens = getTextMaxtokens;
-module.exports.getTextTemperature = getTextTemperature;
-module.exports.getTextModel = getTextModel;
-module.exports.getTextLocation = getTextLocation;
-module.exports.getTextKeepaliveTime = getTextKeepaliveTime;
-module.exports.getTextKeepaliveTimeout = getTextKeepaliveTimeout;
-module.exports.getTextEnableRetries = getTextEnableRetries;
-module.exports.getTextDnsTime = getTextDnsTime;
-module.exports.getTextInitialBackoff = getTextInitialBackoff;
-module.exports.getTextMaxBackoff = getTextMaxBackoff;
-module.exports.getTextIdleTimeout = getTextIdleTimeout;
+module.exports.getMaxtokens = getMaxtokens;
+module.exports.getTemperature = getTemperature;
+module.exports.getModel = getModel;
+module.exports.getLocation = getLocation;
+module.exports.getKeepaliveTime = getKeepaliveTime;
+module.exports.getKeepaliveTimeout = getKeepaliveTimeout;
+module.exports.getEnableRetries = getEnableRetries;
+module.exports.getDnsTime = getDnsTime;
+module.exports.getInitialBackoff = getInitialBackoff;
+module.exports.getMaxBackoff = getMaxBackoff;
+module.exports.getIdleTimeout = getIdleTimeout;
 module.exports.getLanguage = getLanguage;
 module.exports.getLogFormat = getLogFormat;
 module.exports.checkConfigFile = checkConfigFile;
@@ -805,14 +566,3 @@ module.exports.getFuncDiffRank = getFuncDiffRank;
 module.exports.getFuncFileSummary = getFuncFileSummary;
 module.exports.getFuncFilePerformance = getFuncFilePerformance;
 module.exports.getFuncFileSecurity = getFuncFileSecurity;
-module.exports.getCodeMaxtokens = getCodeMaxtokens;
-module.exports.getCodeTemperature = getCodeTemperature;
-module.exports.getCodeModel = getCodeModel;
-module.exports.getCodeLocation = getCodeLocation;
-module.exports.getCodeKeepaliveTime = getCodeKeepaliveTime;
-module.exports.getCodeKeepaliveTimeout = getCodeKeepaliveTimeout;
-module.exports.getCodeEnableRetries = getCodeEnableRetries;
-module.exports.getCodeDnsTime = getCodeDnsTime;
-module.exports.getCodeInitialBackoff = getCodeInitialBackoff;
-module.exports.getCodeMaxBackoff = getCodeMaxBackoff;
-module.exports.getCodeIdleTimeout = getCodeIdleTimeout;

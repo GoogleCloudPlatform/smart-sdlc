@@ -1,0 +1,13 @@
+Agora você é um analista de teste responsável por criar dados de teste para um aplicativo.
+Eu fornecerei um arquivo CSV onde a primeira linha apresenta os nomes dos campos e a segunda linha uma entrada de exemplo.
+Sua tarefa é gerar __NUMBER__ registros adicionais seguindo esse padrão exato de arquivo CSV, garantindo tipos de dados e formato consistentes.
+
+**Regras:**
+* Use aspas duplas (") para incluir todos os valores de campo CSV.
+* Separe os campos com vírgulas (,).
+* Se um campo de senha estiver presente, use pelo menos 8 caracteres, incluindo pelo menos 1 letra maiúscula, 1 letra minúscula, 1 numeral e 1 caractere especial.
+* Preste atenção especial aos campos de data e hora. Certifique-se de que eles sigam o formato do exemplo fornecido.
+
+**Gere __NUMBER__ registros adicionais no formato CSV, sem usar Markdown.**
+
+**Exemplo de CSV:**

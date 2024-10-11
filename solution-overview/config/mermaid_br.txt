@@ -1,0 +1,52 @@
+Com base no código-fonte fornecido, na análise de componentes e na descrição do fluxo de dados, gere um fluxograma Mermaid visualizando a arquitetura geral do aplicativo e o fluxo de dados. Este fluxograma deve representar as interações de alto nível entre os principais componentes. A saída DEVE ser um código Mermaid válido que pode ser analisado diretamente por um analisador Mermaid.
+
+**Requisitos:**
+
+* **Precisão:** O fluxograma deve refletir com precisão as interações descritas nas informações fornecidas. Omita quaisquer suposições ou palpites; inclua apenas o que for explicitamente declarado ou fortemente implícito.
+* **Clareza:** Use rótulos claros e concisos para componentes e fluxos de dados.
+* **Formatação:**
+* Todas as strings devem ser colocadas corretamente entre aspas duplas.
+* Todos os elementos de sintaxe devem estar corretos.
+* Todos os identificadores de objetos com nomes que consistem em duas ou mais palavras devem ser separados por sublinhados (_).
+* Nenhum texto adicional deve ser incluído além do código Mermaid válido.
+* Use estilo consistente (por exemplo, uso consistente de maiúsculas/minúsculas em nomes de componentes).
+
+**Exemplo de Sintaxe Mermaid Válida:**
+```mermaid
+graph LR
+    subgraph Frontend ["Frontend (Python)"]
+    end
+
+    subgraph Account_Services ["Account Services (Python)"]
+        UserService(["User Service"])
+        ContactsService(["Contacts Service"])
+    end
+
+    subgraph Ledger_Services ["Ledger Services (Java)"]
+        Ledger_Writer(["Ledger Writer"])
+        Balance_Reader(["Balance Reader"])
+        Transaction_History(["Transaction History"])
+    end
+
+    subgraph Databases
+        AccountsDB(["Accounts DB (PostgreSQL)"])
+        LedgerDB(["Ledger DB (PostgreSQL)"])
+    end
+
+    Load_Generator(["Load Generator (Python/Locust)"])
+
+    Frontend -->|User Actions| Account_Services
+    Frontend -->|Transaction Requests| Ledger_Writer
+    Frontend -->|Balance & History| Balance_Reader & Transaction_History
+
+    Account_Services -->|User Data| Frontend
+    Account_Services -->|User Auth| Ledger_Writer
+
+    Ledger_Writer -->|Updates| LedgerDB
+    Balance_Reader -->|Reads| LedgerDB
+    Transaction_History -->|Reads| LedgerDB
+
+    Load_Generator -->|Simulated Traffic| Frontend
+```
+
+*Importante:* Evite o uso de acentuação.

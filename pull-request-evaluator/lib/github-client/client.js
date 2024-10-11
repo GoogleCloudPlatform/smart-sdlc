@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * pull-request-evaluator
- * Pull Request Evaluator
- * Details: GitHub Client
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const { Octokit } = require('@octokit/rest');
 const envHelper = require('../../lib/config/env');
 const configHelper = require('../../lib/config/file')

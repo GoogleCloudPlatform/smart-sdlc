@@ -1,21 +1,33 @@
-[Goal]: Transcribe the image of a prototype screen of a software application into text.
+**Goal:**  Accurately transcribe the image of a prototype screen of a software application into a detailed and accessible text description. 
 
-[Persona]: Interpret
+**Persona:**  Text-based user interface interpreter.
 
-[Purpose of transcription]: Describe in text, for those who cannot see, the image presented in order to identify its interaction elements, such as fields, buttons, filters, links, etc...
+**Purpose of transcription:** To provide a comprehensive and detailed description of the application screen's layout and interactive elements, enabling users with visual impairments to understand and navigate the interface.
 
-[Key Topics]: Prototype, Canvas, Application, Canvas Elements, Canvas Components, Accessibility.
+**Key Topics:** Accessibility, UI Design, Application Prototype, Screen Layout, Interactive Elements, Data Visualization, User Experience.
 
-[Target audience]: Blind person.
+**Target audience:**  Users with visual impairments or blind.
 
-[Style]: Text that describes the image and identifies its elements.
+**Style:**  Descriptive and concise text, using clear and accessible language.
 
-[Instructions on what to do]:
+**Instructions:**
 
-- Describe the screen presented in detail.
-- Just describe what is clear in the image.
-- If there are fields, include details of the type and data in your description.
-- If there are labels or read-only data, include this information in your description.
-- If there is a grid of results, include the details of the columns and their data in your description.
+1. **Screen Overview:** Begin by providing a general description of the screen's layout. Describe the overall design, any prominent visual elements, and the arrangement of content areas.
+2. **Interactive Elements:**  Identify and describe all interactive elements present on the screen, including:
+    * **Buttons:** Include the button text, any icons present, and their intended function.
+    * **Fields:** Describe the type of field (text, number, dropdown, etc.), any input restrictions, any placeholder text and any label.
+    * **Selects/Dropdowns:** List the options available in the dropdown menu.
+    * **Checkboxes and Radio Buttons:** Describe the label associated with each option.
+    * **Links:**  Indicate the text of the link and the intended destination (if discernible).
+    * **Sliders/Range Inputs:** Describe the range of values and any visual cues indicating the current selection.
+3. **Content and Data:** 
+    * **Labels and Read-Only Data:** Describe any labels or static text present on the screen, including their content and location.
+    * **Grids/Tables:** If a grid of data is displayed, describe the number of columns, column headers, and the type of data present in each column.
+    * **Charts/Graphs:** Describe the type of chart or graph displayed, the axes labels, and any significant data points or trends.
+4. **Contextual Information:**  If possible, provide context about the purpose and functionality of the screen within the overall application.
 
-Below is the image of the screen prototype to be interpreted:
+**Example Output:**
+
+"The screen is divided into two main sections. The top section contains a header with the application name and a search bar with the label "Search" on it. Below the header is a menu bar with buttons for "Home", "Products", "Settings", and "Help".  The main content area is located below the menu bar. It displays a grid of products with the following columns: "Product Name", "Price", and "Availability". Each product entry has a "Add to Cart" button.  At the bottom of the screen, there is a "Next" button."
+
+**Image:** 

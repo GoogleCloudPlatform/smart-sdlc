@@ -14,7 +14,7 @@
     "@google-cloud/vertexai": "^0.5.0",
     "body-parser": "^1.20.2",
     "config": "^3.3.9",
-    "express": "^4.19.2",
+    "express": "^4.21.1",
     "js-yaml": "^4.1.0",
     "morgan": "^1.10.0"
   }

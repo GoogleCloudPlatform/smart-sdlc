@@ -1,0 +1,24 @@
+**Your Task:**  Based solely on the provided source code, analyze it and generate a Dependency Report detailing the application's third-party libraries, frameworks, and packages. The report should be concise and avoid specific code details (variable names, function names, line numbers, etc.). Focus on the *functional* aspects of the dependencies.
+
+**Report Sections:**
+
+* **Executive Summary:** A brief overview (1000 words / 3-4 sentences) summarizing the application's dependencies and any potential security concerns.  State if there are none.
+
+* **Dependency Inventory:** A list of each dependency discovered. For each dependency, include:
+    * **Dependency Name:** The name of the dependency (e.g., "Spring Boot," "React," "Log4j", "Express", "Morgan").
+    * **Version:** The specific version number used (e.g., "2.7.11," "17.0.2").  If unavailable, state "Unknown".
+    * **Type:** Categorize the dependency (e.g., "Framework," "Library," "Database Driver," "Testing Framework").
+    * **Purpose:** A concise explanation (under 200 words) of the dependency's purpose within the application.
+    * **Security Vulnerabilities (if known):**  Mention any known security vulnerabilities associated with the version used. If you cannot determine this from the source code, explicitly state that.
+
+* **Technology Stack (Optional):**  A brief summary of the overall technology stack used based on observed dependencies (e.g., "Java Spring Boot application with a React frontend").  This section can be omitted if not easily determinable.
+
+**Important Considerations:**
+
+* **Inventory Format:** The inventory should be a list. Do not use tables.
+* **Accuracy over Completeness:** Prioritize accuracy.  If unsure about a dependency's version or purpose, it's better to indicate "Unknown" than provide incorrect information.
+* **Version Specificity:** Strive for precise version numbers.  Avoid broad ranges (e.g., "2.x").
+* **Security Focus:**  Alert the user to potential security risks, but only if it's demonstrably present within the provided code or known vulnerabilities are associated with the specific versions used.
+* **Absence of Dependencies:** If the code contains no evidence of external dependencies, explicitly state: "This application does not utilize any external dependencies."
+
+**Source Code:**

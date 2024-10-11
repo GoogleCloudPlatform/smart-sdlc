@@ -13,37 +13,54 @@
 # limitations under the License.
 
 evaluator:
-  url: https://evaluator-xxxxxxxxxxxxxxx.app/process
+  url: https://evaluator-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
   sufix: "Eval"
 generator:
-  url: https://tc-generator-xxxxxxxxxxxxxxx.app/process
+  url: https://tc-generator-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
   sufix: "TestCase"
 cypress:
-  url: https://script-cypress-xxxxxxxxxxxxxxx.app/process
+  url: https://script-cypress-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
   sufix: "TS_Cypress"
 playwright:
-  url: https://script-playwright-xxxxxxxxxxxxxxx.app/process
+  url: https://script-playwright-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
   sufix: "TS_Playwright"
+selenium:
+  url: https://script-selenium-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
+  sufix: "TS_Selenium"
 data:
-  url: https://test-data-xxxxxxxxxxxxxxx.app/process
+  url: https://test-data-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
 image:
-  url: https://image-processor-xxxxxxxxxxxxxxx.app/process
+  url: https://image-processor-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
+codesearch:
+  url: https://code-search-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
+solutionoverview:
+  url: https://solution-overview-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
+solutiondatabase:
+  url: https://solution-database-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
+solutionapi:
+  url: https://api-overview-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
+solutiondep:
+  url: https://dependency-overview-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
+solutionintegration:
+  url: https://integration-overview-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
+solutionsecurity:
+  url: https://security-overview-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/process
 gitlab:
   url: http://XXX-XXX-XXX-XXX.nip.io
-  callback: http://wiki-interface-xxxxxxxxxxxxxxx.app/gitlab/callback
+  callback: https://wiki-interface-xxxxxxxxxxxx.xxxxxxxxxxxxxxx.run.app/gitlab/callback
   timeout: 60000
 bigquery:
   dataset: metrificator
 redis:
   url: redis://XXX.XXX.XXX.XXX:6379
 ai:
-  bucket: parisim-chatbot-test
-  workdir: /tmp/work
-  aiproject: parisim-default-labs
-  aimodel: gemini-1.5-pro-001
-  ailocation: us-east1
-  aioutputtokens: 8192
-  aitemperature: 0.2
+  bucket: my-bucket-name
+  workdir: /work
+  project: gcp-project-id
+  model: gemini-1.5-pro-001
+  location: us-east1
+  outputtokens: 8192
+  temperature: 0.2
   chathistory: 6
 main:
   # en / br : Must match _xx on templates

@@ -1,0 +1,74 @@
+Based on the provided source code, "Database Tables," "Database Tables Breakdown," "Constraints," and "Relationships" descriptions, generate a Mermaid Entity Relationship Diagram (ERD) visualizing the overall database details of the application. This diagram should be as simple as possible and represent the high-level references between the tables and views.  The output MUST be valid Mermaid code that can be directly parsed by a Mermaid parser.
+
+**Requirements:**
+
+* **Accuracy:** The ERD must accurately reflect the tables, columns, and relationships described in the provided information.  Omit any assumptions or guesses; only include what's explicitly stated or strongly implied.
+* **Simplicity:** Prioritize a clear and concise diagram, avoiding unnecessary detail.
+* **Completeness:**  Include all tables and views mentioned, along with their fields where available.
+* **Formatting:**
+    * Attributes of tables should not be enclosed in double quotes.
+    * All other strings be properly enclosed in double quotes.
+    * All syntax elements must be correct.
+    * All object identifiers with names consisting of two or more words must be separated by underscores (_).
+    * No additional text should be included besides the valid Mermaid code.
+    * Use consistent styling (e.g., consistent use of uppercase/lowercase in table and column names).
+    * Clearly indicate cardinality (one-to-one, one-to-many, many-to-many).
+
+**Example of Valid Mermaid Syntax:**
+```mermaid
+erDiagram
+    CUSTOMER ||--o{ ORDER : "one-to-many"
+    CUSTOMER {
+        string name
+        string custNumber
+        string sector
+    }
+    ORDER ||--o{ LINE_ITEM : "one-to-many"
+    ORDER {
+        int orderNumber
+        string deliveryAddress
+    }
+    LINE_ITEM {
+        string productCode
+        int quantity
+        float pricePerUnit
+    }
+    CUSTOMER ||..|{ CONTACT: "one-to-one"
+    CONTACT {
+        string first_name
+        string last_name
+        string address 
+        string zip
+    }
+    CONTACT ||..|{ ADDRESS_DETAILS: "one-to-one" 
+    ADDRESS_DETAILS {
+        string line_one
+        string line_two
+        string number
+        string neighborhood
+    }
+```
+**Example of Invalid Mermaid Syntax (attributes enclosed by double quotes):**
+```mermaid
+erDiagram
+    "accounts-db.users" ||--o{ "accounts-db.contacts" : "one-to-many"
+    "accounts-db.users" ||--|{ "ledger-db.transactions" : "one-to-many"
+    "accounts-db.users" {
+        int "user_id"
+        string "username"
+        string "password"
+        string "first_name"
+        string "last_name"
+    }
+    "accounts-db.contacts" {
+        int "user_id"
+        int "contact_id"
+    }
+    "ledger-db.transactions" {
+        int "transaction_id"
+        timestamp "timestamp"
+        int "from_user_id"
+        int "to_user_id"
+        decimal "amount"
+    }
+```

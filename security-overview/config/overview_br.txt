@@ -1,0 +1,24 @@
+**Sua tarefa:** Analise o código-fonte fornecido para potenciais vulnerabilidades de segurança. O relatório deve se concentrar em vulnerabilidades e exposições comuns (CVEs) e evitar detalhes específicos do código (nomes de variáveis, nomes de funções, números de linha, etc.), a menos que seja absolutamente necessário para explicar a vulnerabilidade. Concentre-se no *potencial* de vulnerabilidade, não na prova definitiva de explorabilidade.
+
+**Seções do relatório:**
+
+* **Resumo executivo:** Uma breve visão geral (2 a 4 frases) resumindo as potenciais vulnerabilidades de segurança identificadas e sua gravidade. Informe se nenhuma vulnerabilidade significativa foi encontrada.
+
+* **Inventário de vulnerabilidades:** Uma lista de cada potencial vulnerabilidade encontrada. Para cada vulnerabilidade, inclua:
+* **Tipo de vulnerabilidade:** O tipo de vulnerabilidade (por exemplo, estouro de buffer, injeção de SQL, script entre sites (XSS), injeção de comando, uso de algoritmos criptográficos inseguros, estouro de heap, estouro de inteiro, negação de serviço (DoS), travessia de caminho, redirecionamentos e encaminhamentos não validados, autenticação quebrada, exposição de dados confidenciais).
+* **Localização (aproximada):** Uma indicação geral de onde no aplicativo a vulnerabilidade *pode* existir (por exemplo, "Manipulação de entrada do usuário", "Interação com o banco de dados", "Módulo de autenticação"). Evite caminhos de arquivo ou nomes de classe específicos.
+* **Descrição:** Uma explicação concisa (menos de 150 palavras) descrevendo a vulnerabilidade potencial e como ela *poderia* ser explorada. Inclua contexto relevante do código-fonte, se possível, mas mantenha-o em alto nível.
+* **Gravidade:** Avalie a gravidade da vulnerabilidade (por exemplo, Crítica, Alta, Média, Baixa). Explique seu raciocínio.
+* **Sugestões de mitigação (opcional):** Sugira brevemente possíveis estratégias de mitigação para lidar com a vulnerabilidade.
+
+**Considerações importantes:**
+
+* **Formato do inventário:** O inventário deve ser uma lista. Não use tabelas.
+* **Potencial vs. Certeza:** Esta análise se concentra em vulnerabilidades *potenciais*. A ausência de uma vulnerabilidade listada não garante a ausência de vulnerabilidades no código.
+* **O contexto importa:** A análise é limitada pelo código-fonte fornecido. Fatores externos ou dependências não incluídas no código-fonte podem introduzir vulnerabilidades adicionais.
+* **Falsos positivos:** A IA pode identificar vulnerabilidades potenciais que não são realmente exploráveis ​​no contexto específico do aplicativo. A revisão humana é crucial.
+* **Completude do código:** Fornecer código incompleto ou ofuscado limitará severamente a eficácia desta análise.
+* **Ausência de vulnerabilidades:** Se nenhuma vulnerabilidade de segurança significativa for identificada, declare explicitamente: "Nenhuma vulnerabilidade de segurança significativa foi identificada no código-fonte fornecido. No entanto, isso não garante a ausência completa de vulnerabilidades."
+* **Idioma:** O relatório deve estar em Português do Brasil.
+
+**Código-fonte:**

@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Metric/Rating Sample
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 /* our metric */
 let metric = {
     id: "",
+    gitlab_user: "",
     date: "",
     project: "",
-    user_story: "",
+    input_doc: "",
     document: "",
     model: ""
 };

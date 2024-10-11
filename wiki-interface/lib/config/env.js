@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Handle Environment Variables
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 function checkEnvironment() {
     /* Check if API KEY is setup as ENV */
     if (!process.env.APIKEY) {
@@ -44,6 +36,12 @@ function checkEnvironment() {
     /* Check if GITLAB_APP_SECRET is setup as ENV */
     if (!process.env.GITLAB_APP_SECRET) {
         console.log("Please set GITLAB_APP_SECRET value");
+        return false;
+    }
+
+    /* Check if SESSION_SECRET is setup as ENV */
+    if (!process.env.SESSION_SECRET) {
+        console.log("Please set SESSION_SECRET value");
         return false;
     }
 
@@ -70,8 +68,14 @@ function getGitlabAppSecret() {
     return appsecret;
 }
 
+function getSessionSecret() {
+    let appsecret = process.env.SESSION_SECRET || "";
+    return appsecret;
+}
+
 module.exports.getApikey = getApikey;
 module.exports.getGitToken = getGitToken;
 module.exports.getGitlabAppId = getGitlabAppId;
 module.exports.getGitlabAppSecret = getGitlabAppSecret;
+module.exports.getSessionSecret = getSessionSecret;
 module.exports.checkEnvironment = checkEnvironment;

@@ -1,0 +1,23 @@
+**Your Task:**  Analyze the provided source code for potential security vulnerabilities.  The report should focus on common vulnerabilities and exposures (CVEs) and avoid specific code details (variable names, function names, line numbers, etc.) unless absolutely necessary to explain the vulnerability.  Focus on the *potential* for vulnerability, not definitive proof of exploitability.
+
+**Report Sections:**
+
+* **Executive Summary:**  A brief overview (2-4 sentences) summarizing the identified potential security vulnerabilities and their severity. State if no significant vulnerabilities were found.
+
+* **Vulnerability Inventory:** A list of each potential vulnerability found. For each vulnerability, include:
+    * **Vulnerability Type:**  The type of vulnerability (e.g., Buffer Overflow, SQL Injection, Cross-Site Scripting (XSS), Command Injection, Use of Insecure Cryptographic Algorithms,  Heap Overflow, Integer Overflow, Denial of Service (DoS),  Path Traversal,  Unvalidated Redirects and Forwards,  Broken Authentication, Sensitive Data Exposure).
+    * **Location (Approximate):** A general indication of where in the application the vulnerability *might* exist (e.g., "User input handling," "Database interaction," "Authentication module").  Avoid specific file paths or class names.
+    * **Description:** A concise explanation (under 150 words) describing the potential vulnerability and how it *could* be exploited.  Include relevant context from the source code if possible, but keep it high-level.
+    * **Severity:**  Assess the severity of the vulnerability (e.g., Critical, High, Medium, Low).  Explain your reasoning.
+    * **Mitigation Suggestions (Optional):** Briefly suggest possible mitigation strategies for addressing the vulnerability.
+
+**Important Considerations:**
+
+* **Inventory Format:** The inventory should be a list. Do not use tables.
+* **Potential vs. Certainty:**  This analysis focuses on *potential* vulnerabilities.  The absence of a listed vulnerability does not guarantee the absence of vulnerabilities in the code.
+* **Context Matters:**  The analysis is limited by the provided source code.  External factors or dependencies not included in the source code may introduce additional vulnerabilities.
+* **False Positives:**  The AI might identify potential vulnerabilities that are not actually exploitable in the specific context of the application.  Human review is crucial.
+* **Code Completeness:** Providing incomplete or obfuscated code will severely limit the effectiveness of this analysis.
+* **Absence of Vulnerabilities:** If no significant security vulnerabilities are identified, explicitly state: "No significant security vulnerabilities were identified in the provided source code. However, this does not guarantee the complete absence of vulnerabilities."
+
+**Source Code:**

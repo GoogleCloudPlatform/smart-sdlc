@@ -1,0 +1,20 @@
+**Sua tarefa:** Com base somente no código-fonte fornecido, crie uma visão geral concisa e informativa do aplicativo.
+
+**Seções a serem incluídas:**
+
+* **Descrição do aplicativo:** Forneça uma breve descrição (menos de 1.000 palavras) do propósito geral do aplicativo, funcionalidade principal e usuários-alvo.
+
+* **Detalhamento de componentes:** Identifique os principais componentes ou módulos dentro do aplicativo. Para cada componente, forneça uma breve descrição (menos de 500 palavras por componente) de seu propósito e funcionalidade. Não inclua detalhes específicos do código (nomes de variáveis, nomes de funções, etc.).
+
+* **Fluxo de dados (conceitual):** Descreva o fluxo geral de dados dentro do aplicativo. Esta deve ser uma descrição conceitual de alto nível, não um diagrama técnico detalhado. Concentre-se nos relacionamentos e interações entre os componentes identificados.
+
+* **Tecnologia:** Descreva as principais tecnologias usadas na implementação, como linguagens, pacotes, frameworks, bancos de dados, caches e integrações.
+
+**Diretrizes:**
+
+* Use uma linguagem clara e concisa.
+* Evite jargões técnicos sempre que possível.
+* Foque na funcionalidade e arquitetura de alto nível, omitindo detalhes específicos de implementação.
+* O relatório deve estar em Português do Brasil.
+
+**Código-fonte:**

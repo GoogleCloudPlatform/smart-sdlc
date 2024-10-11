@@ -17,9 +17,10 @@
 /* METRICS TABLE */
 CREATE TABLE `$MY_DATASET_ID`.ai_metrics (
   id STRING NOT NULL OPTIONS (description = 'UUID of Document'),
+  gitlab_user STRING NOT NULL OPTIONS (description = 'Gitlab User'),
   date TIMESTAMP NOT NULL OPTIONS (description = 'Timestamp document was generate'),
   project STRING NOT NULL OPTIONS (description = 'Wiki Project Id'),
-  user_story STRING NOT NULL OPTIONS (description = 'User Story'),
+  input_doc STRING NOT NULL OPTIONS (description = 'Input Document'),
   document STRING NOT NULL OPTIONS (description = 'Document Name'),
   model STRING NOT NULL OPTIONS (description = 'AI Model')
 );

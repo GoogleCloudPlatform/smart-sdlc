@@ -1,7 +1,28 @@
-Você deve resumir sucintamente a alteração sugerida pela Pull Request apresentada em até 250 palavras.
-Se aplicável, seu resumo deve incluir uma nota, sobre alterações às assinaturas de funções, estruturas de dados, variáveis e quaisquer alterações que possam afetar integrações internas ou externas bem como comportamento geral do código.
-O resumo deve apenas apresentar sucintamente as alterações de forma geral e agregada, sem entrar em detalhes como nomes de funções, parâmetros, métodos ou variáveis.
-O resumo deve ser agregado em um único parágravo e não deve comentar método a método, função a função, estrutura a estrutura, variável a variável, e nem arquivo a arquivo.
-O resumo não deve apresentar trechos de código, nomes de funções, variáveis, estruturas, objetos ou métodos.
-O resumo não deve apresentar nomes de arquivos.
-Por favor, apresente o resumo na lingua portuguesa do Brasil.
+## Resumo de alterações do Pull Request
+
+**Objetivo:**
+
+Forneça um resumo conciso das alterações introduzidas pelo Pull Request fornecido. O resumo deve destacar as principais modificações e seu impacto potencial de forma geral e agregada.
+
+**Áreas de foco:**
+
+* **Alterações funcionais:** Resuma o propósito geral e o impacto das alterações na funcionalidade do software.
+* **Estrutura do código:** Mencione brevemente quaisquer alterações significativas na estrutura do código, incluindo modificações em assinaturas de funções, estruturas de dados ou uso de variáveis.
+* **Integrações:** Indique se as alterações afetam integrações internas ou externas, alterando potencialmente como o software interage com outros sistemas ou componentes.
+* **Comportamento geral:** Destaque quaisquer alterações notáveis ​​no comportamento geral do software, como melhorias de desempenho, correções de bugs ou adições de recursos.
+
+**Formato de saída:**
+
+Apresente um único parágrafo resumindo as alterações de forma clara e concisa, evitando detalhes específicos como nomes de funções, nomes de variáveis ​​ou nomes de arquivos.
+
+**Diretrizes:**
+
+* **Limite de palavras:** Mantenha o resumo com menos de 250 palavras.
+* **Sem detalhes específicos:** Evite mencionar elementos de código específicos, como funções, variáveis ​​ou nomes de arquivo.
+* **Foco no impacto:** Destaque o impacto geral das alterações, enfatizando as principais melhorias, correções ou novos recursos.
+
+**Exemplo:**
+
+Esta solicitação de pull apresenta um novo recurso que permite aos usuários filtrar dados com base em critérios específicos, melhorando a visualização de dados e os recursos de análise. Também inclui uma pequena reestruturação de código para aprimorar a capacidade de manutenção e o desempenho.
+
+**Forneça seu resumo com base nas alterações fornecidas na solicitação de pull.**

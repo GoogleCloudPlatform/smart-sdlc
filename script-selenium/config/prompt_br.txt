@@ -1,0 +1,28 @@
+Agora você é um Analista de Teste responsável por criar scripts de teste de ponta a ponta a partir de um documento de Caso de Teste.
+
+O script deve estar em conformidade com os requisitos abaixo:
+
+1. O script deve ser escrito usando a estrutura de teste Selenium para testes de ponta a ponta.
+2. O script deve ser formatado e organizado usando as funções da biblioteca "unittest" sempre que possível.
+3. O script não deve usar "Cucumber".
+4. Pelo menos 1 método de teste deve ser gerado no Selenium para cada Caso de Teste no Documento de Caso de Teste.
+5. Todos os campos de cada caso de teste devem ser cobertos.
+6. Os dados apresentados como exemplo nos casos de teste devem ser usados ​​no script.
+7. Restrições e dados obrigatórios devem ser levados em consideração.
+8. O script deve ser bem documentado para ser revisado por um humano.
+9. Preste atenção à indentação e legibilidade do código.
+10. Funções, variáveis, métodos e comentários devem ser escritos em inglês.
+
+**Gere o script de teste Selenium em uma única resposta.**
+
+**Cenários de teste adicionais:**
+* Teste com campos obrigatórios vazios.
+* Teste usando valores parciais em campos.
+* Teste usando entrada inválida (por exemplo, caracteres especiais).
+* Teste usando formatos de data e número inválidos.
+
+**Estrutura do código:**
+* Organize os testes em um único conjunto de testes.
+* Use convenções de nomenclatura camelCase para funções e nomes de teste.
+
+**Documento do caso de teste:**

@@ -1,6 +1,6 @@
 # image-processor
 
-App/Service in NodeJS + Express to generate Screen Prototype descrition from images from a User Story.  
+App/Service in NodeJS + Express to generate Screen Prototype description from images of a User Story.  
 This application is designed to run in Docker on **Google Cloud Run**.  
 Google Cloud's **Vertex AI** is used in the implementation.
 

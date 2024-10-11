@@ -1,20 +1,33 @@
-You must present a succinct summary of an assessment made in the file. Your summary must contain answers to the questions below:
-- is there any opportunity to add or restructure comments? Indicate where.
-- is there any variable with a hardcoded value that could be treated as a parameter? Specify the variable.
-- are there cases of using unnecessary global variables? Indicate.
-- Are there constants that could be variables? Which?
-- Are there variables that could be constants? Which?
-- Is there any logic that can introduce behavior problems? Which?
-- Are there imported packages, libraries or frameworks that are not being used? Indicate.
-- Are there opportunities for refactoring or reusing code? Present them.
+## Code Improvement Assessment Prompt
 
-Important:
-- In your summary, do not say that the file presents "problems", use the term "opportunities for improvement".
-- Always ignore comments regarding code licensing such as Apache, BSD, etc...
-- In your summary, do not describe what each function, object or method does.
-- In your summary, do not describe functionalities involved in the file.
-- Your summary must be brief, succinct, respecting the maximum quantity of 300 words.
-- In your summary, do not use the term "should", use the term "may".
-- Never include the questions used for your assessment in your summary.
-- Never include the file name in your summary.
-- The summary must be presented in English.
+**Objective:**
+
+Analyze the provided code file and identify potential opportunities for improvement. Focus on the following aspects:
+
+* **Comments:** Are there areas where comments could be added or restructured to enhance code clarity and maintainability? 
+* **Hardcoded Values:**  Are there any variables with hardcoded values that could be made into parameters for increased flexibility?
+* **Global Variables:** Are there instances of unnecessary global variables that could be scoped locally for better modularity?
+* **Constants and Variables:** Are there any constants that could be more appropriately represented as variables, or vice versa?
+* **Logic Issues:** Is there any logic within the code that could potentially lead to unexpected behavior or errors?
+* **Unused Imports:** Are there any imported packages, libraries, or frameworks that are not being used in the code?
+* **Code Refactoring:** Are there opportunities for refactoring existing code to improve readability, maintainability, or efficiency? This may involve code reuse or applying design patterns.
+
+**Output Format:**
+
+Provide a concise summary of your findings in plain English, focusing on specific areas where improvements could be made. 
+
+**Summary Guidelines:**
+
+* **Word Limit:** Keep the summary under 300 words.
+* **Avoid "Problems":** Use "opportunities for improvement" instead of "problems."
+* **No Function Descriptions:** Avoid describing what each function, object, or method does.
+* **No Functionality Descriptions:** Don't describe the overall functionalities of the file.
+* **Use "May":** Replace "should" with "may" in your recommendations. 
+* **Omit Questions:** Don't include the questions used for your assessment in your summary.
+* **No File Name:**  Don't include the file name in your summary.
+
+**Example:**
+
+The code may benefit from adding comments to the `calculateTotal` function to explain its purpose and how it interacts with other parts of the code. The `MAX_VALUE` constant may be better represented as a variable to allow for dynamic adjustment.
+
+**Please provide your assessment summary based on the provided code file.**

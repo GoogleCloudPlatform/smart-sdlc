@@ -1,0 +1,4 @@
+Com base no código-fonte fornecido antes, na análise de componentes, na descrição do fluxo de dados gerada antes, na tecnologia gerada antes e no diagrama Mermaid gerado antes, sua tarefa agora é construir um documento Markdown único e muito bem organizado, incluindo todos os dados.
+Este documento deve incluir todas as informações que você gerou antes de uma forma bem organizada e estruturada.
+Por favor, certifique-se de seguir todo o Markdown e Mermaid, o analisador é realmente sensível.
+**IMPORTANTE:** Não inclua nada além do documento em sua resposta.

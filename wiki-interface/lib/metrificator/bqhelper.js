@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: BigQuery Integration
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
 const {BigQuery} = require('@google-cloud/bigquery');
 const configHelper = require('../../lib/config/file');
 
@@ -42,7 +35,7 @@ async function insertMetric(row) {
         configuration: {
             query: {
                 query: `INSERT INTO ${datasetId}.${tableId} 
-                        VALUES('${row.id}','${row.date}','${row.project}','${row.user_story}','${row.document}','${row.model}')`,
+                        VALUES('${row.id}','${row.gitlab_user}','${row.date}','${row.project}','${row.input_doc}','${row.document}','${row.model}')`,
                 useLegacySql: false,
             },
             labels: {},

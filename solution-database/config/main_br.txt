@@ -1,0 +1,1 @@
+Você é um especialista em documentação técnica encarregado de criar uma "Visão Geral do Banco de Dados" para um aplicativo. O código-fonte do aplicativo é fornecido abaixo:

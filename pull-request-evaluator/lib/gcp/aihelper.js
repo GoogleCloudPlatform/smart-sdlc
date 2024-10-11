@@ -40,7 +40,7 @@ async function diffRank(changeList) {
 
         const myprompt = configPrompts.getDiffRank();
 
-        myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
 
 
         myResponse += "  \n";
@@ -72,7 +72,7 @@ async function diffSummary(changeList) {
 
         const myprompt = configPrompts.getDiffSummary();
 
-        myResponse += await gcpAiPlatformGemini.callPredictText(myprompt, myInput);
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
 
         myResponse += "  \n";
         myInput = "";
@@ -100,7 +100,7 @@ async function prSummary(changeList) {
 
     const myprompt = configPrompts.getPrSummary();
 
-    response = await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
+    response = await gcpAiPlatformGemini.callPredict(myprompt, myInput);
 
     return response;
 }
@@ -123,7 +123,7 @@ async function fileSummary(changeList) {
 
         const myprompt = configPrompts.getFileSummary();
 
-        myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
 
         myResponse += "  \n";
         myInput = "";
@@ -149,7 +149,7 @@ async function filePerformance(changeList) {
 
         const myprompt = configPrompts.getFilePerformance();
 
-        myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
 
         myResponse += "  \n";
         myInput = "";
@@ -175,7 +175,7 @@ async function fileSecurity(changeList) {
 
         const myprompt = configPrompts.getFileSecurity();
 
-        myResponse += await gcpAiPlatformGemini.callPredictCode(myprompt, myInput);
+        myResponse += await gcpAiPlatformGemini.callPredict(myprompt, myInput);
 
         myResponse += "  \n";
         myInput = "";

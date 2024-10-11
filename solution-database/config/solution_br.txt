@@ -1,0 +1,5 @@
+Com base no código-fonte fornecido antes, as "Tabelas do Banco de Dados", "Detalhamento das Tabelas do Banco de Dados", "Restrições" e "Relacionamentos" gerados antes, e o diagrama Mermaid gerado antes, sua tarefa agora é construir um documento Markdown único e muito bem organizado, incluindo todos os dados.
+Este documento deve incluir todas as informações que você gerou antes de uma forma bem organizada e estruturada.
+Por favor, certifique-se de seguir todo o Markdown e Mermaid, o analisador é realmente sensível.
+O analisador Mermaid é realmente sensível, o diagrama deve ser simples.
+**IMPORTANTE:** Não inclua nada além do documento em sua resposta.

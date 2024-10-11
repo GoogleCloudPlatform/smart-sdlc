@@ -2,7 +2,7 @@
 
 **REVIEW** the `config/default.yaml` file:
 ```yaml
-aitext:
+aiplatform:
   location: us-central1
   # gemini-1.0-pro-001 / gemini-1.5-pro-001 / gemini-1.5-flash-001
   model: gemini-1.5-pro-001
@@ -10,19 +10,6 @@ aitext:
   maxtokens: 8192
   keepalive_timeout: 30000
   keepalive_time: 10000
-  enable_retries: 1
-  dns_min_time_between_resolutions_ms: 10000
-  initial_reconnect_backoff_ms: 10000
-  max_reconnect_backoff_ms: 60000
-  client_idle_timeout_ms: 60000
-aicode:
-  location: us-central1
-  # gemini-1.0-pro-001 / gemini-1.5-pro-001 / gemini-1.5-flash-001
-  model: gemini-1.5-pro-001
-  temperature: 0.2
-  maxtokens: 8192
-  keepalive_timeout: 30000
-  keepalive_time: 12000
   enable_retries: 1
   dns_min_time_between_resolutions_ms: 10000
   initial_reconnect_backoff_ms: 10000

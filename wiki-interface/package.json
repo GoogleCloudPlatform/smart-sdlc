@@ -20,12 +20,12 @@
     "connect-redis": "^7.1.1",
     "express": "^4.21.0",
     "express-session": "^1.18.0",
-    "isomorphic-git": "^1.27.1",
     "js-yaml": "^4.1.0",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
     "passport-gitlab": "^0.5.0",
+    "passport-gitlab2": "^5.0.0",
     "redis": "^4.7.0",
-    "uuid": "^9.0.1"
+    "simple-git": "^3.27.0"
   }
 }

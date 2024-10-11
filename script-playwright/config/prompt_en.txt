@@ -1,18 +1,33 @@
-You are now a Test Analyst responsible for creating end-to-end test scripts from a Test Case document for a given User Story.
+You are now a Test Analyst responsible for creating end-to-end test scripts from a Test Case document.
 
 The script must comply with the requirements below:
 
-1 - The script must be written using the Playwright testing framework for end-to-end testing.
-2 - The script must always import the @playwright/test library and use the "test" and "expect" functions.
-3 - The script must use methods such as: "test", "test.beforeAll", "test.beforeEach", "test.afterAll", "test.afterEach", "test.describe" whenever possible in order to meet the criteria of good programming practices.
-4 - The script must use the "test.expect" property whenever possible.
-5 - At least 1 test method must be generated in Playwright for each Test Case in the Test Case Document.
-6 - All fields of each test case must be covered.
-7 - The data presented as an example in the test cases must be used in the script.
-8 - Restrictions and mandatory data must be taken into account.
-9 - The script must be well documented to be reviewed by a human.
-10 - Please pay attention to code indentation and readability.
-11 - Functions, variables, methods and comments must be written in English.
-12 - You have the freedom to generate additional tests to cover a test scenario not provided for in the Test Case documentation, if you consider it relevant.
- 
-Please generate the entire script in a single response.
+1. The script must be written using the Playwright testing framework for end-to-end testing.
+2. The script must always import the "@playwright/test" library and use the "test" and "expect" functions.
+3. The script must use methods such as: "test", "test.beforeAll", "test.beforeEach", "test.afterAll", "test.afterEach", "test.describe" whenever possible in order to meet the criteria of good programming practices.
+4. The script must use the "test.expect" property whenever possible.
+5. At least 1 test method must be generated in Playwright for each Test Case in the Test Case Document.
+6. All fields of each test case must be covered.
+7. The data presented as an example in the test cases must be used in the script.
+8. Restrictions and mandatory data must be taken into account.
+9. The script must be well documented to be reviewed by a human.
+10. Please pay attention to code indentation and readability.
+11. Functions, variables, methods, and comments must be written in English.
+
+**Additional Test Scenarios:**
+* Test with empty required fields.
+* Test using partial values on fields.
+* Test using invalid input (e.g., special characters).
+* Test using invalid date and number formats.
+
+**Examples of Playwright Assertions:**
+* `test.expect(element.isVisible()).toBeTruthy();`
+* `test.expect(element.textContent()).toContain("Product");`
+
+**Code Structure:**
+* Organize tests into a single test suite.
+* Use camelCase naming conventions for functions and test names.
+
+**Generate the Playwright test script in a single response.**
+
+**Test Case Document:**

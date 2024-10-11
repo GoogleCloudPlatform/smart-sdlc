@@ -25,7 +25,6 @@ nav:
   - Implementação: impl.md
   - Build: build.md
   - Deploy: deploy.md
-  - Teste: test.md
   - GCP: gcp.md
 
 plugins:

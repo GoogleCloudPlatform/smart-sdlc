@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Markdown Utilities
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 /* list of images from markdown */
 async function extractImagesFromMarkdown(markdown) {
     const regex = /!\[(.*?)\]\((.*?)\)/g;

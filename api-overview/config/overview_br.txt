@@ -1,0 +1,24 @@
+**Sua tarefa:** Com base apenas no código-fonte fornecido, analise-o e gere um Relatório de exposição de API detalhando todas as APIs expostas pelo aplicativo. O relatório deve ser conciso e evitar detalhes específicos do código (nomes de variáveis, nomes de funções, números de linha, etc.). Concentre-se nos aspectos *funcionais* das APIs e suas implementações de segurança.
+
+**Seções do relatório:**
+
+* **Resumo executivo:** Uma breve visão geral (1000 palavras / 3-4 frases) resumindo as APIs expostas do aplicativo, suas tecnologias e medidas de segurança. Declare se nenhuma API está exposta.
+
+* **Inventário de API:** Uma tabela listando cada API exposta. Para cada API, inclua:
+* **Ponto final da API (se disponível):** O caminho relativo ou URL do ponto final da API (por exemplo, `/users`, `/products/search`). Se indisponível no código, declare "Não disponível".
+* **Método HTTP:** O método HTTP usado (GET, POST, PUT, DELETE, etc.).
+* **Protocolo:** O protocolo de comunicação (por exemplo, REST, gRPC, SOAP).
+* **Objetivo:** Uma explicação concisa (menos de 100 palavras) do propósito e funcionalidade da API.
+* **Parâmetros de solicitação (se disponíveis):** Uma breve descrição dos parâmetros de entrada esperados pela API. Evite tipos de dados ou nomes específicos.
+* **Dados de resposta (se disponíveis):** Uma breve descrição dos dados retornados pela API. Evite tipos de dados ou nomes específicos.
+* **Autenticação/Autorização:** Descreva os mecanismos de autenticação e autorização usados ​​(por exemplo, chave de API, OAuth 2.0, JWT, autenticação básica). Se nenhum for implementado explicitamente, declare "Nenhum (inseguro)".
+
+**Considerações importantes:**
+
+* **Formato do inventário:** O inventário deve ser uma lista. Não use tabelas.
+* **Precisão sobre integridade:** Priorize a precisão sobre a integridade. Se não tiver certeza sobre os detalhes de uma API, é melhor indicar "Desconhecido" do que fornecer informações incorretas.
+* **Foco na segurança:** Destaque explicitamente os mecanismos de segurança usados ​​(ou a falta deles). Uma API insegura deve ser claramente indicada como tal.
+* **Ausência de APIs:** Se o código não contiver evidências de APIs expostas, declare explicitamente: "Este aplicativo não expõe nenhuma API."
+* **Idioma:** O relatório deve estar em Português do Brasil.
+
+**Código-fonte:**

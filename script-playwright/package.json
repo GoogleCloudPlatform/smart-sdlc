@@ -9,9 +9,6 @@
     "clean": "rm -rf node_modules/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "engines": {
-    "node": ">= 20.0.0"
-  },
   "license": "ISC",
   "dependencies": {
     "@google-cloud/aiplatform": "^3.9.0",

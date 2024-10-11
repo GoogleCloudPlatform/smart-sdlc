@@ -23,7 +23,15 @@ function checkContext() {
     let mycontext;
 
     try {
-        filename  = "config/prompt_" + configFile.getLanguage() + ".txt";
+        filename  = "config/csv_" + configFile.getLanguage() + ".txt";
+        mycontext = fs.readFileSync(filename, 'utf8');
+    } catch (e) {
+        console.log("No AI " + filename + " file.");
+        return false;
+    }
+
+    try {
+        filename  = "config/json_" + configFile.getLanguage() + ".txt";
         mycontext = fs.readFileSync(filename, 'utf8');
     } catch (e) {
         console.log("No AI " + filename + " file.");
@@ -33,12 +41,26 @@ function checkContext() {
 }
 
 /* Return context file contents */
-function getContext() {
+function getContextCSV() {
     let filename;
     let mycontext;
 
     try {
-        filename  = "config/prompt_" + configFile.getLanguage() + ".txt";
+        filename  = "config/csv_" + configFile.getLanguage() + ".txt";
+        mycontext = fs.readFileSync(filename, 'utf8');
+    } catch (e) {
+        return "";
+    }
+    return mycontext;
+}
+
+/* Return context file contents */
+function getContextJSON() {
+    let filename;
+    let mycontext;
+
+    try {
+        filename  = "config/json_" + configFile.getLanguage() + ".txt";
         mycontext = fs.readFileSync(filename, 'utf8');
     } catch (e) {
         return "";
@@ -47,4 +69,5 @@ function getContext() {
 }
 
 module.exports.checkContext = checkContext;
-module.exports.getContext = getContext;
+module.exports.getContextCSV = getContextCSV;
+module.exports.getContextJSON = getContextJSON;

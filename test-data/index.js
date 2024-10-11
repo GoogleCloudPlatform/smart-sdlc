@@ -24,8 +24,6 @@ const authorizationMid = require('./lib/security/authorization');
 const configEnv = require('./lib/config/env');
 const configFile = require('./lib/config/file');
 const contextFile = require('./lib/config/ctx');
-const gcpAiPlatformText = require('./lib/gcp/texthelper');
-const gcpAiPlatformChat = require('./lib/gcp/chathelper');
 const gcpAiPlatformGemini = require('./lib/gcp/geminihelper');
 
 /* Server Listening Port */
@@ -56,7 +54,7 @@ app.use(morgan(configFile.getLogFormat()));
 app.use(obfuscatorMid);
 
 /* Middleware Setup */
-app.use(bodyParser.text({ type: 'text/markdown', extended: true }));
+app.use(bodyParser.text({ type: 'text/plain', extended: true }));
 app.use('/process', authenticationMid); /* Authenticate Request */
 app.use('/process', authorizationMid);  /* Authorize Request    */
 
@@ -66,12 +64,26 @@ app.get('/hc', async (req, res) => {
 });
 
 /* Process Request */
-app.post('/process/:qty', async (req, res) => {
+app.post('/process/csv/:qty', async (req, res) => {
     let response = "";
     let qty = req.params.qty;
-    let model = configFile.getModel();
     try {
-        response = await gcpAiPlatformGemini.callPredict(req.body, qty);
+        response = await gcpAiPlatformGemini.callPredictCSV(req.body, qty);
+        res.status = 200;
+    } catch(e) {
+        console.log(e);
+        response = "Internal error";
+        res.status = 503;
+    }
+    res.send(response);
+});
+
+/* Process Request */
+app.post('/process/json/:qty', async (req, res) => {
+    let response = "";
+    let qty = req.params.qty;
+    try {
+        response = await gcpAiPlatformGemini.callPredictJSON(req.body, qty);
         res.status = 200;
     } catch(e) {
         console.log(e);

@@ -1,7 +1,28 @@
-You must summarize the change suggested by the Pull Request presented in up to 250 words.
-If applicable, your summary should include a note about changes to function signatures, data structures, variables, and any changes that may affect internal or external integrations as well as general code behavior.
-The summary should only succinctly present the changes in a general and aggregated way, without going into details such as names of functions, parameters, methods or variables.
-The summary must be aggregated into a single paragraph and must not comment method by method, function by function, structure by structure, variable by variable, or file by file.
-The summary must not contain code snippets, function names, variables, structures, objects or methods.
-The summary must not contain file names.
-Please present the summary in English.
+## Pull Request Change Summary
+
+**Objective:**
+
+Provide a concise summary of the changes introduced by the provided Pull Request. The summary should highlight the key modifications and their potential impact in a general, aggregated manner.
+
+**Focus Areas:**
+
+* **Functional Changes:**  Summarize the overall purpose and impact of the changes on the software's functionality.
+* **Code Structure:** Briefly mention any significant changes to code structure, including modifications to function signatures, data structures, or variable usage.
+* **Integrations:**  Indicate if the changes affect internal or external integrations, potentially altering how the software interacts with other systems or components.
+* **General Behavior:**  Highlight any notable changes to the software's overall behavior, such as performance improvements, bug fixes, or feature additions.
+
+**Output Format:**
+
+Present a single paragraph summarizing the changes in a clear and concise way, avoiding specific details like function names, variable names, or file names.
+
+**Guidelines:**
+
+* **Word Limit:** Keep the summary under 250 words.
+* **No Specific Details:**  Avoid mentioning specific code elements like functions, variables, or file names. 
+* **Focus on Impact:** Highlight the overall impact of the changes, emphasizing the key improvements, fixes, or new features.
+
+**Example:**
+
+This Pull Request introduces a new feature that allows users to filter data based on specific criteria, improving data visualization and analysis capabilities. It also includes minor code restructuring to enhance maintainability and performance. 
+
+**Please provide your summary based on the provided Pull Request changes.**

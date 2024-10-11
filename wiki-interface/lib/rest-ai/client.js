@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Invoke our AI Apis
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 const configEnv = require('../../lib/config/env');
 const configFile = require('../../lib/config/file');
 
@@ -88,6 +80,27 @@ async function generatePlaywright(content) {
     return data.replace('```playwright', '```js');
 }
 
+/* call our API that uses codechat-bison */
+async function generateSelenium(content) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getSeleniumUrl();
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/markdown',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: content.toString()
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data.replace('```selenium', '```python');
+}
+
 /* call our API that uses chat-bison */
 async function generateEvaluation(content) {
     const aiApiKey = configEnv.getApikey();
@@ -110,9 +123,14 @@ async function generateEvaluation(content) {
 }
 
 /* call our API that uses chat-bison */
-async function generateTestData(content, qty) {
+async function generateTestData(model, content, qty) {
     const aiApiKey = configEnv.getApikey();
-    const thisUrl = configFile.getDataUrl() + "/" + qty.toString();
+    let thisUrl = "";
+    if (model == "csv") {
+        thisUrl = configFile.getDataUrl() + "/csv/" + qty.toString();
+    } else {
+        thisUrl = configFile.getDataUrl() + "/json/" + qty.toString();
+    }
 
     const requestOptions = {
         method: 'POST',
@@ -128,6 +146,203 @@ async function generateTestData(content, qty) {
     const data = await response.text();
 
     return data;
+}
+
+/* call our API that uses gemini-vision */
+async function generateCodeSearch(codeBase, userQuery) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getCodesearchUrl();
+
+    //let reqCodeBase = btoa(codeBase);
+    let reqCodeBase = btoa(encodeURIComponent(codeBase));
+    let reqUserQuery = btoa(userQuery);
+
+    let myReqBody = `{ 
+        "codeBase": "${reqCodeBase}",
+        "userQuery": "${reqUserQuery}"
+    }`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: myReqBody
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data + "\n\n";
+}
+
+/* call our API that uses gemini-vision */
+async function generateSolutionOverview(codeBase) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getSolutionOverviewUrl();
+
+    //let reqCodeBase = btoa(codeBase);
+    let reqCodeBase = btoa(encodeURIComponent(codeBase));
+
+    let myReqBody = `{ 
+        "codeBase": "${reqCodeBase}"
+    }`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: myReqBody
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data + "\n\n";
+}
+
+/* call our API that uses gemini-vision */
+async function generateSolutionDatabase(codeBase) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getSolutionDatabaseUrl();
+
+    //let reqCodeBase = btoa(codeBase);
+    let reqCodeBase = btoa(encodeURIComponent(codeBase));
+
+    let myReqBody = `{ 
+        "codeBase": "${reqCodeBase}"
+    }`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: myReqBody
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data + "\n\n";
+}
+
+/* call our API that uses gemini-vision */
+async function generateSolutionAPI(codeBase) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getSolutionAPIUrl();
+
+    let reqCodeBase = btoa(encodeURIComponent(codeBase));
+
+    let myReqBody = `{ 
+        "codeBase": "${reqCodeBase}"
+    }`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: myReqBody
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data + "\n\n";
+}
+
+/* call our API that uses gemini-vision */
+async function generateSolutionDep(codeBase) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getSolutionDepUrl();
+
+    //let reqCodeBase = btoa(codeBase);
+    let reqCodeBase = btoa(encodeURIComponent(codeBase));
+
+    let myReqBody = `{ 
+        "codeBase": "${reqCodeBase}"
+    }`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: myReqBody
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data + "\n\n";
+}
+
+/* call our API that uses gemini-vision */
+async function generateSolutionIntegration(codeBase) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getSolutionIntegrationUrl();
+
+    //let reqCodeBase = btoa(codeBase);
+    let reqCodeBase = btoa(encodeURIComponent(codeBase));
+
+    let myReqBody = `{ 
+        "codeBase": "${reqCodeBase}"
+    }`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: myReqBody
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data + "\n\n";
+}
+
+/* call our API that uses gemini-vision */
+async function generateSolutionSecurity(codeBase) {
+    const aiApiKey = configEnv.getApikey();
+    const thisUrl = configFile.getSolutionSecurityUrl();
+
+    //let reqCodeBase = btoa(codeBase);
+    let reqCodeBase = btoa(encodeURIComponent(codeBase));
+
+    let myReqBody = `{ 
+        "codeBase": "${reqCodeBase}"
+    }`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'API_KEY': aiApiKey,
+            'User-Agent': configFile.getServerName()
+        },
+        body: myReqBody
+    };
+
+    const response = await fetch(thisUrl, requestOptions);
+    const data = await response.text();
+
+    return data + "\n\n";
 }
 
 /* call our API that uses gemini-vision */
@@ -159,6 +374,14 @@ async function describeImage(mime, image) {
 module.exports.generateDoc = generateDoc;
 module.exports.generateCypress = generateCypress;
 module.exports.generatePlaywright = generatePlaywright;
+module.exports.generateSelenium = generateSelenium;
 module.exports.generateEvaluation = generateEvaluation;
 module.exports.generateTestData = generateTestData;
+module.exports.generateCodeSearch = generateCodeSearch;
+module.exports.generateSolutionOverview = generateSolutionOverview;
+module.exports.generateSolutionDatabase = generateSolutionDatabase;
+module.exports.generateSolutionAPI = generateSolutionAPI;
+module.exports.generateSolutionDep = generateSolutionDep;
+module.exports.generateSolutionIntegration = generateSolutionIntegration;
+module.exports.generateSolutionSecurity = generateSolutionSecurity;
 module.exports.describeImage = describeImage;

@@ -19,22 +19,29 @@ const GitLabStrategy = require("passport-gitlab2");
 const configHelper = require('../../lib/config/file');
 const envHelper = require('../../lib/config/env');
 
-passport.use(
-    new GitLabStrategy(
-        {
-            clientID: envHelper.getGitlabAppId(),
-            clientSecret: envHelper.getGitlabAppSecret(),
-            callbackURL: configHelper.getGitlabCallback(),
-            baseURL: configHelper.getGitlabUrl
-        },
-        function (accessToken, refreshToken, profile, cb) {
-            return cb(null, profile);
-        }
-    )
-);
-passport.serializeUser(function (user, cb) {
-    cb(null, user);
-});
-passport.deserializeUser(function (user, cb) {
-    cb(null, user);
-});
+function getPassport() {
+    passport.use(
+        new GitLabStrategy(
+            {
+                clientID: envHelper.getGitlabAppId(),
+                clientSecret: envHelper.getGitlabAppSecret(),
+                callbackURL: configHelper.getGitlabCallback(),
+                baseURL: configHelper.getGitlabUrl()
+            },
+            function (accessToken, refreshToken, profile, cb) {
+                return cb(null, profile);
+            }
+        )
+    );
+    passport.serializeUser(function (user, cb) {
+        cb(null, user);
+    });
+    passport.deserializeUser(function (user, cb) {
+        cb(null, user);
+    });
+
+    return passport;
+
+}
+
+module.exports.getPassport = getPassport;

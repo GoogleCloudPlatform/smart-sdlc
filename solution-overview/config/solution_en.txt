@@ -1,0 +1,4 @@
+Based on the source code provided before, the component breakdown, the data flow description generated before, the technology generated before and the Mermaid diagram generated before, your task now is to build a single and very well organized Markdown document including all the data.
+This document should include all the information you generated before in a well-organized and structured fashion.
+Please, make sure you follow all the Markdown and Mermaid, the parser is really sensitive.
+**IMPORTANT:** Do not include anything other than the document in your response.

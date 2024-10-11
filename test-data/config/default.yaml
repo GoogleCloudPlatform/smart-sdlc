@@ -25,7 +25,7 @@ aiplatform:
   initial_reconnect_backoff_ms: 10000
   max_reconnect_backoff_ms: 60000
   client_idle_timeout_ms: 60000
-  # en / br : Must match prompt_XX.txt file name
+  # en / br : Must match *_XX.txt file name
   language: en
 grpc:
   retry: true

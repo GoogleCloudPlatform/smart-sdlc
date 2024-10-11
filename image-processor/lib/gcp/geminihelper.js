@@ -33,7 +33,7 @@ async function callPredict(mime, image) {
         location: location
     });
 
-    // Instantiate the models
+    /* Instantiate the models */
     const generativeModel = vertex_ai.preview.getGenerativeModel({
         model: model,
         generation_config: {

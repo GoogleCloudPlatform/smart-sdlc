@@ -67,9 +67,7 @@ app.get('/hc', async (req, res) => {
 app.post('/process', async (req, res) => {
     let response = "";
     try {
-        response = await gcpAiPlatformGemini.evaluateFormat(req.body);
-        response += "\n--------------------\n";
-        response += await gcpAiPlatformGemini.evaluateContent(req.body);
+        response += await gcpAiPlatformGemini.callPredict(req.body);
         res.status = 200;
     } catch(e) {
         console.log(e);

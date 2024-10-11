@@ -13,18 +13,26 @@ The organization of the components on the platform is detailed below:
 
 ![smart-sdlc](img/architecture.png "Solution Architecture: smart-sdlc")
 
-As the diagram shows, the solution relies heavily on Google Cloud Run. There is also the presence of Secret Manager to hold few of the secrets necessary for integration between multiple components. Of course, we have Vertex AI APIs as well and a BigQuery to hold metrics and rating.
+As the diagram shows, the solution relies heavily on Google Cloud Run. There is also the presence of Secret Manager to hold few of the secrets necessary for integration between multiple components. Of course, we have Vertex AI APIs as well and a BigQuery to hold metrics and rating. There is a Cloud Storage bucket to store chat context and history. Looker Studio is used to create dashboards from Big Query metrics and rating.
 
-| Component         | Details                                                                                       |
-|:-----------------:|:----------------------------------------------------------------------------------------------|
-| wiki-interface    | Web interface to integrate Gitlab Wiki to our services                                        |
-| evaluator         | Node.js Service that receives User Story and returns evaluation                               |
-| tc-generator      | Node.js Service that receives User Story and returns a Test Case document                     |
-| script-cypress    | Node.js Service that receives Test Case and returns a Test Script in Cypress                  |
-| script-playwright | Node.js Service that receives Test Case and returns a Test Script in Playwright               |
-| test-data         | Node.js Service that receives Sample CSV Data and QTY, and returns bulk testing data          |
-| pull-request      | Node.js Service that receives Webhook calls from Gitlab/Github and evaluates change           |
-| image-processor   | Node.js Service that receives json input with screen prototype data and returns image details |
+| Component            | Details                                                                                       |
+|:--------------------:|:----------------------------------------------------------------------------------------------|
+| wiki-interface       | Web interface to integrate Gitlab Wiki to our services as well as Chatbot Services            |
+| evaluator            | Node.js Service that receives User Story and returns evaluation                               |
+| tc-generator         | Node.js Service that receives User Story and returns a Test Case document                     |
+| script-cypress       | Node.js Service that receives Test Case and returns a Test Script in Cypress                  |
+| script-playwright    | Node.js Service that receives Test Case and returns a Test Script in Playwright               |
+| script-selenium      | Node.js Service that receives Test Case and returns a Test Script in Selenium                 |
+| test-data            | Node.js Service that receives Sample CSV/JSON Data and QTY, and returns bulk testing data     |
+| pull-request         | Node.js Service that receives Webhook calls from Gitlab/Github and evaluates change           |
+| image-processor      | Node.js Service that receives json input with screen prototype data and returns image details |
+| code-search          | Node.js Service that performs search against the codebase                                     |
+| solution-overview    | Node.js Service that creates a Solution Overview document from a codebase                     |
+| solution-database    | Node.js Service that creates a Database Overview document from a codebase                     |
+| api-overview         | Node.js Service that creates an API Overview Report document from a codebase                  |
+| dependency-overview  | Node.js Service that creates a Dependency Overview Report document from a codebase            |
+| integration-overview | Node.js Service that creates an Integration Overview Report document from a codebase          |
+| security-overview    | Node.js Service that creates a Security Overview Report document from a codebase              |
 
 Each of the described components is built into its own container. Details for each of them are provided in their respective folders.   
 There are two main integration points to Gitlab, the **wiki-interface** component and the **pull-request** component.  
@@ -85,10 +93,11 @@ Each component of the solution has a deployment/installation guide on its subdir
 2. **image-processor**
 3. **script-cypress**
 4. **script-playwright**
-5. **tc-generator**
-6. **test-data**
-7. **wiki-interface**
-8. **pull-request-evaluator**
+5. **script-selenium**
+6. **tc-generator**
+7. **test-data**
+8. **wiki-interface**
+9. **pull-request-evaluator**
 
 ## Documentation
 
@@ -101,7 +110,7 @@ The integration of Gitlab Wiki with your solution is done through **wiki-interfa
 
 ![wiki01](img/wiki01.png "External Wiki: smart-sdlc")
 
-The URL must be in the following format: https://cloud-run-url/webui/:project-id .  
+The URL must be in the following format: https://cloud-run-url/ui/setproject/:project-id .  
 You can get the your Gitlab Project Id going to **Settings**, **General**:
 ![wiki02](img/wiki02.png "Project Id: smart-sdlc")
 
@@ -118,7 +127,7 @@ Select **Comments** and **Merge Request events** on the checkboxes:
 
 ![webhook02](img/webhook02.png "Webhook 02: smart-sdlc")
 
-*Note: Depending on Gitlab Version or Github Usage, if **Content Type** is present it should be set to **application/json** for the webhook call.*
+*Note: Depending on Gitlab Version or Github Usage, if **Content Type** option is present it should be set to **application/json** for the webhook call.*
 
 ## Contributing
 

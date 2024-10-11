@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * wiki-interface
- * Interface com Gitlab Wiki
- * Details: Image Utilities
- * 
- * Author: Marcelo Parisi (parisim@google.com)
- */
-
 /* get image mime */
 async function getMimeType(url) {
     const mimeTypes = {

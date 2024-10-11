@@ -1,0 +1,74 @@
+Com base no código-fonte fornecido, nas descrições "Database Tables", "Database Tables Breakdown", "Constraints" e "Relationships", gere um Mermaid Entity Relationship Diagram (ERD) visualizando os detalhes gerais do banco de dados do aplicativo. Este diagrama deve ser o mais simples possível e representar as referências de alto nível entre as tabelas e visualizações. A saída DEVE ser um código Mermaid válido que pode ser analisado diretamente por um analisador Mermaid.
+
+**Requisitos:**
+
+* **Precisão:** O ERD deve refletir com precisão as tabelas, colunas e relacionamentos descritos nas informações fornecidas. Omita quaisquer suposições ou palpites; inclua apenas o que for explicitamente declarado ou fortemente implícito.
+* **Simplicidade:** Priorize um diagrama claro e conciso, evitando detalhes desnecessários.
+* **Completude:** Inclua todas as tabelas e visualizações mencionadas, juntamente com seus campos, quando disponíveis.
+* **Formatação:**
+* Atributos de tabelas não devem ser colocados entre aspas duplas.
+* Todas as demais strings devem ser colocadas corretamente entre aspas duplas.
+* Todos os elementos de sintaxe devem estar corretos.
+* Todos os identificadores de objetos com nomes consistindo de duas ou mais palavras devem ser separados por sublinhados (_).
+* Nenhum texto adicional deve ser incluído além do código Mermaid válido.
+* Use estilo consistente (por exemplo, uso consistente de maiúsculas/minúsculas em nomes de tabelas e colunas).
+* Indique claramente a cardinalidade (um para um, um para muitos, muitos para muitos).
+
+**Exemplo de sintaxe Mermaid válida:**
+```mermaid
+erDiagram
+    CUSTOMER ||--o{ ORDER : "one-to-many"
+    CUSTOMER {
+        string name
+        string custNumber
+        string sector
+    }
+    ORDER ||--o{ LINE_ITEM : "one-to-many"
+    ORDER {
+        int orderNumber
+        string deliveryAddress
+    }
+    LINE_ITEM {
+        string productCode
+        int quantity
+        float pricePerUnit
+    }
+    CUSTOMER ||..|{ CONTACT: "one-to-one"
+    CONTACT {
+        string first_name
+        string last_name
+        string address 
+        string zip
+    }
+    CONTACT ||..|{ ADDRESS_DETAILS: "one-to-one" 
+    ADDRESS_DETAILS {
+        string line_one
+        string line_two
+        string number
+        string neighborhood
+    }
+```
+**Exemplo de sintaxe Mermaid inválida: (atributos colocados entre aspas duplas):**
+```mermaid
+erDiagram
+    "accounts-db.users" ||--o{ "accounts-db.contacts" : "one-to-many"
+    "accounts-db.users" ||--|{ "ledger-db.transactions" : "one-to-many"
+    "accounts-db.users" {
+        int "user_id"
+        string "username"
+        string "password"
+        string "first_name"
+        string "last_name"
+    }
+    "accounts-db.contacts" {
+        int "user_id"
+        int "contact_id"
+    }
+    "ledger-db.transactions" {
+        int "transaction_id"
+        timestamp "timestamp"
+        int "from_user_id"
+        int "to_user_id"
+        decimal "amount"
+    }
+```

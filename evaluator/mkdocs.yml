@@ -14,7 +14,7 @@
 
 site_name: 'evaluator'
 site_description: 'Avaliar Documento de User Story'
-repo_url: https://github.com/evaluator
+repo_url: https://github.com/GoogleCloudPlatform/smart-sdlc/
 edit_uri: edit/main/docs
 
 # Navigation menu
@@ -25,7 +25,6 @@ nav:
   - Implementação: impl.md
   - Build: build.md
   - Deploy: deploy.md
-  - Teste: test.md
   - GCP: gcp.md
 
 plugins:

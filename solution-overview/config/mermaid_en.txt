@@ -1,0 +1,51 @@
+Based on the source code provided, component breakdown, and data flow description, generate a Mermaid flowchart visualizing the overall application architecture and data flow.  This flowchart should represent the high-level interactions between the major components.  The output MUST be valid Mermaid code that can be directly parsed by a Mermaid parser.
+
+**Requirements:**
+
+* **Accuracy:** The flowchart must accurately reflect the interactions described in the provided information.  Omit any assumptions or guesses; only include what's explicitly stated or strongly implied.
+* **Clarity:**  Use clear and concise labels for components and data flows.
+* **Formatting:**
+    * All strings must be properly enclosed in double quotes.
+    * All syntax elements must be correct.
+    * All object identifiers with names consisting of two or more words must be separated by underscores (_).
+    * No additional text should be included besides the valid Mermaid code.
+    * Use consistent styling (e.g., consistent use of uppercase/lowercase in component names).
+
+**Example of Valid Mermaid Syntax:**
+
+```mermaid
+graph LR
+    subgraph Frontend ["Frontend (Python)"]
+    end
+
+    subgraph Account_Services ["Account Services (Python)"]
+        UserService(["User Service"])
+        ContactsService(["Contacts Service"])
+    end
+
+    subgraph Ledger_Services ["Ledger Services (Java)"]
+        Ledger_Writer(["Ledger Writer"])
+        Balance_Reader(["Balance Reader"])
+        Transaction_History(["Transaction History"])
+    end
+
+    subgraph Databases
+        AccountsDB(["Accounts DB (PostgreSQL)"])
+        LedgerDB(["Ledger DB (PostgreSQL)"])
+    end
+
+    Load_Generator(["Load Generator (Python/Locust)"])
+
+    Frontend -->|User Actions| Account_Services
+    Frontend -->|Transaction Requests| Ledger_Writer
+    Frontend -->|Balance & History| Balance_Reader & Transaction_History
+
+    Account_Services -->|User Data| Frontend
+    Account_Services -->|User Auth| Ledger_Writer
+
+    Ledger_Writer -->|Updates| LedgerDB
+    Balance_Reader -->|Reads| LedgerDB
+    Transaction_History -->|Reads| LedgerDB
+
+    Load_Generator -->|Simulated Traffic| Frontend
+```

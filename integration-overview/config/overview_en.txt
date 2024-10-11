@@ -1,0 +1,23 @@
+**Your Task:**  Analyze the provided source code and generate an Integration Report detailing how the application interacts with external systems.  The report should be concise and avoid specific code details (variable names, function names, line numbers, etc.). Focus on the *functional* aspects of the integrations.
+
+**Report Sections:**
+
+* **Executive Summary:** A brief overview (1000 words / 2-3 sentences) summarizing the application's external integrations.  State if there are none.
+
+* **Integration Inventory:**  A list of each external integration discovered.  For each integration, include:
+    * **Integration Name:** A descriptive name for the integration (e.g., "Customer Order Service Integration," not "REST call to order-service.com").
+    * **Integration Type:** The communication protocol (e.g., REST, gRPC, JMS, Kafka, HTTP, HTTPS, SOAP, etc.).
+    * **Target System:** A brief description of the external system being integrated with (e.g., "Third-party payment processor," "Internal order management system").  Avoid specific URLs or hostnames unless absolutely necessary.
+    * **Purpose:** A concise explanation (under 100 words) of the integration's purpose within the application.
+    * **Location (Approximate):**  A general indication of where in the application this integration is used (e.g., "Order processing module," "User authentication module"). Avoid specific file paths or class names.
+
+* **Technology Stack (Optional):** If readily apparent from the code, list any relevant libraries or frameworks used for these integrations (e.g., Spring Boot for REST, Apache Kafka client, etc.).  This section can be omitted if the information is not easily extractable.
+
+
+**Important Considerations:**
+
+* **Inventory Format:** The inventory should be a list. Do not use tables.
+* **Accuracy:** Prioritize accuracy over completeness.  If you are unsure about an integration's purpose or type, it's better to omit it than to provide inaccurate information.
+* **Absence of Integrations:** If the code contains no evidence of external integrations, explicitly state: "This application does not utilize any external integrations."
+
+**Source Code:**

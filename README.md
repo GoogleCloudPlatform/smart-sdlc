@@ -106,13 +106,16 @@ There is also a TLDR.md file on each component for those that are in a hurry.
 
 ## Wiki Integration
 
-The integration of Gitlab Wiki with your solution is done through **wiki-interface** component. To enable it, you must go into your project settings and enable **External wiki** integration.  
+The integration of Gitlab with our solution is done through **wiki-interface** component. To enable it, you must go into your project settings and enable **External wiki** integration.  
 
-![wiki01](img/wiki01.png "External Wiki: smart-sdlc")
+![external_wiki.png](img/external_wiki.png "External Wiki: smart-sdlc")
 
-The URL must be in the following format: https://cloud-run-url/ui/setproject/:project-id .  
-You can get the your Gitlab Project Id going to **Settings**, **General**:
-![wiki02](img/wiki02.png "Project Id: smart-sdlc")
+The URL must be in the following format: https://cloud-run-url/ui/ .  
+
+You will also need to create an Application to set Authentication. Open Gitlab Admin and go to **Applications**, **Add new application**:
+![oauth2.png](img/oauth2.png "Application: smart-sdlc")
+
+Make sure to select the appropriate **Scopes**, adjust the **Callback URL** according to your Cloud Run URL, and save your **Application ID** and **Secret** to store on Secret Manager.
 
 ## Webhook Integration
 

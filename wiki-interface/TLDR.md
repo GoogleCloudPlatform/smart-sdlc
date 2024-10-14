@@ -69,6 +69,7 @@ export MY_LOCATION="southamerica-east1"
 export MY_DATASET_ID="metrificator"
 export MY_REDIS_ID="wiki-session"
 export MY_PROJECT_VPC="my-vpc"
+export MY_BUCKET_NAME="my-bucket-name"
 ``` 
 
 Set our project id:
@@ -218,6 +219,22 @@ gcloud projects add-iam-policy-binding $MY_PROJECT_ID \
        --condition=None
 ```
 
+Create the GCS Bucket:
+```bash
+gcloud storage buckets create gs://$MY_BUCKET_NAME \
+        --location=$MY_LOCATION \
+        --default-storage-class=STANDARD \
+        --project=$MY_PROJECT_ID \
+        --uniform-bucket-level-access
+```
+
+Grand Bucket IAM:
+```bash
+gcloud storage buckets add-iam-policy-binding gs://$MY_BUCKET_NAME \
+       --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \
+       --role="roles/storage.objectUser"
+```
+
 Adjust substitutions on `cloudbuild.yaml` file:
 ```yaml
 substitutions:
@@ -237,4 +254,4 @@ Run cloud build to deploy:
 gcloud builds submit . --config=./cloudbuild.yaml --region=$MY_LOCATION --project=$MY_PROJECT_ID
 ```
 
-Add an external Wiki on **Gitlab** pointing to the **Cloud Run** URL `/webui/<project-id>`.  
+Under Admin settings, add an external Wiki on **Gitlab** pointing to the **Cloud Run** URL `/ui/`.  

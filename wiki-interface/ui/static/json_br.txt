@@ -1,0 +1,9 @@
+{
+  "nome": "João",
+  "sobrenome": "Silva",
+  "email": "jsilva@email.com",
+  "password": "P@ssw0rd",
+  "logradouro": "Rua ABC, 123",
+  "cep": "12345-123",
+  "cpf": "111.222.333-44"
+}

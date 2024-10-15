@@ -228,7 +228,7 @@ gcloud storage buckets create gs://$MY_BUCKET_NAME \
         --uniform-bucket-level-access
 ```
 
-Grand Bucket IAM:
+Grant Bucket Permissions:
 ```bash
 gcloud storage buckets add-iam-policy-binding gs://$MY_BUCKET_NAME \
        --member="serviceAccount:$MY_PROJECT_NO-compute@developer.gserviceaccount.com" \

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="smart-sdlc" />
+    <meta name="author" content="Marcelo Parisi" />
+    <title>smart-sdcl - GenAI Dashboard</title>
+    <!-- Core theme CSS -->
+    <link href="/css/style.css" rel="stylesheet" />
+    <!-- Bootstrap core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Markdown and Mermaid Support -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Main Functions JS -->
+    <script src="/js/sidebar_br.js"></script>
+    <!-- Form Functions JS -->
+    <script src="/js/forms.js"></script>
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        __SIDEBAR__
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper">
+            <!-- Top navigation-->
+            __TOP_NAV__
+            <!-- Page content-->
+            <div class="container-fluid">
+                <div id="main-content">
+                    __MAIN_CONTENT__
+                </div>
+                <div id="rating-content" style="display: none;"">
+                    __RATING_CONTENT__
+                </div>
+                <div id="loading" style="display: none; margin: auto; width: 400px;">
+                    <br /><br /><br />
+                    <img src="/images/loading.gif" border="0" width="220" height="220">
+                    <br /><br /><br />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

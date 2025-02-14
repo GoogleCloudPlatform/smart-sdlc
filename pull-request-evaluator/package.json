@@ -16,12 +16,12 @@
   "dependencies": {
     "@gitbeaker/rest": "^39.34.2",
     "@google-cloud/vertexai": "^0.5.0",
-    "@octokit/rest": "^20.0.2",
+    "@octokit/rest": "^21.1.0",
     "body-parser": "^1.20.2",
     "config": "^3.3.10",
     "express": "^4.21.1",
     "js-yaml": "^4.1.0",
     "morgan": "^1.10.0",
-    "octokit": "^3.1.2"
+    "octokit": "^4.1.1"
   }
 }

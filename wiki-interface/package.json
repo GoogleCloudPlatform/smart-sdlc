@@ -26,6 +26,6 @@
     "passport-gitlab": "^0.5.0",
     "passport-gitlab2": "^5.0.0",
     "redis": "^4.7.0",
-    "simple-git": "^3.27.0"
+    "simple-git": "^3.36.0"
   }
 }
